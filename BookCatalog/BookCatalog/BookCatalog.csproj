@@ -349,6 +349,7 @@
     <Content Include="Views\Book\Index.cshtml" />
     <Content Include="Views\Author\Index.cshtml" />
     <Content Include="Views\Author\AuthorForm.cshtml" />
+    <Content Include="Views\Author\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

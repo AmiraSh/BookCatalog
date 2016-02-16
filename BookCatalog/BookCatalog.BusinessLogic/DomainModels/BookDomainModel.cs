@@ -63,8 +63,17 @@
         /// <returns>Book view model.</returns>
         public BookViewModel GetBook(int id)
         {
-            return BookMapper.Map(this.bookRepository.FindById(id));            
+            return BookMapper.Map(this.bookRepository.FindById(id));
         }
+
+        /// <summary>
+        /// Gets book view model.
+        /// </summary>
+        /// <param name="Name">Book name.</param>
+        /// <returns>Book view model.</returns>
+        public BookViewModel GetBook(string Name)
+        {
+            return BookMapper.Map(this.bookRepository.FirstOrDefault(book => book.Name == Name));        }
 
         /// <summary>
         /// Adds a new book to database.

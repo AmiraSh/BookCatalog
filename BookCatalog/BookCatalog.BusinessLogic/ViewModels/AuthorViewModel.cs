@@ -33,7 +33,7 @@
         /// <summary>
         /// Gets or sets the second name.
         /// </summary>
-        [Display(Name = "Second Name")]
+        [Display(Name = "Last Name")]
         public string SecondName { get; set; }
 
         /// <summary>

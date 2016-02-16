@@ -53,6 +53,7 @@
                 </td>
                 <td>
                     <input type="button" value="Edit" id="Edit" onclick="editAuthor(@item.Id)" class="makealink" /> |
+                    @Html.ActionLink("Details", "Details", new { FirstName = item.FirstName, LastName = item.SecondName }) |
                     <input type="button" value="Delete" id="Delete" onclick="deleteAuthor(@item.Id)" class="makealink" />
                 </td>
             </tr>
