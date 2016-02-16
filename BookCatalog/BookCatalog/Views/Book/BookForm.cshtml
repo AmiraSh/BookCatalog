@@ -33,7 +33,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.AuthorsIds, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.ListBoxFor(model => model.AuthorsIds, (MultiSelectList)ViewData["AuthorsOptions"], htmlAttributes: new { @class = "form-control" })
+                <select class="multiselectlist" hidden multiple="multiple">
+                    @foreach (var item in (MultiSelectList)ViewData["AuthorsOptions"])
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+                @*@Html.DropDownListFor(model => model.AuthorsIds, (MultiSelectList)ViewData["AuthorsOptions"], htmlAttributes: new { @class = "multiselectlist", multiple = "multiple", style = "width:100%" })*@
                 @Html.ValidationMessageFor(model => model.AuthorsIds, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -51,6 +57,7 @@
     $(function () {
         $('.datepicker').datepicker();
     });
+    $('.multiselectlist').select2();
     function onSuccess(model) {
         if ( model["error"] != null && model["error"] != "" ) {
             alert(model["error"]);
