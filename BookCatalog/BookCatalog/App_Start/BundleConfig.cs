@@ -39,7 +39,6 @@
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-datepicker.css",
                       "~/Content/dataTables.bootstrap.min.css",
-                      "~/Content/jquery.dataTables.min.css",
                       "~/Content/dataTables.scroller.min.css",
                       "~/Content/site.css",
                       "~/Content/custom.css"));

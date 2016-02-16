@@ -1,9 +1,7 @@
 ﻿@model IEnumerable<BookCatalog.BusinessLogic.ViewModels.AuthorViewModel>
-
 @{
     ViewBag.Title = "Authors";
 }
-
 <br />
 <p>
     <input type="button" value="Add" id="CreateAuthor" class="btn btn-default" />
@@ -62,26 +60,6 @@
             </tr>
         }
     </tbody>
-    <tfoot>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SecondName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BooksCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Books)
-            </th>
-            <th></th>
-        </tr>
-    </tfoot>
 </table>
 
 <script>
@@ -97,24 +75,6 @@
                 { "sClass": "Books", "mDataProp": "Books" },
                 { "sClass": "Controls", "mDataProp": "Controls" }
             ]
-        });
-
-        $('#authorsTable tfoot th').each(function () {
-            var title = $(this).text();
-            $(this).html('<input type="text" placeholder="' + title + '" />');
-        });
-
-        // Apply the search
-        authorsTable.columns().every(function () {
-            var that = this;
-
-            $('input', this.footer()).on('keyup change', function () {
-                if (that.search() !== this.value) {
-                    that
-                        .search(this.value)
-                        .draw();
-                }
-            });
         });
     });
     $("#CreateAuthor").click(function () {

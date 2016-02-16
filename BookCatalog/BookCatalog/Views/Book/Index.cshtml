@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<BookCatalog.BusinessLogic.ViewModels.BookViewModel>
-
 @{
     ViewBag.Title = "Book Catalog";
 }
@@ -60,26 +59,6 @@
             </tr>
         }
     </tbody>
-    <tfoot>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PublishedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PagesCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Authors)
-            </th>
-            <th></th>
-        </tr>
-    </tfoot>
 </table>
 
 <script>
@@ -95,24 +74,6 @@
                 { "sClass": "Authors", "mDataProp": "Authors" },
                 { "sClass": "Controls", "mDataProp": "Controls" }
             ]
-        });
-
-        $('#booksTable tfoot th').each(function () {
-            var title = $(this).text();
-            $(this).html('<input type="text" placeholder="' + title + '" />');
-        });
-        
-        // Apply the search
-        booksTable.columns().every(function () {
-            var that = this;
-
-            $('input', this.footer()).on('keyup change', function () {
-                if (that.search() !== this.value) {
-                    that
-                        .search(this.value)
-                        .draw();
-                }
-            });
         });
     });
     $("#CreateBook").click(function () {
