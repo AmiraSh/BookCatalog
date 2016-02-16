@@ -80,7 +80,7 @@
         if (isedited !=true)
         {
             $.ajax({
-                async: true,            
+                async: true,
                 url: '/Book/AddBookForm'
             }).success(function (content) {
                 isedited = true;
@@ -89,12 +89,12 @@
             });
         }
     });
-    function editBook(bookId) {        
+    function editBook(bookId) {
         parent = $(this).parent('td').parent('tr');
         if (isedited != true)
         {
             $.ajax({
-                async: true,            
+                async: true,
                 url: '/Book/AddBookForm/' + bookId
             }).success(function (content) {
                 isedited = true;
@@ -104,14 +104,15 @@
         }
     }
     function deleteBook(bookId) {
-        var parent = $(this).parent('td').parent('tr');
         if (confirm("Are you sure, you want to delete this book from catalog?") == true) {
             $.ajax({
                 async: true,
                 type: 'POST',
                 url: '/Book/Delete/' + bookId
             }).success(function () {
-                parent.remove();
+                $( "tr:contains('" + bookId + "')").each(function() {
+                    booksTable.fnDeleteRow(this);
+                });
                 alert('This book was successfully deleted.');
             });
         }

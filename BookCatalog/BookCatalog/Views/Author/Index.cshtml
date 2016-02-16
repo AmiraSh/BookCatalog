@@ -46,12 +46,10 @@
                     @Html.DisplayFor(modelItem => item.BooksCount)
                 </td>
                 <td>
-                    <ul>
                     @foreach (var book in item.Books)
                     {
-                        <li>@Html.DisplayFor(modelItem => book.Key) @(", ") @Html.DisplayFor(modelItem => book.Value) <br /></li>
-                    }
-                    </ul>
+                        @Html.DisplayFor(modelItem => book.Key) @(", ") @Html.DisplayFor(modelItem => book.Value) <br />
+                    }                    
                 </td>
                 <td>
                     <input type="button" value="Edit" id="Edit" onclick="editAuthor(@item.Id)" class="makealink" /> |
@@ -101,15 +99,16 @@
             });
         }
     }
-    function deleteAuthor(bookId) {
-        var parent = $(this).parent('td').parent('tr');
+    function deleteAuthor(authorId) {
         if (confirm("Are you sure, you want to delete this author from catalog?") == true) {
             $.ajax({
                 async: true,
                 type: 'POST',
-                url: '/Author/Delete/' + bookId
+                url: '/Author/Delete/' + authorId
             }).success(function () {
-                parent.remove();
+                $( "tr:contains('" + authorId + "')").each(function() {
+                    booksTable.fnDeleteRow(this);
+                });
                 alert('This author was successfully deleted.');
             });
         }
