@@ -64,7 +64,7 @@
     var isedited = false;
     var authorsTable;
     $(document).ready(function () {
-        authorsTable = $('#authorsTable').DataTable({
+        authorsTable = $('#authorsTable').dataTable({
             "aoColumns": [
                 { "sClass": "Id", "mDataProp": "Id" },
                 { "sClass": "FirstName", "mDataProp": "FirstName" },
@@ -107,7 +107,7 @@
                 url: '/Author/Delete/' + authorId
             }).success(function () {
                 $( "tr:contains('" + authorId + "')").each(function() {
-                    booksTable.fnDeleteRow(this);
+                    authorsTable.fnDeleteRow(this);
                 });
                 alert('This author was successfully deleted.');
             });
