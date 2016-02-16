@@ -18,6 +18,16 @@
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //routes.MapRoute(
+            //    name: "BookDetails",
+            //    url: "Book/Details/{Name}",
+            //    defaults: new { controller = "Book", action = "Details", Name = UrlParameter.Optional });
+
+            routes.MapRoute(
+                name: "AuthorDetails",
+                url: "Author/Details/{FirstName}/{LastName}/{BooksCount}",
+                defaults: new { controller = "Author", action = "Details", FirstName = UrlParameter.Optional, LastName = UrlParameter.Optional, BooksCount = UrlParameter.Optional });
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
