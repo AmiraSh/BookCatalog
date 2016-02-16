@@ -43,7 +43,7 @@
         /// Displays a book.
         /// </summary>
         /// <param name="id">Book id.</param>
-        /// <returns>Display book page.</returns>
+        /// <returns>Book page.</returns>
         public ActionResult Details(int? id)
         {
             if (id == null)
