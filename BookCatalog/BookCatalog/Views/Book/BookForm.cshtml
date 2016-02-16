@@ -1,0 +1,77 @@
+﻿@model BookCatalog.BusinessLogic.ViewModels.BookViewModel
+
+@using (Ajax.BeginForm("Manage", "Book", Model, new AjaxOptions() { OnSuccess = "onSuccess" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Name, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PublishedDate, htmlAttributes: new { @class = "control-label col-md-2", @type = "datetime" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.PublishedDate, @"{0:MM/dd/yyyy}", htmlAttributes: new { @class = "form-control datepicker" })
+                @Html.ValidationMessageFor(model => model.PublishedDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PagesCount, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.PagesCount, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PagesCount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.AuthorsIds, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.ListBoxFor(model => model.AuthorsIds, (MultiSelectList)ViewData["AuthorsOptions"], htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AuthorsIds, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input id="Manage" type="submit" value="@((Model.Id == 0) ? "Create" : "Edit")" class="btn btn-default" />
+                <input type="button" value="Cancel" id="CancelCreateBook" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    $(function () {
+        $('.datepicker').datepicker();
+    });
+    function onSuccess(model) {
+        if ( model["error"] != null && model["error"] != "" ) {
+            alert(model["error"]);
+        }
+        else
+        {
+            $('#BookForm').empty();
+            $('#BookForm').attr("style", "display:none");
+            isedited = false;
+            if (@Model.Id != 0)
+            {
+                $( "tr:contains('" + @Model.Id + "')").each(function() {
+                    booksTable.fnDeleteRow(this);
+                });
+            }
+            booksTable.fnAddData(model);
+        }
+    }
+    $('#CancelCreateBook').click(function () {
+        $('#BookForm').attr("style", "display:none");
+        $('#BookForm').empty();
+        isedited = false;
+    })
+</script>

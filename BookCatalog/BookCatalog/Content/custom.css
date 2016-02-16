@@ -1,0 +1,9 @@
+﻿.makealink{
+    background:transparent;
+    border:0px;
+    text-decoration:none;
+    color:#428bca;    
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0em 0em !important;
+}
