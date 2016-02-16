@@ -84,10 +84,7 @@
                     sdt = new System.Data.SqlTypes.SqlDateTime(testDate);
                     valid = true;
                 }
-                catch (System.Data.SqlTypes.SqlTypeException ex)
-                {
-                    
-                }
+                catch { }
             }
 
             return valid;
