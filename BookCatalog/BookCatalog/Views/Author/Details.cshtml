@@ -1,0 +1,49 @@
+﻿@model BookCatalog.BusinessLogic.ViewModels.AuthorViewModel
+
+@{
+    ViewBag.Title = Model.FirstName + " " + Model.SecondName;
+}
+
+<h2>Author Details</h2>
+
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SecondName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecondName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BooksCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BooksCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Books)
+        </dt>
+
+        <dd>
+            @foreach (var book in Model.Books)
+            {
+                @Html.DisplayFor(modelItem => book.Key) @(", ") @Html.DisplayFor(modelItem => book.Value) <br />
+            }
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -36,7 +36,25 @@
         {
             return View(this.domainModel.GetAuthors());
         }
-        
+
+        /// <summary>
+        /// Displays an author.
+        /// </summary>
+        /// <param name="FirstName">First name.</param>
+        /// <param name="LastName">Last name.</param>
+        /// <param name="BooksCount">Books count (optional).</param>
+        /// <returns>Author's page.</returns>
+        public ActionResult Details(string FirstName, string LastName, int? BooksCount)
+        {
+            AuthorViewModel author = this.domainModel.GetAuthor(FirstName, LastName, BooksCount);
+            if (author == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(author);
+        }
+
         /// <summary>
         /// Gets a partial view for creating new book.
         /// </summary>
@@ -80,7 +98,7 @@
                         SecondName = authorVM.SecondName,
                         BooksCount = authorVM.BooksCount,
                         Books = books,
-                        Controls = "<input type='button' value='Edit' id='Edit' onclick='editBook(" + authorVM.Id + ")' class='makealink'> | <input type='button' value='Delete' id='Delete' onclick='deleteBook(" + authorVM.Id + ")' class='makealink'>"
+                        Controls = "<input type='button' value='Edit' id='Edit' onclick='editBook(" + authorVM.Id + ")' class='makealink'> | <a href='Author/Details/" + authorVM.FirstName + "/" + authorVM.SecondName + "'>Details</a>  | <input type='button' value='Delete' id='Delete' onclick='deleteBook(" + authorVM.Id + ")' class='makealink'>"
                     });
                 case 1:
                     ModelState.AddModelError("FirstName", "First name is required.");
