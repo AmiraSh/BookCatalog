@@ -49,7 +49,8 @@
             Book book = FindById(bookId);
             foreach (int authorId in authorsIds)
             {
-                book.Authors.Add(this.Context.Set<Author>().Find(authorId));
+                Author author = this.Context.Set<Author>().Find(authorId);
+                book.Authors.Add(author);
             }
         }
     }

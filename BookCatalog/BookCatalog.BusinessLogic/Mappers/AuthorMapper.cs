@@ -1,5 +1,6 @@
 ﻿namespace BookCatalog.BusinessLogic.Mappers
 {
+    using System;
     #region Using
     using System.Collections.Generic;
     using BookCatalog.BusinessLogic.ViewModels;
@@ -34,11 +35,16 @@
         /// <returns>Author view model.</returns>
         public static AuthorViewModel Map(Author author)
         {
+            if (author == null)
+            {
+                throw new ArgumentException();
+            }
+
             AuthorViewModel authorVM = new AuthorViewModel();
             authorVM.Id = author.Id;
             authorVM.FirstName = author.FirstName;
             authorVM.SecondName = author.SecondName;
-            authorVM.BooksCount = author.BooksCount;
+            authorVM.BooksCount = author.Books.Count;
             foreach (var book in author.Books)
             {
                 authorVM.Books.Add(book.Name, book.PublishedDate.Year);
@@ -56,7 +62,6 @@
             Author author = new Author();
             author.FirstName = authorVM.FirstName;
             author.SecondName = authorVM.SecondName;
-            author.BooksCount = authorVM.BooksCount;
             return author;
         }
 
@@ -69,7 +74,6 @@
         {
             author.FirstName = authorVM.FirstName;
             author.SecondName = authorVM.SecondName;
-            author.BooksCount = authorVM.BooksCount;
         }
     }
 }

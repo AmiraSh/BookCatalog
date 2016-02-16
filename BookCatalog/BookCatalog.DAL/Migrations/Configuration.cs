@@ -30,10 +30,10 @@ namespace BookCatalog.DAL.Migrations
         {
             var authors = new List<Author>
             {
-                new Author { FirstName = "Andy", SecondName = "Weir", BooksCount = 1 },
-                new Author { FirstName = "Jacob", SecondName = "Grimm", BooksCount = 2 },
-                new Author { FirstName = "Wilhelm", SecondName = "Grimm", BooksCount = 2 },
-                new Author { FirstName = "J. K.", SecondName = "Rowling", BooksCount = 7 }
+                new Author { FirstName = "Andy", SecondName = "Weir" },
+                new Author { FirstName = "Jacob", SecondName = "Grimm" },
+                new Author { FirstName = "Wilhelm", SecondName = "Grimm" },
+                new Author { FirstName = "J. K.", SecondName = "Rowling" }
             };
             authors.ForEach(author => context.Authors.AddOrUpdate(author));
             context.SaveChanges();

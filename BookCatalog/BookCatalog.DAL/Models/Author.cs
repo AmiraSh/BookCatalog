@@ -33,11 +33,6 @@
         public string SecondName { get; set; }
 
         /// <summary>
-        /// Gets or sets count of books.
-        /// </summary>
-        public int BooksCount { get; set; }
-
-        /// <summary>
         /// Gets or sets author's books.
         /// </summary>
         public virtual ICollection<Book> Books { get; set; }
