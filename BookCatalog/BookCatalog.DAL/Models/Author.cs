@@ -2,6 +2,7 @@
 {
     #region Using
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     #endregion
 
     /// <summary>
@@ -25,11 +26,15 @@
         /// <summary>
         /// Gets or sets first name.
         /// </summary>
+        [Required(ErrorMessage = "First name is required.")]
+        [StringLength(150, MinimumLength = 1)]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Gets or sets second name.
         /// </summary>
+        [Required(ErrorMessage = "Last name is required.")]
+        [StringLength(150, MinimumLength = 1)]
         public string SecondName { get; set; }
 
         /// <summary>
