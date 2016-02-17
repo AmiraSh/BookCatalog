@@ -44,9 +44,10 @@
                       "~/Content/site.css",
                       "~/Content/custom.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/select2").Include(
-                      "~/Scripts/select2.js",
-                      "~/Content/css/select2.css"));
+            bundles.Add(new ScriptBundle("~/bundles/multiselect").Include(
+                      "~/Scripts/chosen.jquery.js",
+                      "~/Content/css/chosen.css"
+                      ));
         }
     }
 }

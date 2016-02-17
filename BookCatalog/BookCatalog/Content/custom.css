@@ -17,24 +17,3 @@
 .navbar-inverse .navbar-nav > li > a {
     color: #fff !important;
 }
-input,
-select,
-select2,
-textarea {
-    max-width: 202px;
-}
-.selected-field {
-    max-width: 202px !important;
-    white-space: normal !important;
-    width: 100% !important;
-}
-.select2-container .select2-selection--multiple .select2-selection__rendered {
-    white-space: normal !important;
-}
-.select2-container--default .select2-selection--multiple .select2-selection__choice {    
-    float: none !important;
-    margin-right: 15px !important;
-}
-.select2-container--default .select2-selection--multiple .select2-selection__clear {
-    margin-right: 0px !important;
-}
