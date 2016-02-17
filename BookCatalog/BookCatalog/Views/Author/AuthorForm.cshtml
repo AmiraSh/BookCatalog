@@ -32,6 +32,10 @@
 }
 
 <script>
+    var form = $("#AuthorForm");
+    form.removeData('validator');
+    form.removeData('unobtrusiveValidation');
+    $.validator.unobtrusive.parse(form);
     function onSuccess(model) {
         if ( model["error"] != null && model["error"] != "" ) {
             alert(model["error"]);
