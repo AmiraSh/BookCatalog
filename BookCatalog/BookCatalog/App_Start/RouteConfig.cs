@@ -25,8 +25,8 @@
 
             routes.MapRoute(
                 name: "AuthorDetails",
-                url: "Author/Details/{FirstName}/{LastName}/{BooksCount}",
-                defaults: new { controller = "Author", action = "Details", FirstName = UrlParameter.Optional, LastName = UrlParameter.Optional, BooksCount = UrlParameter.Optional });
+                url: "Author/Details/{id}/{FirstName}/{LastName}/{BooksCount}",
+                defaults: new { controller = "Author", action = "Details", id = UrlParameter.Optional, FirstName = UrlParameter.Optional, LastName = UrlParameter.Optional, BooksCount = UrlParameter.Optional });
 
             routes.MapRoute(
                 name: "Default",

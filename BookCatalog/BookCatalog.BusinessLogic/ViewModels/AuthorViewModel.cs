@@ -28,12 +28,16 @@
         /// Gets or sets the first name.
         /// </summary>
         [Display(Name = "First Name")]
+        [Required(ErrorMessage = "First name is required.")]
+        [StringLength(150, MinimumLength = 1)]
         public string FirstName { get; set; }
 
         /// <summary>
         /// Gets or sets the second name.
         /// </summary>
         [Display(Name = "Last Name")]
+        [Required(ErrorMessage = "Last name is required.")]
+        [StringLength(150, MinimumLength = 1)]
         public string SecondName { get; set; }
 
         /// <summary>

@@ -51,28 +51,6 @@
         }
 
         /// <summary>
-        /// Gets an author.
-        /// </summary>
-        /// <param name="FirstName">First name.</param>
-        /// <param name="LastName">Last name.</param>
-        /// <param name="BooksCount">Books count (optional).</param>
-        /// <returns>Author view model.</returns>
-        public AuthorViewModel GetAuthor(string FirstName, string LastName, int? BooksCount)
-        {
-            List<Author> authors = this.authorRepository.FindBy(author => author.FirstName == FirstName && author.SecondName == LastName).ToList();
-            if (BooksCount.HasValue)
-            {
-                authors = authors.Where(author => author.Books.Count == BooksCount.Value).ToList();
-            }
-            if (authors.Count == 0)
-            {
-                return null;
-            }
-
-            return AuthorMapper.Map(authors.FirstOrDefault());
-        }
-
-        /// <summary>
         /// Adds a new author to database.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>

@@ -7,12 +7,13 @@
     using BusinessLogic.DomainModels;
     using BusinessLogic.ViewModels;
     using DAL.Interfaces;
+    using Infrastructure.Logging;
     #endregion
 
     /// <summary>
     /// Author controller.
     /// </summary>
-    public class AuthorController : Controller
+    public class AuthorController : BaseController
     {
         /// <summary>
         /// Domain model.
@@ -23,7 +24,7 @@
         /// Initializes a new instance of the <see cref="BookController"/> class.
         /// </summary>
         /// <param name="authorRepository">Author repository.</param>
-        public AuthorController(IAuthorRepository authorRepository)
+        public AuthorController(IAuthorRepository authorRepository, ILogger logger) : base(logger)
         {
             this.domainModel = new AuthorDomainModel(authorRepository);
         }
@@ -40,13 +41,14 @@
         /// <summary>
         /// Displays an author.
         /// </summary>
+        /// <param name="id">Identifier.</param>
         /// <param name="FirstName">First name.</param>
         /// <param name="LastName">Last name.</param>
         /// <param name="BooksCount">Books count (optional).</param>
         /// <returns>Author's page.</returns>
-        public ActionResult Details(string FirstName, string LastName, int? BooksCount)
+        public ActionResult Details(int id, string FirstName, string LastName, int? BooksCount)
         {
-            AuthorViewModel author = this.domainModel.GetAuthor(FirstName, LastName, BooksCount);
+            AuthorViewModel author = this.domainModel.GetAuthor(id);
             if (author == null)
             {
                 throw new ArgumentException("Author does not exist.");
@@ -97,8 +99,8 @@
                         FirstName = authorVM.FirstName,
                         SecondName = authorVM.SecondName,
                         BooksCount = authorVM.BooksCount,
-                        Books = books,
-                        Controls = "<input type='button' value='Edit' id='Edit' onclick='editBook(" + authorVM.Id + ")' class='makealink'> | <a href='Author/Details/" + authorVM.FirstName + "/" + authorVM.SecondName + "'>Details</a>  | <input type='button' value='Delete' id='Delete' onclick='deleteBook(" + authorVM.Id + ")' class='makealink'>"
+                        Books = books.ToString(),
+                        Controls = "<input type='button' value='Edit' id='Edit' onclick='editBook(" + authorVM.Id + ")' class='makealink'> | <a href='Author/Details/" + authorVM.Id  + "/" + authorVM.FirstName + "/" + authorVM.SecondName + "'>Details</a>  | <input type='button' value='Delete' id='Delete' onclick='deleteBook(" + authorVM.Id + ")' class='makealink'>"
                     });
                 case 1:
                     ModelState.AddModelError("FirstName", "First name is required.");

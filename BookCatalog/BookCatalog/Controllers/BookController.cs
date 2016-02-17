@@ -9,12 +9,13 @@
     using BusinessLogic.DomainModel;
     using BusinessLogic.ViewModels;
     using DAL.Interfaces;
+    using Infrastructure.Logging;
     #endregion
 
     /// <summary>
     /// Book's catalog controller.
     /// </summary>
-    public class BookController : Controller
+    public class BookController : BaseController
     {
         /// <summary>
         /// Domain model.
@@ -26,7 +27,7 @@
         /// </summary>
         /// <param name="bookRepository">Book repository.</param>
         /// <param name="authorRepository">Author repository.</param>
-        public BookController(IBookRepository bookRepository, IAuthorRepository authorRepository)
+        public BookController(IBookRepository bookRepository, IAuthorRepository authorRepository, ILogger logger) : base(logger)
         {
             this.domainModel = new BookDomainModel(bookRepository, authorRepository);
         }
