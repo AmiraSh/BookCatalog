@@ -176,6 +176,7 @@
     <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BookController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -192,6 +193,9 @@
     <Content Include="Content\bootstrap-datepicker3.standalone.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chosen-sprite%402x.png" />
+    <Content Include="Content\chosen-sprite.png" />
+    <Content Include="Content\chosen.css" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\dataTables.bootstrap.min.css" />
     <Content Include="Content\dataTables.bootstrap.min.js" />
@@ -247,6 +251,8 @@
     </Content>
     <None Include="Properties\PublishProfiles\BookCatalogIIS.pubxml" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
+    <Content Include="Scripts\chosen.jquery.js" />
+    <Content Include="Scripts\chosen.jquery.min.js" />
     <Content Include="Scripts\dataTables.bootstrap.min.js" />
     <Content Include="Scripts\dataTables.scroller.min.js" />
     <Content Include="Scripts\jquery-1.12.0.min.js" />
@@ -350,6 +356,7 @@
     <Content Include="Views\Author\Index.cshtml" />
     <Content Include="Views\Author\AuthorForm.cshtml" />
     <Content Include="Views\Author\Details.cshtml" />
+    <Content Include="Views\Error\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

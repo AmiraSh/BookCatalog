@@ -1,6 +1,7 @@
 ﻿namespace BookCatalog.Controllers
 {
     #region Using
+    using System;
     using System.Collections.Generic;
     using System.Net;
     using System.Text;
@@ -54,7 +55,7 @@
             BookViewModel book = this.domainModel.GetBook(id.Value);
             if (book == null)
             {
-                return HttpNotFound();
+                throw new ArgumentException("Book does not exist.");
             }
 
             return View(book);
@@ -90,7 +91,7 @@
             BookViewModel book = this.domainModel.GetBook(id.Value);
             if (book == null)
             {
-                return HttpNotFound();
+                throw new ArgumentException("Book does not exist.");
             }
 
             foreach (var item in (ViewData["AuthorsOptions"] as MultiSelectList).Items)
@@ -118,7 +119,7 @@
                     StringBuilder authors = new StringBuilder();
                     foreach (var author in this.domainModel.GetAuthors(bookVM.Id))
                     {
-                        authors.Append(author + "\n");
+                        authors.Append(author + ", \n");
                     }
                     return Json(new
                     {
@@ -159,7 +160,7 @@
         {
             if (this.domainModel.DeleteBook(id) == 1)
             {
-                return HttpNotFound();
+                throw new ArgumentException("Book does not exist.");
             }
 
             return Json(id);

@@ -1,7 +1,7 @@
 ﻿namespace BookCatalog.Controllers
 {
     #region Using
-    using System.Net;
+    using System;
     using System.Text;
     using System.Web.Mvc;
     using BusinessLogic.DomainModels;
@@ -49,7 +49,7 @@
             AuthorViewModel author = this.domainModel.GetAuthor(FirstName, LastName, BooksCount);
             if (author == null)
             {
-                return HttpNotFound();
+                throw new ArgumentException("Author does not exist.");
             }
 
             return View(author);
@@ -69,7 +69,7 @@
             AuthorViewModel author = this.domainModel.GetAuthor(id.Value);
             if (author == null)
             {
-                return HttpNotFound();
+                throw new ArgumentException("Author does not exist.");
             }
 
             return PartialView("AuthorEdit", author);
@@ -121,7 +121,7 @@
         {
             if (this.domainModel.DeleteAuthor(id) == 1)
             {
-                return HttpNotFound();
+                throw new ArgumentException("Author does not exist.");
             }
 
             return Json(id);
