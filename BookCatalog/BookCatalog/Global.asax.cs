@@ -31,16 +31,17 @@
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
 
-        /// <summary>
-        /// Fired when an unhandled exception is encountered within the application.
-        /// </summary>
-        /// <param name="sender">Sender.</param>
-        /// <param name="e">Event arguments.</param>
+        ///// <summary>
+        ///// Fired when an unhandled exception is encountered within the application.
+        ///// </summary>
+        ///// <param name="sender">Sender.</param>
+        ///// <param name="e">Event arguments.</param>
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception exception = Server.GetLastError();
             this.logger.Log(exception);
             Server.ClearError();
+            Response.RedirectToRoute("ErrorPage");
         }
     }
 }
