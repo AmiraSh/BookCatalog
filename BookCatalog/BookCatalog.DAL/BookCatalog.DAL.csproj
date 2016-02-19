@@ -65,6 +65,10 @@
     <Compile Include="Migrations\201602161539555_DropBooksCoutColumn.Designer.cs">
       <DependentUpon>201602161539555_DropBooksCoutColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602190845086_AddDataAnnotations.cs" />
+    <Compile Include="Migrations\201602190845086_AddDataAnnotations.Designer.cs">
+      <DependentUpon>201602190845086_AddDataAnnotations.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
@@ -80,6 +84,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602161539555_DropBooksCoutColumn.resx">
       <DependentUpon>201602161539555_DropBooksCoutColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602190845086_AddDataAnnotations.resx">
+      <DependentUpon>201602190845086_AddDataAnnotations.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
