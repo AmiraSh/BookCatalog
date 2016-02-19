@@ -57,6 +57,10 @@
       <Project>{1e2a569e-0d14-42ff-92c3-5cb2acef6543}</Project>
       <Name>BookCatalog.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\BookCatalog.Infrastructure\BookCatalog.Infrastructure.csproj">
+      <Project>{4ea7a47a-ff7d-47a1-8d34-4b29f262d7e1}</Project>
+      <Name>BookCatalog.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

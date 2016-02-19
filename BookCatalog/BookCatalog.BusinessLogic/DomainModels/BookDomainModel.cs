@@ -6,6 +6,7 @@
     using System.Transactions;
     using DAL.Interfaces;
     using DAL.Models;
+    using Infrastructure.Errors;
     using Mappers;
     using Validation;
     using ViewModels;
@@ -73,31 +74,26 @@
         /// <returns>Book view model.</returns>
         public BookViewModel GetBook(string Name)
         {
-            return BookMapper.Map(this.bookRepository.FirstOrDefault(book => book.Name == Name));        }
+            return BookMapper.Map(this.bookRepository.FirstOrDefault(book => book.Name == Name));
+        }
 
         /// <summary>
         /// Adds a new book to database.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
         /// <returns>Status of operation.</returns>
-        public int AddBook(BookViewModel bookVM)
+        public void AddBook(BookViewModel bookVM)
         {
-            int validCheck = Validator.Validate(bookVM);
-            if (validCheck == 0)
+            using (TransactionScope scope = new TransactionScope())
             {
-                using (TransactionScope scope = new TransactionScope())
-                {
-                    Book book = BookMapper.Map(bookVM);
-                    this.bookRepository.Add(book);
-                    this.bookRepository.SaveChanges();
-                    this.bookRepository.SetAuthors(book.Id, bookVM.AuthorsIds);
-                    this.bookRepository.SaveChanges();
-                    bookVM.Id = book.Id;
-                    scope.Complete();
-                }
+                Book book = BookMapper.Map(bookVM);
+                this.bookRepository.Add(book);
+                this.bookRepository.SaveChanges();
+                this.bookRepository.SetAuthors(book.Id, bookVM.AuthorsIds);
+                this.bookRepository.SaveChanges();
+                bookVM.Id = book.Id;
+                scope.Complete();
             }
-            
-            return validCheck;
         }
 
         /// <summary>
@@ -105,25 +101,19 @@
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
         /// <returns>Status of operation.</returns>
-        public int EditBook(BookViewModel bookVM)
+        public void EditBook(BookViewModel bookVM)
         {
-            int validCheck = Validator.Validate(bookVM);
-            if (validCheck == 0)
+            using (TransactionScope scope = new TransactionScope())
             {
-                using (TransactionScope scope = new TransactionScope())
-                {
-                    Book book = this.bookRepository.FindById(bookVM.Id);
-                    BookMapper.Map(bookVM, ref book);
-                    this.bookRepository.Modify(book);
-                    this.bookRepository.SaveChanges();
-                    book.Authors.Clear();
-                    this.bookRepository.SetAuthors(book.Id, bookVM.AuthorsIds);
-                    this.bookRepository.SaveChanges();
-                    scope.Complete();
-                }
+                Book book = this.bookRepository.FindById(bookVM.Id);
+                BookMapper.Map(bookVM, ref book);
+                this.bookRepository.Modify(book);
+                this.bookRepository.SaveChanges();
+                book.Authors.Clear();
+                this.bookRepository.SetAuthors(book.Id, bookVM.AuthorsIds);
+                this.bookRepository.SaveChanges();
+                scope.Complete();
             }
-
-            return validCheck;
         }
 
         /// <summary>
@@ -131,17 +121,16 @@
         /// </summary>
         /// <param name="bookId">Book id.</param>
         /// <returns>Status of operation.</returns>
-        public int DeleteBook(int bookId)
+        public void DeleteBook(int bookId)
         {
             Book book = this.bookRepository.FindById(bookId);
             if (book == null)
             {
-                return 1;
+                throw new InvalidFieldValueException("Book does not exists.");
             }
 
             this.bookRepository.Delete(book);
             this.bookRepository.SaveChanges();
-            return 0;
         }
 
         /// <summary>

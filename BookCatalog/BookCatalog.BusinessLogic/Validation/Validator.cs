@@ -2,6 +2,7 @@
 {
     #region Using
     using System;
+    using Infrastructure.Errors;
     using ViewModels;
     #endregion
 
@@ -15,34 +16,29 @@
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
         /// <returns>True if valid, false otherwise.</returns>
-        public static int Validate(BookViewModel bookVM)
+        public static void Validate(BookViewModel bookVM)
         {
             if (bookVM.AuthorsIds.Count == 0)
             {
-                return 1;
+                throw new InvalidFieldValueException("You need to specify at least one author.", "AuthorsIds");
             }
 
             if (string.IsNullOrEmpty(bookVM.Name))
             {
-                return 2;
+                throw new InvalidFieldValueException("Name is required.", "Name");
             }
 
             if (bookVM.PagesCount < 1 || bookVM.PagesCount > 20000)
             {
-                return 3;
+                throw new InvalidFieldValueException("Pages' count should be in range from 1 to 20,000.", "PagesCount");
             }
 
             if (bookVM.PublishedDate.CompareTo(DateTime.Now) > -1)
             {
-                return 4;
+                throw new InvalidFieldValueException("Published day should ealier then today.", "PublishedDate");
             }
 
-            if (!IsValidSqlDateTimeNative(bookVM.PublishedDate.ToString()))
-            {
-                return 5;
-            }
-
-            return 0;
+            ValidateSqlDateTimeNative(bookVM.PublishedDate.ToString());
         }
 
         /// <summary>
@@ -50,19 +46,17 @@
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
         /// <returns>True if valid, false otherwise.</returns>
-        public static int Validate(AuthorViewModel authorVM)
+        public static void Validate(AuthorViewModel authorVM)
         {
             if (string.IsNullOrEmpty(authorVM.FirstName))
             {
-                return 1;
+                throw new InvalidFieldValueException("First name is required.", "FirstName");
             }
 
             if (string.IsNullOrEmpty(authorVM.SecondName))
             {
-                return 2;
+                throw new InvalidFieldValueException("Second name is required.", "SecondName");
             }
-
-            return 0;
         }
 
         /// <summary>
@@ -72,9 +66,8 @@
         /// </summary>
         /// <param name="someval">A date string that may parse</param>
         /// <returns>true if the parameter is valid for SQL Sever datetime</returns>
-        private static bool IsValidSqlDateTimeNative(string someval)
+        private static void ValidateSqlDateTimeNative(string someval)
         {
-            bool valid = false;
             DateTime testDate = DateTime.MinValue;
             System.Data.SqlTypes.SqlDateTime sdt;
             if (DateTime.TryParse(someval, out testDate))
@@ -82,12 +75,12 @@
                 try
                 {
                     sdt = new System.Data.SqlTypes.SqlDateTime(testDate);
-                    valid = true;
                 }
-                catch { }
+                catch (System.Data.SqlTypes.SqlTypeException exception)
+                {
+                    throw new InvalidFieldValueException("Published day is in wrong format.", "PublishedDate", exception);
+                }
             }
-
-            return valid;
         }
     }
 }

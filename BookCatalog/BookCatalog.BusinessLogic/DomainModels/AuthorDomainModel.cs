@@ -6,6 +6,7 @@
     using System.Transactions;
     using DAL.Interfaces;
     using DAL.Models;
+    using Infrastructure.Errors;
     using Mappers;
     using Validation;
     using ViewModels;
@@ -41,6 +42,22 @@
         }
 
         /// <summary>
+        /// Gets author's books.
+        /// </summary>
+        /// <param name="authorId">Author id.</param>
+        /// <returns>List of author's books.</returns>
+        public List<Book> GetBooks(int authorId)
+        {
+            Author author = this.authorRepository.FindById(authorId);
+            if (author == null)
+            {
+                throw new InvalidFieldValueException("Author does not exist.");
+            }
+
+            return author.Books.ToList();
+        }
+
+        /// <summary>
         /// Gets an author.
         /// </summary>
         /// <param name="id">Author id.</param>
@@ -55,18 +72,12 @@
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
         /// <returns>Status of operation.</returns>
-        public int AddAuthor(AuthorViewModel authorVM)
+        public void AddAuthor(AuthorViewModel authorVM)
         {
-            int validCheck = Validator.Validate(authorVM);
-            if (validCheck == 0)
-            {
-                Author author = AuthorMapper.Map(authorVM);
-                this.authorRepository.Add(author);
-                this.authorRepository.SaveChanges();
-                authorVM.Id = author.Id;
-            }
-
-            return validCheck;
+            Author author = AuthorMapper.Map(authorVM);
+            this.authorRepository.Add(author);
+            this.authorRepository.SaveChanges();
+            authorVM.Id = author.Id;
         }
 
         /// <summary>
@@ -74,17 +85,11 @@
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
         /// <returns>Status of operation.</returns>
-        public int EditAuthor(AuthorViewModel authorVM)
+        public void EditAuthor(AuthorViewModel authorVM)
         {
-            int validCheck = Validator.Validate(authorVM);
-            if (validCheck == 0)
-            {
-                Author author = this.authorRepository.FindById(authorVM.Id);
-                AuthorMapper.Map(authorVM, ref author);
-                this.authorRepository.SaveChanges();
-            }
-
-            return validCheck;
+            Author author = this.authorRepository.FindById(authorVM.Id);
+            AuthorMapper.Map(authorVM, ref author);
+            this.authorRepository.SaveChanges();
         }
 
         /// <summary>
@@ -92,17 +97,16 @@
         /// </summary>
         /// <param name="authorId">Author id.</param>
         /// <returns>Status of operation.</returns>
-        public int DeleteAuthor(int authorId)
+        public void DeleteAuthor(int authorId)
         {
             Author author = this.authorRepository.FindById(authorId);
             if (author == null)
             {
-                return 1;
+                throw new InvalidFieldValueException("Author does not exist.");
             }
 
             this.authorRepository.Delete(author);
             this.authorRepository.SaveChanges();
-            return 0;
         }
     }
 }
