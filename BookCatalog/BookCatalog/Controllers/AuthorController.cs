@@ -5,8 +5,10 @@
     using System.Text;
     using System.Web.Mvc;
     using BusinessLogic.DomainModels;
+    using BusinessLogic.Validation;
     using BusinessLogic.ViewModels;
     using DAL.Interfaces;
+    using Infrastructure.Errors;
     using Infrastructure.Logging;
     #endregion
 
@@ -74,7 +76,7 @@
                 throw new ArgumentException("Author does not exist.");
             }
 
-            return PartialView("AuthorEdit", author);
+            return PartialView("AuthorForm", author);
         }
 
         /// <summary>
@@ -85,32 +87,38 @@
         [HttpPost]
         public JsonResult Manage(AuthorViewModel authorVM)
         {
-            switch ((authorVM.Id == 0) ? this.domainModel.AddAuthor(authorVM) : this.domainModel.EditAuthor(authorVM))
+            try
             {
-                case 0:
-                    StringBuilder books = new StringBuilder();
-                    foreach (var book in authorVM.Books)
-                    {
-                        books.Append(book.Key + ", " + book.Value + "\n");
-                    }
-                    return Json(new
-                    {
-                        Id = authorVM.Id,
-                        FirstName = authorVM.FirstName,
-                        SecondName = authorVM.SecondName,
-                        BooksCount = authorVM.BooksCount,
-                        Books = books.ToString(),
-                        Controls = "<input type='button' value='Edit' id='Edit' onclick='editBook(" + authorVM.Id + ")' class='makealink'> | <a href='Author/Details/" + authorVM.Id  + "/" + authorVM.FirstName + "/" + authorVM.SecondName + "'>Details</a>  | <input type='button' value='Delete' id='Delete' onclick='deleteBook(" + authorVM.Id + ")' class='makealink'>"
-                    });
-                case 1:
-                    ModelState.AddModelError("FirstName", "First name is required.");
-                    return Json(new { error = "First name is required." });
-                case 2:
-                    ModelState.AddModelError("SecondName", "Second name is required.");
-                    return Json(new { error = "Second name is required." });
+                Validator.Validate(authorVM);
+            }
+            catch (InvalidFieldValueException exception)
+            {
+                ModelState.AddModelError(exception.Field, exception.ValidationMessage);
+                return Json(new { error = exception.ValidationMessage });
             }
 
-            return Json(new { error = "Unknown error." });
+            if (authorVM.Id == 0)
+            {
+                this.domainModel.AddAuthor(authorVM);
+            }
+            else
+            {
+                this.domainModel.EditAuthor(authorVM);
+            }
+            
+            StringBuilder books = new StringBuilder();
+            foreach (var book in this.domainModel.GetBooks(authorVM.Id))
+            {
+                books.Append(book.Name + ", " + book.PublishedDate.Year + "\n");
+            }
+            return Json(new
+            {
+                Id = authorVM.Id,
+                FirstName = authorVM.FirstName,
+                SecondName = authorVM.SecondName,
+                BooksCount = authorVM.BooksCount,
+                Books = books.ToString()
+            });
         }
 
         /// <summary>
@@ -121,11 +129,7 @@
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            if (this.domainModel.DeleteAuthor(id) == 1)
-            {
-                throw new ArgumentException("Author does not exist.");
-            }
-
+            this.domainModel.DeleteAuthor(id);
             return Json(id);
         }
     }

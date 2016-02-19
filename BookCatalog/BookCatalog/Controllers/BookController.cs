@@ -7,8 +7,10 @@
     using System.Text;
     using System.Web.Mvc;
     using BusinessLogic.DomainModel;
+    using BusinessLogic.Validation;
     using BusinessLogic.ViewModels;
     using DAL.Interfaces;
+    using Infrastructure.Errors;
     using Infrastructure.Logging;
     #endregion
 
@@ -114,41 +116,38 @@
         [HttpPost]
         public JsonResult Manage(BookViewModel bookVM)
         {
-            switch ((bookVM.Id == 0) ? this.domainModel.AddBook(bookVM) : this.domainModel.EditBook(bookVM))
+            try
             {
-                case 0:
-                    StringBuilder authors = new StringBuilder();
-                    foreach (var author in this.domainModel.GetAuthors(bookVM.Id))
-                    {
-                        authors.Append(author + ", \n");
-                    }
-                    return Json(new
-                    {
-                        Id = bookVM.Id,
-                        Name = bookVM.Name,
-                        PublishedDate = bookVM.PublishedDate.ToString("MM/dd/yyyy"),
-                        PagesCount = bookVM.PagesCount,
-                        Authors = authors.ToString(),
-                        Controls = "<input type='button' value='Edit' id='Edit' onclick='editBook(" + bookVM.Id + ")' class='makealink'> | <a href='Book/Details/" + bookVM.Id + "'>Details</a> | <input type='button' value='Delete' id='Delete' onclick='deleteBook(" + bookVM.Id + ")' class='makealink'>"
-                    });
-                case 1:
-                    ModelState.AddModelError("AuthorsIds", "You need to specify at least one author.");
-                    return Json(new { error = "You need to specify at least one author." });
-                case 2:
-                    ModelState.AddModelError("Name", "Name is required.");
-                    return Json(new { error = "Name is required." });
-                case 3:
-                    ModelState.AddModelError("PagesCount", "Pages' count should be in range from 1 to 20,000.");
-                    return Json(new { error = "Pages' count should be in range from 1 to 20,000." });
-                case 4:
-                    ModelState.AddModelError("PublishedDate", "Published day should ealier then today.");
-                    return Json(new { error = "Published day should ealier then today." });
-                case 5:
-                    ModelState.AddModelError("PublishedDate", "Published day is in wrong format.");
-                    return Json(new { error = "Published day is in wrong format." });
+                Validator.Validate(bookVM);
+            }
+            catch (InvalidFieldValueException exception)
+            {
+                ModelState.AddModelError(exception.Field, exception.ValidationMessage);
+                return Json(new { error = exception.ValidationMessage });
             }
 
-            return Json(new { error = "Unknown error." });
+            if (bookVM.Id == 0)
+            {
+                this.domainModel.AddBook(bookVM);
+            }
+            else
+            {
+                this.domainModel.EditBook(bookVM);
+            }
+
+            StringBuilder authors = new StringBuilder();
+            foreach (var author in this.domainModel.GetAuthors(bookVM.Id))
+            {
+                authors.Append(author + "\n");
+            }
+            return Json(new
+            {
+                Id = bookVM.Id,
+                Name = bookVM.Name,
+                PublishedDate = bookVM.PublishedDate.ToString("MM/dd/yyyy"),
+                PagesCount = bookVM.PagesCount,
+                Authors = authors.ToString()
+            });
         }
 
         /// <summary>
@@ -159,11 +158,7 @@
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            if (this.domainModel.DeleteBook(id) == 1)
-            {
-                throw new ArgumentException("Book does not exist.");
-            }
-
+            this.domainModel.DeleteBook(id);
             return Json(id);
         }
     }

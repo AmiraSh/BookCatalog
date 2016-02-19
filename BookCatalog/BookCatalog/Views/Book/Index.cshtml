@@ -90,7 +90,6 @@
         }
     });
     function editBook(bookId) {
-        parent = $(this).parent('td').parent('tr');
         if (isedited != true)
         {
             $.ajax({
@@ -113,7 +112,6 @@
                 $( "tr:contains('" + bookId + "')").each(function() {
                     booksTable.fnDeleteRow(this);
                 });
-                alert('This book was successfully deleted.');
             });
         }
     }

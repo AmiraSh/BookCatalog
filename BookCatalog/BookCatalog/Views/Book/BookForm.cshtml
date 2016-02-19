@@ -41,6 +41,7 @@
                         multiple = "multiple",
                         @class = "chosen-select chosen form-group",
                         data_placeholder = "Choose an author...",
+                        style = "width:100%"
                         })
                 @Html.ValidationMessageFor(model => model.AuthorsIds, "", new { @class = "text-danger" })
             </div>
@@ -85,10 +86,11 @@
             isedited = false;
             if (@Model.Id != 0)
             {
-                $( "tr:contains('" + @Model.Name + "')").each(function() {
+                $("tr:contains('" + @Model.Id + "')").each(function() {
                     booksTable.fnDeleteRow(this);
                 });
             }
+            model["Controls"] = buildControl(model["Id"]);
             booksTable.fnAddData(model);
         }
     }
@@ -97,4 +99,7 @@
         $('#BookForm').empty();
         isedited = false;
     })
+    function buildControl(bookId) {
+        return "<input type='button' value='Edit' id='Edit' onclick='editBook(" + bookId + ")' class='makealink'> | <a href='Book/Details/" + bookId + "'>Details</a> | <input type='button' value='Delete' id='Delete' onclick='deleteBook(" + bookId + ")' class='makealink'>";
+    }
 </script>
