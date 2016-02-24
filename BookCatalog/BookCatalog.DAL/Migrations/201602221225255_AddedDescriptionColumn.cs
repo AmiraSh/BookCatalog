@@ -5,24 +5,24 @@ namespace BookCatalog.DAL.Migrations
     #endregion
 
     /// <summary>
-    /// Migration: 'dropped books count column'.
+    /// Migration: 'added description column'.
     /// </summary>
-    public partial class DropBooksCoutColumn : DbMigration
+    public partial class AddedDescriptionColumn : DbMigration
     {
         /// <summary>
         /// Apply.
         /// </summary>
         public override void Up()
         {
-            this.DropColumn("dbo.Author", "BooksCount");
+            this.AddColumn("dbo.Book", "Description", c => c.String());
         }
-
+        
         /// <summary>
         /// Revert.
         /// </summary>
         public override void Down()
         {
-            this.AddColumn("dbo.Author", "BooksCount", c => c.Int(nullable: false));
+            this.DropColumn("dbo.Book", "Description");
         }
     }
 }
