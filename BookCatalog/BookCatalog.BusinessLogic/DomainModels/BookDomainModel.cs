@@ -7,8 +7,8 @@
     using DAL.Interfaces;
     using DAL.Models;
     using Infrastructure.Errors;
+    using Infrastructure.Filtration;
     using Mappers;
-    using Validation;
     using ViewModels;
     #endregion
 
@@ -42,9 +42,36 @@
         /// Gets all books.
         /// </summary>
         /// <returns>Books list.</returns>
-        public List<BookViewModel> GetBooksList()
+        public List<BookViewModel> GetBooks()
         {
             return BookMapper.Map(this.bookRepository.GetAll().ToList());
+        }
+
+        /// <summary>
+        /// Gets books.
+        /// </summary>
+        /// <param name="sorts">Sotrs.</param>
+        /// <param name="filters">Filters.</param>
+        /// <param name="take">Count of elements to take.</param>
+        /// <param name="skip">Count of elements to skip.</param>
+        /// <returns>Books list.</returns>
+        public List<BookViewModel> GetBooks(out int total, Dictionary<string, bool> sorts, List<CustomFilter> filters, int take, int skip)
+        {
+            if (sorts.Count == 0)
+            {
+                sorts.Add("Id", true);
+            }
+            
+            return BookMapper.Map(this.bookRepository.Take(out total, sorts, filters, take, skip).ToList());
+        }
+
+        /// <summary>
+        /// Gets books count.
+        /// </summary>
+        /// <returns>Books count.</returns>
+        public int GetBooksCount()
+        {
+            return this.bookRepository.GetSize();
         }
 
         /// <summary>
@@ -81,7 +108,6 @@
         /// Adds a new book to database.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
-        /// <returns>Status of operation.</returns>
         public void AddBook(BookViewModel bookVM)
         {
             using (TransactionScope scope = new TransactionScope())
@@ -100,7 +126,6 @@
         /// Edits a book in database.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
-        /// <returns>Status of operation.</returns>
         public void EditBook(BookViewModel bookVM)
         {
             using (TransactionScope scope = new TransactionScope())
@@ -120,7 +145,6 @@
         /// Deletes a book.
         /// </summary>
         /// <param name="bookId">Book id.</param>
-        /// <returns>Status of operation.</returns>
         public void DeleteBook(int bookId)
         {
             Book book = this.bookRepository.FindById(bookId);
@@ -152,6 +176,7 @@
         /// <summary>
         /// Gets authors' names.
         /// </summary>
+        /// <param name="bookId">Book identifier.</param>
         /// <returns>Authors' names.</returns>
         public List<string> GetAuthors(int bookId)
         {

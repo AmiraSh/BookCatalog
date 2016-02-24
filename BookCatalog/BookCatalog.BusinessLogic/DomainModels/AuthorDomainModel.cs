@@ -3,12 +3,11 @@
     #region Using
     using System.Collections.Generic;
     using System.Linq;
-    using System.Transactions;
     using DAL.Interfaces;
     using DAL.Models;
     using Infrastructure.Errors;
+    using Infrastructure.Filtration;
     using Mappers;
-    using Validation;
     using ViewModels;
     #endregion
 
@@ -32,13 +31,39 @@
         }
 
         /// <summary>
-        /// Gets an author.
+        /// Gets authors.
         /// </summary>
-        /// <param name="id">Author id.</param>
         /// <returns>List of authors view model.</returns>
         public List<AuthorViewModel> GetAuthors()
         {
             return AuthorMapper.Map(this.authorRepository.GetAll().ToList());
+        }
+
+        /// <summary>
+        /// Gets authors.
+        /// </summary>
+        /// <param name="sorts">Sotrs.</param>
+        /// <param name="filters">Filters.</param>
+        /// <param name="take">Count of elements to take.</param>
+        /// <param name="skip">Count of elements to skip.</param>
+        /// <returns>List of authors view model.</returns>
+        public List<AuthorViewModel> GetAuthors(out int total, Dictionary<string, bool> sorts, List<CustomFilter> filters, int take, int skip)
+        {
+            if (sorts.Count == 0)
+            {
+                sorts.Add("Id", true);
+            }
+
+            return AuthorMapper.Map(this.authorRepository.Take(out total, sorts, filters, take, skip).ToList());
+        }
+        
+        /// <summary>
+        /// Gets authors count.
+        /// </summary>
+        /// <returns>Authors count.</returns>
+        public int GetAuthorsCount()
+        {
+            return this.authorRepository.GetSize();
         }
 
         /// <summary>
@@ -71,7 +96,6 @@
         /// Adds a new author to database.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
-        /// <returns>Status of operation.</returns>
         public void AddAuthor(AuthorViewModel authorVM)
         {
             Author author = AuthorMapper.Map(authorVM);
@@ -84,7 +108,6 @@
         /// Edits an author in database.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
-        /// <returns>Status of operation.</returns>
         public void EditAuthor(AuthorViewModel authorVM)
         {
             Author author = this.authorRepository.FindById(authorVM.Id);
@@ -96,7 +119,6 @@
         /// Deletes an author.
         /// </summary>
         /// <param name="authorId">Author id.</param>
-        /// <returns>Status of operation.</returns>
         public void DeleteAuthor(int authorId)
         {
             Author author = this.authorRepository.FindById(authorId);
