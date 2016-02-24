@@ -1,9 +1,8 @@
 ﻿namespace BookCatalog.BusinessLogic.ViewModels
 {
-    using System.Collections.Generic;
     #region Using
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using DAL.Models;
     #endregion
 
     /// <summary>
@@ -16,7 +15,7 @@
         /// </summary>
         public AuthorViewModel()
         {
-            Books = new Dictionary<string, int>();
+            this.Books = new Dictionary<string, int>();
         }
 
         /// <summary>
@@ -50,6 +49,6 @@
         /// Gets or sets the books' list.
         /// </summary>
         [Display(Name = "Books")]
-        public Dictionary<string, int> Books { get; set; }     
+        public Dictionary<string, int> Books { get; set; }
     }
 }

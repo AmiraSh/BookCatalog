@@ -18,6 +18,7 @@
         {
             this.Authors = new List<AuthorViewModel>();
             this.AuthorsIds = new List<int>();
+            this.PublishedDate = DateTime.Now.Date;
         }
 
         /// <summary>
@@ -51,9 +52,14 @@
         public int PagesCount { get; set; }
 
         /// <summary>
+        /// Gets or sets the description of the book.
+        /// </summary>
+        [System.Web.Mvc.AllowHtml]
+        public string Description { get; set; }
+
+        /// <summary>
         /// Gets or sets the book's authors.
         /// </summary>
-        [Required(ErrorMessage = "You need to specify at least one author.")]
         [Display(Name = "Authors")]
         public List<AuthorViewModel> Authors { get; set; }
 

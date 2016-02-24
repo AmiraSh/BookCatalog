@@ -1,7 +1,7 @@
 ﻿namespace BookCatalog.BusinessLogic.Mappers
 {
-    using System;
     #region Using
+    using System;
     using System.Collections.Generic;
     using BookCatalog.BusinessLogic.ViewModels;
     using BookCatalog.DAL.Models;
@@ -49,6 +49,7 @@
             {
                 authorVM.Books.Add(book.Name, book.PublishedDate.Year);
             }
+
             return authorVM;
         }
 

@@ -15,7 +15,6 @@
         /// Validates book view model.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
-        /// <returns>True if valid, false otherwise.</returns>
         public static void Validate(BookViewModel bookVM)
         {
             if (bookVM.AuthorsIds.Count == 0)
@@ -45,7 +44,6 @@
         /// Validates author view model.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
-        /// <returns>True if valid, false otherwise.</returns>
         public static void Validate(AuthorViewModel authorVM)
         {
             if (string.IsNullOrEmpty(authorVM.FirstName))
@@ -65,7 +63,6 @@
         /// for checking range values
         /// </summary>
         /// <param name="someval">A date string that may parse</param>
-        /// <returns>true if the parameter is valid for SQL Sever datetime</returns>
         private static void ValidateSqlDateTimeNative(string someval)
         {
             DateTime testDate = DateTime.MinValue;

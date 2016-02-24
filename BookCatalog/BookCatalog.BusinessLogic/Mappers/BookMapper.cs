@@ -40,6 +40,7 @@
             bookVM.Name = book.Name;
             bookVM.PagesCount = book.PagesCount;
             bookVM.PublishedDate = book.PublishedDate;
+            bookVM.Description = (book.Description == null) ? string.Empty : book.Description;
             List<Author> authors = book.Authors.ToList();
             bookVM.Authors.AddRange(AuthorMapper.Map(authors));
             bookVM.AuthorsIds.AddRange(authors.Select(author => author.Id));
@@ -68,6 +69,7 @@
             book.Name = bookVM.Name;
             book.PagesCount = bookVM.PagesCount;
             book.PublishedDate = bookVM.PublishedDate;
+            book.Description = bookVM.Description;
         }
     }
 }
