@@ -17,3 +17,42 @@
 .navbar-inverse .navbar-nav > li > a {
     color: #fff !important;
 }
+.row {
+    margin-right: 15px !important;
+}
+.form-control {
+    height: auto !important;
+}
+/*.k-widget.k-tabstrip {
+    width: 100% !important;
+}*/
+.k-tabstrip .k-content.k-state-active {
+    padding: 30px !important;
+}
+.body-content {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+/*.k-grid tr td {*/
+.k-grid td {
+    padding: 7px !important;
+}
+.k-button {
+    padding: 2px 10px 2px !important;
+}
+/*.k-widget
+{
+    height: 80% !important;
+}*/
+.k-grid-content
+{
+    height: 80% !important;
+}
+.k-content 
+{
+    height: 80% !important;
+}
+.k-grid
+{
+    height: 80% !important;
+}

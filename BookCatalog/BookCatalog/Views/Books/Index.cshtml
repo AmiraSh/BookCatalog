@@ -1,0 +1,90 @@
+﻿@{
+    Layout = null;
+}
+@(Html.Kendo().Grid<BookCatalog.BusinessLogic.ViewModels.BookViewModel>()
+      .Name("books_grid")
+      .Columns(columns =>
+      {
+          columns.Bound(c => c.Id).Width(50);
+          columns.Bound(c => c.Name).Width(100);
+          columns.Bound(c => c.PublishedDate).EditorTemplateName("CustomDate").Width(150);
+          columns.Bound(c => c.PagesCount).Width(80);
+          columns.Command(command => { command.Edit(); command.Destroy(); }).Width(160);
+      })
+      .ClientDetailTemplateId("BookDetails")
+      .ToolBar(toolbar =>
+      {
+          toolbar.Create();
+      })
+      .Filterable(filterable => filterable
+        .Extra(false)
+        .Operators(operators => operators
+            .ForString(str => str.Clear()
+                .Contains("Contains")
+            )
+            .ForNumber(num => num.Clear()
+                .IsGreaterThanOrEqualTo("Greater than or equal")
+                .IsGreaterThan("Greater than")
+                .IsLessThanOrEqualTo("Less than or equal")
+                .IsLessThan("Less than")
+            )
+            .ForDate(date => date.Clear()
+                .IsGreaterThanOrEqualTo("Greater than or equal")
+                .IsGreaterThan("Greater than")
+                .IsLessThanOrEqualTo("Less than or equal")
+                .IsLessThan("Less than")
+            ))
+        )
+      .ColumnMenu()
+      .Editable(editable =>
+      {
+          editable.Mode(GridEditMode.PopUp).TemplateName("BookForm");
+      })
+      .Pageable(page => page.Enabled(true).PageSizes(new[] { 7, 10, 15, 20, 30, 50, 100 }))
+      .Selectable(selectable =>
+      {
+          selectable.Mode(GridSelectionMode.Single);
+          selectable.Type(GridSelectionType.Row);
+      })
+      .Sortable(sortable =>
+      {
+          sortable.SortMode(GridSortMode.MultipleColumn);
+      })
+      .Scrollable()
+      .DataSource(dataSource => dataSource
+          .Ajax()
+          .ServerOperation(true)
+          .Model(model =>
+          {
+              model.Id(p => p.Id);
+              model.Field(p => p.Id).Editable(false);
+              model.Field(p => p.AuthorsIds).Editable(true);
+          })
+          .PageSize(7)
+          .Read(read => read.Action("Read", "Books"))
+          .Create(create => create.Action("Manage", "Books"))
+          .Update(update => update.Action("Manage", "Books"))
+          .Destroy(destroy => destroy.Action("Destroy", "Books"))
+      )
+)
+<script type="text/x-kendo-template" id="BookDetails">
+    <div id="details-container">
+        <h2>#= Name #</h2>
+        <dl class="dl-horizontal">
+            <dt>Pages Count:</dt><dd> #= PagesCount #</dd>
+            <dt>Published Date:</dt><dd> #= kendo.toString(PublishedDate, "MM/dd/yyyy") #</dd>
+            <dt>Authors:</dt><dd> #= printAuthors(Authors) #</dd>
+        </dl>
+        <p>#= Description #</p>
+    </div>
+</script>   
+<script>
+    function printAuthors(Authors) {
+        var result = "";
+        var j = Authors.length;
+        for(var i = 0; i < j; i++) {
+            result += Authors[i].FirstName + " " + Authors[i].SecondName + "<br />";
+        }
+        return result;
+    }
+</script>

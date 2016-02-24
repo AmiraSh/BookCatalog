@@ -29,6 +29,7 @@
         /// </summary>
         /// <param name="bookRepository">Book repository.</param>
         /// <param name="authorRepository">Author repository.</param>
+        /// <param name="logger">Logger.</param>
         public BookController(IBookRepository bookRepository, IAuthorRepository authorRepository, ILogger logger) : base(logger)
         {
             this.domainModel = new BookDomainModel(bookRepository, authorRepository);
@@ -40,7 +41,7 @@
         /// <returns>Main page.</returns>
         public ActionResult Index()
         {
-            return View(this.domainModel.GetBooksList());
+            return this.View(this.domainModel.GetBooks());
         }
 
         /// <summary>
@@ -61,13 +62,13 @@
                 throw new ArgumentException("Book does not exist.");
             }
 
-            return View(book);
+            return this.View(book);
         }
 
         /// <summary>
         /// Populates multi select list.
         /// </summary>
-        /// <param name="options"></param>
+        /// <param name="options">Options to populate.</param>
         public void PopulateMultiSelectList(Dictionary<int, string> options)
         {
             List<SelectListItem> items = new List<SelectListItem>();
@@ -76,19 +77,20 @@
                 items.Add(new SelectListItem { Value = author.Key.ToString(), Text = author.Value });
             }
 
-            ViewData["AuthorsOptions"] = new MultiSelectList(items, "Value", "Text");
+            this.ViewData["AuthorsOptions"] = new MultiSelectList(items, "Value", "Text");
         }
 
         /// <summary>
         /// Gets a partial view for creating or editing new book.
         /// </summary>
+        /// <param name="id">Identifier.</param>
         /// <returns>Partial view.</returns>
         public ActionResult AddBookForm(int? id)
         {
             this.PopulateMultiSelectList(this.domainModel.GetAuthorsOptions());
             if (id == null)
             {
-                return PartialView("BookForm", new BookViewModel());
+                return this.PartialView("BookForm", new BookViewModel());
             }
 
             BookViewModel book = this.domainModel.GetBook(id.Value);
@@ -105,7 +107,7 @@
                 }
             }
 
-            return PartialView("BookForm", book);
+            return this.PartialView("BookForm", book);
         }
 
         /// <summary>
@@ -123,7 +125,7 @@
             catch (InvalidFieldValueException exception)
             {
                 ModelState.AddModelError(exception.Field, exception.ValidationMessage);
-                return Json(new { error = exception.ValidationMessage });
+                return this.Json(new { error = exception.ValidationMessage });
             }
 
             if (bookVM.Id == 0)
@@ -140,7 +142,8 @@
             {
                 authors.Append(author + "\n");
             }
-            return Json(new
+
+            return this.Json(new
             {
                 Id = bookVM.Id,
                 Name = bookVM.Name,
@@ -154,12 +157,12 @@
         /// Deletes a book.
         /// </summary>
         /// <param name="id">Book id.</param>
-        /// <returns></returns>
+        /// <returns>Identifier of deleted item.</returns>
         [HttpPost]
         public ActionResult Delete(int id)
         {
             this.domainModel.DeleteBook(id);
-            return Json(id);
+            return this.Json(id);
         }
     }
 }

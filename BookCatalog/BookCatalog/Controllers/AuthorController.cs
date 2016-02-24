@@ -23,9 +23,10 @@
         private AuthorDomainModel domainModel;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BookController"/> class.
+        /// Initializes a new instance of the <see cref="AuthorController"/> class.
         /// </summary>
         /// <param name="authorRepository">Author repository.</param>
+        /// <param name="logger">Logger.</param>
         public AuthorController(IAuthorRepository authorRepository, ILogger logger) : base(logger)
         {
             this.domainModel = new AuthorDomainModel(authorRepository);
@@ -34,10 +35,10 @@
         /// <summary>
         /// Displays a page with authors list.
         /// </summary>
-        /// <returns>A page with autors' list.</returns>
+        /// <returns>A page with authors' list.</returns>
         public ActionResult Index()
         {
-            return View(this.domainModel.GetAuthors());
+            return this.View(this.domainModel.GetAuthors());
         }
 
         /// <summary>
@@ -56,18 +57,19 @@
                 throw new ArgumentException("Author does not exist.");
             }
 
-            return View(author);
+            return this.View(author);
         }
 
         /// <summary>
         /// Gets a partial view for creating new book.
         /// </summary>
+        /// <param name="id">Book's identifier.</param>
         /// <returns>Partial view.</returns>
         public ActionResult AddAuthorForm(int? id)
         {
             if (id == null)
             {
-                return PartialView("AuthorForm", new AuthorViewModel());
+                return this.PartialView("AuthorForm", new AuthorViewModel());
             }
 
             AuthorViewModel author = this.domainModel.GetAuthor(id.Value);
@@ -76,7 +78,7 @@
                 throw new ArgumentException("Author does not exist.");
             }
 
-            return PartialView("AuthorForm", author);
+            return this.PartialView("AuthorForm", author);
         }
 
         /// <summary>
@@ -94,7 +96,7 @@
             catch (InvalidFieldValueException exception)
             {
                 ModelState.AddModelError(exception.Field, exception.ValidationMessage);
-                return Json(new { error = exception.ValidationMessage });
+                return this.Json(new { error = exception.ValidationMessage });
             }
 
             if (authorVM.Id == 0)
@@ -111,7 +113,8 @@
             {
                 books.Append(book.Name + ", " + book.PublishedDate.Year + "\n");
             }
-            return Json(new
+
+            return this.Json(new
             {
                 Id = authorVM.Id,
                 FirstName = authorVM.FirstName,
@@ -130,7 +133,7 @@
         public ActionResult Delete(int id)
         {
             this.domainModel.DeleteAuthor(id);
-            return Json(id);
+            return this.Json(id);
         }
     }
 }

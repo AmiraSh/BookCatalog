@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+@(Html.Kendo().TabStrip()
+              .Name("tabstrip")
+              .Items(tabstrip =>
+              {
+                  tabstrip.Add().Text("Books")
+                      .Selected(true)
+                      .LoadContentFrom(Url.Action("Index", "Books"));
+
+                  tabstrip.Add().Text("Authors")
+                      .LoadContentFrom(Url.Action("Index", "Authors"));
+              })
+)

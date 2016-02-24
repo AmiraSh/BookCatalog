@@ -5,14 +5,14 @@
     #endregion
 
     /// <summary>
-    /// Error controller.
+    /// Home controller.
     /// </summary>
-    public class ErrorController : Controller
+    public class HomeController : Controller
     {
         /// <summary>
-        /// Displays error page.
+        /// Displays main page.
         /// </summary>
-        /// <returns>Error page.</returns>
+        /// <returns>Main page.</returns>
         public ActionResult Index()
         {
             return this.View();

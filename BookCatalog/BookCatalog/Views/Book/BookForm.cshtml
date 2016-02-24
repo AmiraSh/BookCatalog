@@ -7,31 +7,39 @@
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-1" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Name, htmlAttributes: new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.Name, htmlAttributes: new { @class = "form-control col-md-9" })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PublishedDate, htmlAttributes: new { @class = "control-label col-md-2", @type = "datetime" })
+            @Html.LabelFor(model => model.PublishedDate, htmlAttributes: new { @class = "control-label col-md-1", @type = "datetime" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.PublishedDate, @"{0:MM/dd/yyyy}", htmlAttributes: new { @class = "form-control datepicker" })
+                @Html.TextBoxFor(model => model.PublishedDate, @"{0:MM/dd/yyyy}", htmlAttributes: new { @class = "form-control col-md-10 datepicker" })
                 @Html.ValidationMessageFor(model => model.PublishedDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PagesCount, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.PagesCount, htmlAttributes: new { @class = "control-label col-md-1" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.PagesCount, htmlAttributes: new { @class = "form-control" })
+                @Html.TextBoxFor(model => model.PagesCount, htmlAttributes: new { @class = "form-control col-md-9" })
                 @Html.ValidationMessageFor(model => model.PagesCount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, htmlAttributes: new { @class = "form-control col-md-9" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
        
         <div class="form-group">
-            @Html.LabelFor(model => model.AuthorsIds, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.AuthorsIds, htmlAttributes: new { @class = "control-label col-md-1" })
             <div class="col-md-10">
                 @Html.ListBoxFor(model => model.AuthorsIds,
                     (MultiSelectList)ViewData["AuthorsOptions"],
@@ -39,7 +47,7 @@
                     {
                         id = "AuthorsIds",
                         multiple = "multiple",
-                        @class = "chosen-select chosen form-group",
+                        @class = "chosen-select chosen form-group col-md-9",
                         data_placeholder = "Choose an author...",
                         style = "width:100%"
                         })
