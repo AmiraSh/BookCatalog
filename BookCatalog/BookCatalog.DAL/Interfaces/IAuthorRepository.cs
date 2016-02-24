@@ -1,10 +1,8 @@
 ﻿namespace BookCatalog.DAL.Interfaces
 {
     #region Using
-
     using System.Collections.Generic;
     using BookCatalog.DAL.Models;
-
     #endregion
 
     /// <summary>

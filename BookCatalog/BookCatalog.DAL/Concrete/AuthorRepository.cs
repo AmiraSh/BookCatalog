@@ -1,12 +1,9 @@
 ﻿namespace BookCatalog.DAL.Concrete
 {
     #region Using
-
-    using System;
     using System.Collections.Generic;
     using BookCatalog.DAL.Models;
     using Interfaces;
-
     #endregion
 
     /// <summary>

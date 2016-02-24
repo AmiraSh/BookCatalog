@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Web;
     #endregion
 
     /// <summary>
@@ -45,6 +46,11 @@
         [Required(ErrorMessage = "Pages' count is required.")]
         [Range(minimum: 1, maximum: 20000)]
         public int PagesCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the description of the book.
+        /// </summary>
+        public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets book's authors.

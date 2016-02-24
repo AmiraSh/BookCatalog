@@ -41,6 +41,11 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Linq.Dynamic, Version=1.0.5840.25917, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.Dynamic.1.0.6\lib\net40\System.Linq.Dynamic.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -69,6 +74,10 @@
     <Compile Include="Migrations\201602190845086_AddDataAnnotations.Designer.cs">
       <DependentUpon>201602190845086_AddDataAnnotations.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602221225255_AddedDescriptionColumn.cs" />
+    <Compile Include="Migrations\201602221225255_AddedDescriptionColumn.Designer.cs">
+      <DependentUpon>201602221225255_AddedDescriptionColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
@@ -88,6 +97,15 @@
     <EmbeddedResource Include="Migrations\201602190845086_AddDataAnnotations.resx">
       <DependentUpon>201602190845086_AddDataAnnotations.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602221225255_AddedDescriptionColumn.resx">
+      <DependentUpon>201602221225255_AddedDescriptionColumn.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BookCatalog.Infrastructure\BookCatalog.Infrastructure.csproj">
+      <Project>{4ea7a47a-ff7d-47a1-8d34-4b29f262d7e1}</Project>
+      <Name>BookCatalog.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

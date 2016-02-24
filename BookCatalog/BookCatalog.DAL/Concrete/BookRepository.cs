@@ -27,7 +27,7 @@
 
             return authors;
         }
-
+        
         /// <summary>
         /// Set a new book author.
         /// </summary>

@@ -1,13 +1,13 @@
 ﻿namespace BookCatalog.DAL.Concrete
 {
     #region Using
-
     using System;
     using System.Collections.Generic;
     using System.Data.Entity;
     using System.Linq;
+    using System.Linq.Dynamic;
     using BookCatalog.DAL.Interfaces;
-
+    using Infrastructure.Filtration;
     #endregion
 
     /// <summary>
@@ -50,6 +50,61 @@
         public virtual IEnumerable<T> GetAll()
         {
             return this.entities.Set<T>().ToList();
+        }
+
+        /// <summary>
+        /// Gets table size.
+        /// </summary>
+        /// <returns>Table size.</returns>
+        public int GetSize()
+        {
+            return this.entities.Set<T>().Count();
+        }
+
+        /// <summary>
+        /// Gets specified count of entities from database.
+        /// </summary>
+        /// <param name="sorts">Sotrings.</param>
+        /// <param name="filters">Filters.</param>
+        /// <param name="take">Count of elements to take.</param>
+        /// <param name="skip">Count of elements to skip.</param>
+        /// <returns>Some entities from database.</returns>
+        public IEnumerable<T> Take(out int total, Dictionary<string, bool> sorts, List<CustomFilter> filters, int take, int skip = 0)
+        {
+            var result = this.entities.Set<T>().AsQueryable();
+            foreach (var sort in sorts)
+            {
+                result = result.OrderBy(string.Format("{0} {1}", sort.Key, sort.Value ? "ascending" : "descending"));
+            }
+
+            foreach (var filter in filters)
+            {
+                if (filter.MemberType == typeof(string))
+                {
+                    result = result.Where(filter.Member + ".Contains(@0)", filter.Value);
+                }
+                else
+                {
+                    switch (filter.Operator)
+                    {
+                        case CustomOperator.Greater:
+                            result = result.Where(filter.Member + " > @0", filter.Value);
+                            break;
+                        case CustomOperator.GreaterOrEqual:
+                            result = result.Where(filter.Member + " >= @0", filter.Value);
+                            break;
+                        case CustomOperator.Less:
+                            result = result.Where(filter.Member + " < @0", filter.Value);
+                            break;
+                        case CustomOperator.LessOrEqual:
+                            result = result.Where(filter.Member + " <= @0", filter.Value);
+                            break;
+                    }
+                }
+            }
+
+            total = result.Count();
+            return result.Skip(skip).Take(take);
         }
 
         /// <summary>

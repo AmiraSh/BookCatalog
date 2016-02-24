@@ -1,10 +1,9 @@
 ﻿namespace BookCatalog.DAL.Interfaces
 {
     #region Using
-
     using System;
     using System.Collections.Generic;
-
+    using Infrastructure.Filtration;
     #endregion
 
     /// <summary>
@@ -25,6 +24,22 @@
         /// </summary>
         /// <returns>All entities in database.</returns>
         IEnumerable<T> GetAll();
+
+        /// <summary>
+        /// Gets table size.
+        /// </summary>
+        /// <returns>Table size.</returns>
+        int GetSize();
+
+        /// <summary>
+        /// Gets specified count of entities from database.
+        /// </summary>
+        /// <param name="sorts">Sortings.</param>
+        /// <param name="filters">Filters.</param>
+        /// <param name="take">Count of elements to take.</param>
+        /// <param name="skip">Count of elements to skip.</param>
+        /// <returns>Some entities from database.</returns>
+        IEnumerable<T> Take(out int total, Dictionary<string, bool> sorts, List<CustomFilter> filters, int take, int skip = 0);
 
         /// <summary>
         /// Adds a new instance to database.
