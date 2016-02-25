@@ -2,6 +2,7 @@
 {
     #region Using
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Linq;
     using DAL.Interfaces;
     using DAL.Models;
@@ -47,11 +48,11 @@
         /// <param name="take">Count of elements to take.</param>
         /// <param name="skip">Count of elements to skip.</param>
         /// <returns>List of authors view model.</returns>
-        public List<AuthorViewModel> GetAuthors(out int total, Dictionary<string, bool> sorts, List<CustomFilter> filters, int take, int skip)
+        public List<AuthorViewModel> GetAuthors(out int total, Dictionary<string, ListSortDirection> sorts, List<CustomFilter> filters, int take, int skip)
         {
             if (sorts.Count == 0)
             {
-                sorts.Add("Id", true);
+                sorts.Add("Id", ListSortDirection.Ascending);
             }
 
             return AuthorMapper.Map(this.authorRepository.Take(out total, sorts, filters, take, skip).ToList());

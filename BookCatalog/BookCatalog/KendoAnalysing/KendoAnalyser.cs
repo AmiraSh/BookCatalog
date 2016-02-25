@@ -2,6 +2,7 @@
 {
     #region Using
     using System.Collections.Generic;
+    using System.ComponentModel;
     using Infrastructure.Filtration;
     using Kendo.Mvc;
     #endregion
@@ -16,12 +17,12 @@
         /// </summary>
         /// <param name="sortDescriptors">Sorting descriptors.</param>
         /// <returns>Dictionary for sorting descriptors.</returns>
-        public static Dictionary<string, bool> GetSorts(IList<SortDescriptor> sortDescriptors)
+        public static Dictionary<string, ListSortDirection> GetSorts(IList<SortDescriptor> sortDescriptors)
         {
-            var sorts = new Dictionary<string, bool>();
+            var sorts = new Dictionary<string, ListSortDirection>();
             foreach (var sort in sortDescriptors)
             {
-                sorts.Add(sort.Member, sort.SortDirection == System.ComponentModel.ListSortDirection.Ascending);
+                sorts.Add(sort.Member, sort.SortDirection);
             }
 
             return sorts;

@@ -3,6 +3,8 @@
     #region Using
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
     using Infrastructure.Filtration;
     #endregion
 
@@ -39,7 +41,21 @@
         /// <param name="take">Count of elements to take.</param>
         /// <param name="skip">Count of elements to skip.</param>
         /// <returns>Some entities from database.</returns>
-        IEnumerable<T> Take(out int total, Dictionary<string, bool> sorts, List<CustomFilter> filters, int take, int skip = 0);
+        IEnumerable<T> Take(out int total, Dictionary<string, ListSortDirection> sorts, List<CustomFilter> filters, int take, int skip = 0);
+
+        /// <summary>
+        /// Sorts queryable set.
+        /// </summary>
+        /// <param name="set">Queryable set.</param>
+        /// <param name="sorts">Sortings.</param>
+        void Sort(ref IQueryable<T> set, Dictionary<string, ListSortDirection> sorts);
+
+        /// <summary>
+        /// Filters queryable set.
+        /// </summary>
+        /// <param name="set">Queryable set.</param>
+        /// <param name="filters">Filters.</param>
+        void Filter(ref IQueryable<T> set, List<CustomFilter> filters);
 
         /// <summary>
         /// Adds a new instance to database.

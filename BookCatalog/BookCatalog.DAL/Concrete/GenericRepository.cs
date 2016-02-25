@@ -3,6 +3,7 @@
     #region Using
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Data.Entity;
     using System.Linq;
     using System.Linq.Dynamic;
@@ -69,42 +70,62 @@
         /// <param name="take">Count of elements to take.</param>
         /// <param name="skip">Count of elements to skip.</param>
         /// <returns>Some entities from database.</returns>
-        public IEnumerable<T> Take(out int total, Dictionary<string, bool> sorts, List<CustomFilter> filters, int take, int skip = 0)
+        public IEnumerable<T> Take(out int total, Dictionary<string, ListSortDirection> sorts, List<CustomFilter> filters, int take, int skip = 0)
         {
             var result = this.entities.Set<T>().AsQueryable();
+            Sort(ref result, sorts);
+            Filter(ref result, filters);
+            total = result.Count();
+            return result.Skip(skip).Take(take);
+        }
+        
+        /// <summary>
+        /// Sorts queryable set.
+        /// </summary>
+        /// <param name="set">Queryable set.</param>
+        /// <param name="sorts">Sortings.</param>
+        public void Sort(ref IQueryable<T> set, Dictionary<string, ListSortDirection> sorts)
+        {
             foreach (var sort in sorts)
             {
-                result = result.OrderBy(string.Format("{0} {1}", sort.Key, sort.Value ? "ascending" : "descending"));
+                set = set.OrderBy(string.Format("{0} {1}", sort.Key, sort.Value.ToString()));
             }
+        }
 
+        /// <summary>
+        /// Filters queryable set.
+        /// </summary>
+        /// <param name="set">Queryable set.</param>
+        /// <param name="filters">Filters.</param>
+        public void Filter(ref IQueryable<T> set, List<CustomFilter> filters)
+        {
             foreach (var filter in filters)
             {
+                string operatorString = "";
                 if (filter.MemberType == typeof(string))
                 {
-                    result = result.Where(filter.Member + ".Contains(@0)", filter.Value);
+                    operatorString = ".Contains(@0)";
                 }
                 else
                 {
                     switch (filter.Operator)
                     {
                         case CustomOperator.Greater:
-                            result = result.Where(filter.Member + " > @0", filter.Value);
+                            operatorString = " > @0";
                             break;
                         case CustomOperator.GreaterOrEqual:
-                            result = result.Where(filter.Member + " >= @0", filter.Value);
+                            operatorString = " >= @0";
                             break;
                         case CustomOperator.Less:
-                            result = result.Where(filter.Member + " < @0", filter.Value);
+                            operatorString = " < @0";
                             break;
                         case CustomOperator.LessOrEqual:
-                            result = result.Where(filter.Member + " <= @0", filter.Value);
+                            operatorString = " <= @0";
                             break;
                     }
                 }
+                set = set.Where(filter.Member + operatorString, filter.Value);
             }
-
-            total = result.Count();
-            return result.Skip(skip).Take(take);
         }
 
         /// <summary>
