@@ -68,12 +68,30 @@
             <dt>Books Count:</dt>
             <dd> #= BooksCount #</dd>
             <dt>Books:</dt>
-            <dd> #= printBooks(Books) #</dd>
+            <dd> #= printBooks(Books, Id) #</dd>
         </dl>
+        <div id="chart_#:Id#"></div>
     </div>
 </script>
 <script>
-    function printBooks(Books) {
+    function printBooks(Books, Id) {
+        var ratings = [];
+        var names = [];
+        for (var i = 0; i < Books.length; i++) {
+            ratings[i] = Books[i].Rating;
+            names[i] = Books[i].Name;
+        }
+        $("#chart_" + Id).kendoChart({
+            title: {
+                text: "Books' Rating"
+            },
+            series: [{
+                data: ratings
+            }],
+            categoryAxis: {
+                categories: names
+            }
+        });
         var result = "";
         var j = Books.length;
         for(var i = 0; i < j; i++) {
