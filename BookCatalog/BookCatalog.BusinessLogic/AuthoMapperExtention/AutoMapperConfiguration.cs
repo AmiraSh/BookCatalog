@@ -37,6 +37,7 @@
                     bookVM.PagesCount = book.PagesCount;
                     bookVM.PublishedDate = book.PublishedDate;
                     bookVM.Description = (book.Description == null) ? string.Empty : book.Description;
+                    bookVM.Rating = book.Rating;
                     List<Author> authors = book.Authors.ToList();
                     bookVM.Authors.AddRange(Mapper.Map<List<AuthorViewModel>>(authors));
                     bookVM.AuthorsIds.AddRange(authors.Select(author => author.Id));
@@ -53,6 +54,7 @@
                     ShortBookViewModel bookVM = new ShortBookViewModel();
                     bookVM.Name = book.Name;
                     bookVM.Year = book.PublishedDate.Year;
+                    bookVM.Rating = book.Rating;
                     return bookVM;
                 }
 
@@ -84,6 +86,7 @@
                         book.PagesCount = bookVM.PagesCount;
                         book.PublishedDate = bookVM.PublishedDate;
                         book.Description = bookVM.Description;
+                        book.Rating = bookVM.Rating;
                         return book;
                     }
 
@@ -95,6 +98,7 @@
                 .ForMember(dest => dest.PagesCount, opt => opt.MapFrom(src => src.PagesCount))
                 .ForMember(dest => dest.PublishedDate, opt => opt.MapFrom(src => src.PublishedDate))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating))
                 .IgnoreAllUnmapped();
         }
 

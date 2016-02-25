@@ -19,6 +19,7 @@
             this.Authors = new List<AuthorViewModel>();
             this.AuthorsIds = new List<int>();
             this.PublishedDate = DateTime.Now.Date;
+            this.Rating = 3;
         }
 
         /// <summary>
@@ -56,6 +57,14 @@
         /// </summary>
         [System.Web.Mvc.AllowHtml]
         public string Description { get; set; }
+
+        /// <summary>
+        /// Gets or sets rating.
+        /// </summary>
+        [Required(ErrorMessage = "Rating is required.")]
+        [Range(minimum: 1, maximum: 5)]
+        [Display(Name = "Rating")]
+        public int Rating { get; set; }
 
         /// <summary>
         /// Gets or sets the book's authors.

@@ -11,5 +11,10 @@
         /// Gets or sets the published year.
         /// </summary>
         public int Year { get; set; }
+
+        /// <summary>
+        /// Gets or sets rating.
+        /// </summary>
+        public int Rating { get; set; }
     }
 }
