@@ -10,7 +10,6 @@
     using DAL.Models;
     using Infrastructure.Errors;
     using Infrastructure.Filtration;
-    using Mappers;
     using ViewModels;
     #endregion
 
@@ -114,7 +113,7 @@
             using (TransactionScope scope = new TransactionScope())
             {
                 Book book = this.bookRepository.FindById(bookVM.Id);
-                BookMapper.Map(bookVM, ref book);
+                Mapper.Map(bookVM, book);
                 this.bookRepository.Modify(book);
                 this.bookRepository.SaveChanges();
                 book.Authors.Clear();

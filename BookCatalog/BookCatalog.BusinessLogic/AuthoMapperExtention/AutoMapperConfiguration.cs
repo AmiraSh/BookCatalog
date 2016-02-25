@@ -42,7 +42,7 @@
                     bookVM.AuthorsIds.AddRange(authors.Select(author => author.Id));
                     return bookVM;
                 }
-
+                
                 return default(BookViewModel);
             });
 
@@ -89,6 +89,13 @@
 
                     return default(Book);
                 });
+
+            Mapper.CreateMap<BookViewModel, Book>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.PagesCount, opt => opt.MapFrom(src => src.PagesCount))
+                .ForMember(dest => dest.PublishedDate, opt => opt.MapFrom(src => src.PublishedDate))
+                .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+                .IgnoreAllUnmapped();
         }
 
         /// <summary>
@@ -108,6 +115,11 @@
 
                 return default(Author);
             });
+
+            Mapper.CreateMap<AuthorViewModel, Author>()
+                .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
+                .ForMember(dest => dest.SecondName, opt => opt.MapFrom(src => src.SecondName))
+                .IgnoreAllUnmapped();
 
             Mapper.CreateMap<Author, AuthorViewModel>().ConstructUsing(author =>
             {
@@ -144,6 +156,19 @@
 
                 return default(List<AuthorViewModel>);
             });
+        }
+
+        /// <summary>
+        /// Ignores all unmapped members.
+        /// </summary>
+        /// <typeparam name="TSource">Source.</typeparam>
+        /// <typeparam name="TDest">Destination.</typeparam>
+        /// <param name="expression">Expression.</param>
+        /// <returns>Mapping expression.</returns>
+        public static IMappingExpression<TSource, TDest> IgnoreAllUnmapped<TSource, TDest>(this IMappingExpression<TSource, TDest> expression)
+        {
+            expression.ForAllMembers(opt => opt.Ignore());
+            return expression;
         }
     }
 }

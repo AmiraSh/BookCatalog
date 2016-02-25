@@ -9,7 +9,6 @@
     using DAL.Models;
     using Infrastructure.Errors;
     using Infrastructure.Filtration;
-    using Mappers;
     using ViewModels;
     #endregion
 
@@ -104,7 +103,7 @@
         public void EditAuthor(AuthorViewModel authorVM)
         {
             Author author = this.authorRepository.FindById(authorVM.Id);
-            AuthorMapper.Map(authorVM, ref author);
+            Mapper.Map(authorVM, author);
             this.authorRepository.SaveChanges();
         }
 

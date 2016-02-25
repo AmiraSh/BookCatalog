@@ -51,8 +51,6 @@
     <Compile Include="AuthoMapperExtention\AutoMapperConfiguration.cs" />
     <Compile Include="DomainModels\AuthorDomainModel.cs" />
     <Compile Include="DomainModels\BookDomainModel.cs" />
-    <Compile Include="Mappers\AuthorMapper.cs" />
-    <Compile Include="Mappers\BookMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="ViewModels\AuthorViewModel.cs" />
