@@ -9,6 +9,7 @@
           columns.Bound(c => c.Name).Width(100);
           columns.Bound(c => c.PublishedDate).EditorTemplateName("CustomDate").Width(150);
           columns.Bound(c => c.PagesCount).Width(80);
+          columns.Bound(c => c.Rating).Width(60);
           columns.Command(command => { command.Edit(); command.Destroy(); }).Width(160);
       })
       .ClientDetailTemplateId("BookDetails")

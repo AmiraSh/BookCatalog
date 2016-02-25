@@ -24,6 +24,9 @@
                 @Html.DisplayNameFor(model => model.PagesCount)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Authors)
             </th>
             <th></th>
@@ -44,6 +47,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.PagesCount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
                 </td>
                 <td>
                     @foreach (var author in item.Authors)
