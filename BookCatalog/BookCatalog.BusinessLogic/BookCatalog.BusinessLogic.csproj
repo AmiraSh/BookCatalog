@@ -52,6 +52,7 @@
     <Compile Include="Validation\Validator.cs" />
     <Compile Include="ViewModels\AuthorViewModel.cs" />
     <Compile Include="ViewModels\BookViewModel.cs" />
+    <Compile Include="ViewModels\ShortBookViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookCatalog.DAL\BookCatalog.DAL.csproj">

@@ -15,7 +15,7 @@
         /// </summary>
         public AuthorViewModel()
         {
-            this.Books = new Dictionary<string, int>();
+            this.Books = new List<ShortBookViewModel>();
         }
 
         /// <summary>
@@ -49,6 +49,6 @@
         /// Gets or sets the books' list.
         /// </summary>
         [Display(Name = "Books")]
-        public Dictionary<string, int> Books { get; set; }
+        public List<ShortBookViewModel> Books { get; set; }
     }
 }

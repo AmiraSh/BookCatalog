@@ -47,7 +47,7 @@
             authorVM.BooksCount = author.Books.Count;
             foreach (var book in author.Books)
             {
-                authorVM.Books.Add(book.Name, book.PublishedDate.Year);
+                authorVM.Books.Add(new ShortBookViewModel() { Name = book.Name, Year = book.PublishedDate.Year });
             }
 
             return authorVM;

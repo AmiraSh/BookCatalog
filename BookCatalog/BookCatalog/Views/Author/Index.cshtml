@@ -48,7 +48,7 @@
                 <td>
                     @foreach (var book in item.Books)
                     {
-                        @Html.DisplayFor(modelItem => book.Key) @(", ") @Html.DisplayFor(modelItem => book.Value) <br />
+                        @Html.DisplayFor(modelItem => book.Name) @(", ") @Html.DisplayFor(modelItem => book.Year) <br />
                     }                    
                 </td>
                 <td>
