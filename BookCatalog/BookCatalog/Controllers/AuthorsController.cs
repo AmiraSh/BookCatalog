@@ -56,6 +56,11 @@
             result.Total = total;
             return this.Json(result, JsonRequestBehavior.AllowGet);
         }
+        
+        public ActionResult BooksChart(int id)
+        {
+            return this.View("BooksChart", this.domainModel.GetAuthor(id).Books);
+        }
 
         /// <summary>
         /// Creates or updates an entity.
