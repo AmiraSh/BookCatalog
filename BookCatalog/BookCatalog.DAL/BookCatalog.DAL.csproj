@@ -78,6 +78,10 @@
     <Compile Include="Migrations\201602221225255_AddedDescriptionColumn.Designer.cs">
       <DependentUpon>201602221225255_AddedDescriptionColumn.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201602251024050_AddedRatingColumn.cs" />
+    <Compile Include="Migrations\201602251024050_AddedRatingColumn.Designer.cs">
+      <DependentUpon>201602251024050_AddedRatingColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Author.cs" />
     <Compile Include="Models\Book.cs" />
@@ -99,6 +103,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602221225255_AddedDescriptionColumn.resx">
       <DependentUpon>201602221225255_AddedDescriptionColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602251024050_AddedRatingColumn.resx">
+      <DependentUpon>201602251024050_AddedRatingColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

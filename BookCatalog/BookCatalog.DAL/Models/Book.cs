@@ -48,6 +48,12 @@
         public int PagesCount { get; set; }
 
         /// <summary>
+        /// Gets or sets rating.
+        /// </summary>
+        [Range(minimum: 1, maximum: 5)]
+        public int Rating { get; set; }
+
+        /// <summary>
         /// Gets or sets the description of the book.
         /// </summary>
         public string Description { get; set; }
