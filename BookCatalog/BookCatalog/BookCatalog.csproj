@@ -184,6 +184,7 @@
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FileBrowserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageBrowserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -410,8 +411,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\UserFiles\Files\" />
     <Folder Include="Content\UserFiles\Images\" />
-    <Folder Include="Views\ImageBrowser\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

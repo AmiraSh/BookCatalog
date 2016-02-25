@@ -29,14 +29,21 @@
             .Name("Description")
             .Encode(false)
             .HtmlAttributes(new { @class = "form-control col-md-9" })
-            .Tools(tools => tools.InsertImage())
+            .Tools(tools => tools.InsertImage().InsertFile())
             .ImageBrowser(imageBrowser => imageBrowser
                 .Image("~/Content/UserFiles/Images/{0}")
                 .Read("Read", "ImageBrowser")
                 .Create("Create", "ImageBrowser")
                 .Destroy("Destroy", "ImageBrowser")
                 .Upload("Upload", "ImageBrowser")
-                .Thumbnail("Thumbnail", "ImageBrowser")))
+                .Thumbnail("Thumbnail", "ImageBrowser"))
+            .FileBrowser(fileBrowser => fileBrowser
+                .File("~/Content/UserFiles/Files/{0}")
+                .Read("Read", "FileBrowser")
+                .Create("Create", "FileBrowser")
+                .Destroy("Destroy", "FileBrowser")
+                .Upload("Upload", "FileBrowser")
+            ))
         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
     </div>
 </div>
