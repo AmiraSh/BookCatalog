@@ -5,6 +5,7 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Transactions;
+    using AutoMapper;
     using DAL.Interfaces;
     using DAL.Models;
     using Infrastructure.Errors;
@@ -45,7 +46,7 @@
         /// <returns>Books list.</returns>
         public List<BookViewModel> GetBooks()
         {
-            return BookMapper.Map(this.bookRepository.GetAll().ToList());
+            return Mapper.Map<List<BookViewModel>>(this.bookRepository.GetAll().ToList());
         }
 
         /// <summary>
@@ -62,17 +63,8 @@
             {
                 sorts.Add("Id", ListSortDirection.Ascending);
             }
-            
-            return BookMapper.Map(this.bookRepository.Take(out total, sorts, filters, take, skip).ToList());
-        }
 
-        /// <summary>
-        /// Gets books count.
-        /// </summary>
-        /// <returns>Books count.</returns>
-        public int GetBooksCount()
-        {
-            return this.bookRepository.GetSize();
+            return Mapper.Map<List<BookViewModel>>(this.bookRepository.Take(out total, sorts, filters, take, skip).ToList());
         }
 
         /// <summary>
@@ -92,17 +84,7 @@
         /// <returns>Book view model.</returns>
         public BookViewModel GetBook(int id)
         {
-            return BookMapper.Map(this.bookRepository.FindById(id));
-        }
-
-        /// <summary>
-        /// Gets book view model.
-        /// </summary>
-        /// <param name="Name">Book name.</param>
-        /// <returns>Book view model.</returns>
-        public BookViewModel GetBook(string Name)
-        {
-            return BookMapper.Map(this.bookRepository.FirstOrDefault(book => book.Name == Name));
+            return Mapper.Map<BookViewModel>(this.bookRepository.FindById(id));
         }
 
         /// <summary>
@@ -113,7 +95,7 @@
         {
             using (TransactionScope scope = new TransactionScope())
             {
-                Book book = BookMapper.Map(bookVM);
+                Book book = Mapper.Map<Book>(bookVM);
                 this.bookRepository.Add(book);
                 this.bookRepository.SaveChanges();
                 this.bookRepository.SetAuthors(book.Id, bookVM.AuthorsIds);

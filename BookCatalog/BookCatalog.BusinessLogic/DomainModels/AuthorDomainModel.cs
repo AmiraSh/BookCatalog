@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
+    using AutoMapper;
     using DAL.Interfaces;
     using DAL.Models;
     using Infrastructure.Errors;
@@ -37,7 +38,7 @@
         /// <returns>List of authors view model.</returns>
         public List<AuthorViewModel> GetAuthors()
         {
-            return AuthorMapper.Map(this.authorRepository.GetAll().ToList());
+            return Mapper.Map<List<AuthorViewModel>>(this.authorRepository.GetAll().ToList());
         }
 
         /// <summary>
@@ -55,16 +56,7 @@
                 sorts.Add("Id", ListSortDirection.Ascending);
             }
 
-            return AuthorMapper.Map(this.authorRepository.Take(out total, sorts, filters, take, skip).ToList());
-        }
-        
-        /// <summary>
-        /// Gets authors count.
-        /// </summary>
-        /// <returns>Authors count.</returns>
-        public int GetAuthorsCount()
-        {
-            return this.authorRepository.GetSize();
+            return Mapper.Map<List<AuthorViewModel>>(this.authorRepository.Take(out total, sorts, filters, take, skip).ToList());
         }
 
         /// <summary>
@@ -90,7 +82,7 @@
         /// <returns>Author view model.</returns>
         public AuthorViewModel GetAuthor(int id)
         {
-            return AuthorMapper.Map(this.authorRepository.FindById(id));
+            return Mapper.Map<AuthorViewModel>(this.authorRepository.FindById(id));
         }
 
         /// <summary>
@@ -99,7 +91,7 @@
         /// <param name="authorVM">Author view model.</param>
         public void AddAuthor(AuthorViewModel authorVM)
         {
-            Author author = AuthorMapper.Map(authorVM);
+            Author author = Mapper.Map<Author>(authorVM);
             this.authorRepository.Add(author);
             this.authorRepository.SaveChanges();
             authorVM.Id = author.Id;
