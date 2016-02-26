@@ -139,6 +139,7 @@
                         authorVM.Books.Add(Mapper.Map<ShortBookViewModel>(book));
                     }
 
+                    authorVM.Books = authorVM.Books.OrderBy(book => book.Year).ToList();
                     return authorVM;
                 }
 

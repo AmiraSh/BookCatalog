@@ -7,9 +7,9 @@
               {
                   tabstrip.Add().Text("Books")
                       .Selected(true)
-                      .LoadContentFrom(Url.Action("Index", "Books"));
+                      .LoadContentFrom(Url.Action("Grid", "Book"));
 
                   tabstrip.Add().Text("Authors")
-                      .LoadContentFrom(Url.Action("Index", "Authors"));
+                      .LoadContentFrom(Url.Action("Grid", "Author"));
               })
 )

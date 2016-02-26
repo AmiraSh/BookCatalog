@@ -10,6 +10,7 @@
         })
         .CategoryAxis(axis => axis
             .Categories(model => model.Name)
+            .Labels(labels => labels.Rotation(90))
             .Title(title => title.Text("Book Name"))
             .Crosshair(crosshair => crosshair
                 .Visible(true)

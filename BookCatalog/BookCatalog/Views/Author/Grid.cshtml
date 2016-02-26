@@ -55,10 +55,10 @@
               model.Field(p => p.BooksCount).Editable(false);
               model.Field(p => p.Books).Editable(false);
           })
-          .Read(read => read.Action("Read", "Authors"))
-          .Create(create => create.Action("Manage", "Authors"))
-          .Update(update => update.Action("Manage", "Authors"))
-          .Destroy(destroy => destroy.Action("Destroy", "Authors"))
+          .Read(read => read.Action("Read", "Author"))
+          .Create(create => create.Action("Manage", "Author"))
+          .Update(update => update.Action("Manage", "Author"))
+          .Destroy(destroy => destroy.Action("Destroy", "Author"))
       )
 )
 <script type="text/x-kendo-template" id="AuthorDetails">
@@ -70,33 +70,26 @@
             <dt>Books:</dt>
             <dd> #= printBooks(Books, Id) #</dd>
         </dl>
-        <div id="chart_#:Id#"></div>
+        <input type="hidden" value="#= printBooksChart(Id) #" />
+        <div id="chart_#:Id#"> </div>
     </div>
 </script>
 <script>
     function printBooks(Books, Id) {
-        var ratings = [];
-        var names = [];
-        for (var i = 0; i < Books.length; i++) {
-            ratings[i] = Books[i].Rating;
-            names[i] = Books[i].Name;
-        }
-        $("#chart_" + Id).kendoChart({
-            title: {
-                text: "Books' Rating"
-            },
-            series: [{
-                data: ratings
-            }],
-            categoryAxis: {
-                categories: names
-            }
-        });
         var result = "";
         var j = Books.length;
         for(var i = 0; i < j; i++) {
             result += Books[i].Name + ", " + Books[i].Year + "<br />";
         }
         return result;
+    }
+    function printBooksChart(Id) {
+        $.ajax({
+            url: "Author/BooksChart/" + Id,
+            type: 'GET',
+            success: function (response) {
+                $("#chart_" + Id).html(response);
+            }
+        });
     }
 </script>

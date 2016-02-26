@@ -1,6 +1,6 @@
-﻿@model List<BookCatalog.BusinessLogic.ViewModels.ShortBookViewModel>
-@(Html.Kendo().Chart(Model)
-        .Name("Books")
+﻿@model BookCatalog.BusinessLogic.ViewModels.AuthorViewModel
+@(Html.Kendo().Chart(Model.Books)
+        .Name("Books_" + Model.Id)
                 .Title(title => title
                     .Text("Books' rating")
                     .Position(ChartTitlePosition.Top))
@@ -10,6 +10,7 @@
         })
         .CategoryAxis(axis => axis
             .Categories(model => model.Name)
+            .Labels(labels => labels.Rotation(90))
             .Title(title => title.Text("Book Name"))
             .Crosshair(crosshair => crosshair
                 .Visible(true)

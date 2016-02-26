@@ -62,10 +62,10 @@
               model.Field(p => p.AuthorsIds).Editable(true);
           })
           .PageSize(7)
-          .Read(read => read.Action("Read", "Books"))
-          .Create(create => create.Action("Manage", "Books"))
-          .Update(update => update.Action("Manage", "Books"))
-          .Destroy(destroy => destroy.Action("Destroy", "Books"))
+          .Read(read => read.Action("Read", "Book"))
+          .Create(create => create.Action("Manage", "Book"))
+          .Update(update => update.Action("Manage", "Book"))
+          .Destroy(destroy => destroy.Action("Destroy", "Book"))
       )
 )
 <script type="text/x-kendo-template" id="BookDetails">
