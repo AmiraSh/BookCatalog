@@ -158,8 +158,7 @@
         /// <returns>Grid view.</returns>
         public ActionResult Grid()
         {
-            ViewData["AuthorsOptions"] = this.domainModel.PopulateMultiSelectList();
-            return this.View();
+            return this.View(this.domainModel.PopulateMultiSelectList());
         }
 
         /// <summary>
