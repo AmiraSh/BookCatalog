@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
+    using System.Text;
     using System.Transactions;
     using System.Web.Mvc;
     using AutoMapper;
@@ -43,14 +44,14 @@
         /// <summary>
         /// Populates multi select list.
         /// </summary>
-        public MultiSelectList PopulateMultiSelectList()
+        public List<SelectListItem> PopulateMultiSelectList()
         {
             return new MultiSelectList(
                 this.authorRepository.GetAll().ToList().Select(author => new SelectListItem()
                 {
                     Text = string.Format("{0} {1}", author.FirstName, author.SecondName),
                     Value = author.Id.ToString()
-                }), "Value", "Text");
+                }), "Value", "Text").ToList();
         }
 
         /// <summary>
@@ -65,7 +66,7 @@
                     Text = string.Format("{0} {1}", author.FirstName, author.SecondName),
                     Value = author.Id.ToString(),
                     Selected = (bookVM.Authors.FirstOrDefault(bookAuthor => bookAuthor.Id == author.Id) != null)
-                }), "Value", "Text");
+                }), "Value", "Text").ToList();
         }
 
         /// <summary>
@@ -113,6 +114,22 @@
         public BookViewModel GetBook(int id)
         {
             return Mapper.Map<BookViewModel>(this.bookRepository.FindById(id));
+        }
+
+        /// <summary>
+        /// Adds or edits a book.
+        /// </summary>
+        /// <param name="bookVM">Book view model.</param>
+        public void Manage(BookViewModel bookVM)
+        {
+            if (bookVM.Id == 0)
+            {
+                this.AddBook(bookVM);
+            }
+            else
+            {
+                this.EditBook(bookVM);
+            }
         }
 
         /// <summary>
@@ -173,16 +190,16 @@
         /// </summary>
         /// <param name="bookId">Book identifier.</param>
         /// <returns>Authors' names.</returns>
-        public List<string> GetAuthors(int bookId)
+        public string GetAuthors(int bookId)
         {
-            List<string> options = new List<string>();
+            StringBuilder authors = new StringBuilder();
             Book book = this.bookRepository.FindById(bookId);
             foreach (Author author in book.Authors)
             {
-                options.Add(string.Format("{0} {1}", author.FirstName, author.SecondName));
+                authors.AppendLine(string.Format("{0} {1}", author.FirstName, author.SecondName));
             }
 
-            return options;
+            return authors.ToString();
         }
     }
 }

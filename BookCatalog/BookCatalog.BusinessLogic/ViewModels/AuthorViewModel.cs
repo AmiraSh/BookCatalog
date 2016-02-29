@@ -3,6 +3,7 @@
     #region Using
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using Newtonsoft.Json;
     #endregion
 
     /// <summary>
@@ -21,6 +22,7 @@
         /// <summary>
         /// Gets or sets the identifier.
         /// </summary>
+        [JsonProperty(PropertyName = "Id")]
         public int Id { get; set; }
 
         /// <summary>
@@ -29,6 +31,7 @@
         [Display(Name = "First Name")]
         [Required(ErrorMessage = "First name is required.")]
         [StringLength(150, MinimumLength = 1)]
+        [JsonProperty(PropertyName = "FirstName")]
         public string FirstName { get; set; }
 
         /// <summary>
@@ -37,18 +40,21 @@
         [Display(Name = "Last Name")]
         [Required(ErrorMessage = "Last name is required.")]
         [StringLength(150, MinimumLength = 1)]
+        [JsonProperty(PropertyName = "SecondName")]
         public string SecondName { get; set; }
 
         /// <summary>
         /// Gets or sets the books' count.
         /// </summary>
         [Display(Name = "Books Count")]
+        [JsonProperty(PropertyName = "BooksCount")]
         public int BooksCount { get; set; }
 
         /// <summary>
         /// Gets or sets the books' list.
         /// </summary>
         [Display(Name = "Books")]
+        [JsonProperty(PropertyName = "Books")]
         public List<ShortBookViewModel> Books { get; set; }
     }
 }
