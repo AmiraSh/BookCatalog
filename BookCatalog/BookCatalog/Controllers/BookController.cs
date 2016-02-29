@@ -222,10 +222,5 @@
             this.domainModel.DeleteBook(bookViewModel.Id);
             return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));
         }
-
-        //public ActionResult GetMultiSelectList()
-        //{
-        //    return Json(this.domainModel.GetMultiSelectList(), JsonRequestBehavior.AllowGet);
-        //}
     }
 }

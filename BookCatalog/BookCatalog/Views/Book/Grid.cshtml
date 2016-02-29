@@ -37,7 +37,6 @@
             ))
         )
       .ColumnMenu()
-      //.Events(events => events.Edit("#= OnEdit(editEvent) #"))
       .Editable(editable =>
       {
           editable.Mode(GridEditMode.PopUp).TemplateName("BookForm");
@@ -82,16 +81,6 @@
     </div>
 </script>   
 <script>
-    //function OnEdit(editEvent) {
-    //    $.ajax({
-    //        url: "Book/GetMultiSelectList",
-    //        success: function (selectOptions) {
-    //            editEvent.container.find("[name=AuthorsOptions]")
-    //                .val(selectOptions)
-    //                .trigger("change");
-    //        }
-    //    })
-    //}
     function printAuthors(Authors) {
         var result = "";
         var j = Authors.length;
