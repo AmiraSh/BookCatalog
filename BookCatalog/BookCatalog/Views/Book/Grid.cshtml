@@ -1,4 +1,4 @@
-﻿@model MultiSelectList
+﻿@model List<SelectListItem>
 @{
     Layout = null;
 }
@@ -65,8 +65,8 @@
           })
           .PageSize(7)
           .Read(read => read.Action("Read", "Book"))
-          .Create(create => create.Action("Manage", "Book"))
-          .Update(update => update.Action("Manage", "Book"))
+          .Create(create => create.Action("KendoManage", "Book"))
+          .Update(update => update.Action("KendoManage", "Book"))
           .Destroy(destroy => destroy.Action("Destroy", "Book"))
       )
 )

@@ -15,6 +15,7 @@
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
     using KendoAnalysing;
+    using Newtonsoft.Json;
     #endregion
 
     /// <summary>
@@ -112,28 +113,14 @@
                 return this.Json(new { error = exception.ValidationMessage });
             }
 
-            if (bookVM.Id == 0)
-            {
-                this.domainModel.AddBook(bookVM);
-            }
-            else
-            {
-                this.domainModel.EditBook(bookVM);
-            }
-
-            StringBuilder authors = new StringBuilder();
-            foreach (var author in this.domainModel.GetAuthors(bookVM.Id))
-            {
-                authors.Append(author + "\n");
-            }
-
+            this.domainModel.Manage(bookVM);
             return this.Json(new
             {
                 Id = bookVM.Id,
                 Name = bookVM.Name,
                 PublishedDate = bookVM.PublishedDate.ToString("MM/dd/yyyy"),
                 PagesCount = bookVM.PagesCount,
-                Authors = authors.ToString()
+                Authors = this.domainModel.GetAuthors(bookVM.Id)
             });
         }
 
@@ -166,7 +153,7 @@
         /// </summary>
         /// <param name="request">Request.</param>
         /// <returns>Grids' elements.</returns>
-        public ActionResult Read([DataSourceRequest]DataSourceRequest request)
+        public JsonResult Read([DataSourceRequest]DataSourceRequest request)
         {
             int total;
             var sorts = KendoAnalyser.GetSorts(request.Sorts);
@@ -185,7 +172,7 @@
         /// <param name="bookViewModel">Book view model.</param>
         /// <returns>Created or updated entity.</returns>
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Manage([DataSourceRequest]DataSourceRequest request, BookViewModel bookViewModel)
+        public JsonResult KendoManage([DataSourceRequest]DataSourceRequest request, BookViewModel bookViewModel)
         {
             try
             {
@@ -197,15 +184,7 @@
                 return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));
             }
 
-            if (bookViewModel.Id == 0)
-            {
-                this.domainModel.AddBook(bookViewModel);
-            }
-            else
-            {
-                this.domainModel.EditBook(bookViewModel);
-            }
-
+            this.domainModel.Manage(bookViewModel);
             return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));
         }
 
@@ -216,7 +195,7 @@
         /// <param name="bookViewModel">Book view model.</param>
         /// <returns>Deleted entity.</returns>
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, BookViewModel bookViewModel)
+        public JsonResult Destroy([DataSourceRequest]DataSourceRequest request, BookViewModel bookViewModel)
         {
             this.domainModel.DeleteBook(bookViewModel.Id);
             return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));

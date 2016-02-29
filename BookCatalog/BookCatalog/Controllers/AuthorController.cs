@@ -13,6 +13,7 @@
     using Kendo.Mvc.Extensions;
     using Kendo.Mvc.UI;
     using KendoAnalysing;
+    using Newtonsoft.Json;
     #endregion
 
     /// <summary>
@@ -102,28 +103,14 @@
                 return this.Json(new { error = exception.ValidationMessage });
             }
 
-            if (authorVM.Id == 0)
-            {
-                this.domainModel.AddAuthor(authorVM);
-            }
-            else
-            {
-                this.domainModel.EditAuthor(authorVM);
-            }
-            
-            StringBuilder books = new StringBuilder();
-            foreach (var book in this.domainModel.GetBooks(authorVM.Id))
-            {
-                books.Append(book.Name + ", " + book.PublishedDate.Year + "\n");
-            }
-
+            this.domainModel.Manage(authorVM);            
             return this.Json(new
             {
                 Id = authorVM.Id,
                 FirstName = authorVM.FirstName,
                 SecondName = authorVM.SecondName,
                 BooksCount = authorVM.BooksCount,
-                Books = books.ToString()
+                Books = this.domainModel.GetBooks(authorVM.Id)
             });
         }
 
@@ -171,7 +158,7 @@
         /// </summary>
         /// <param name="request">Request.</param>
         /// <returns>Grids' elements.</returns>
-        public ActionResult Read([DataSourceRequest]DataSourceRequest request)
+        public JsonResult Read([DataSourceRequest]DataSourceRequest request)
         {
             int total;
             var sorts = KendoAnalyser.GetSorts(request.Sorts);
@@ -190,7 +177,7 @@
         /// <param name="authorViewModel">Author view model.</param>
         /// <returns>Created or updated entity.</returns>
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Manage([DataSourceRequest]DataSourceRequest request, AuthorViewModel authorViewModel)
+        public JsonResult KendoManage([DataSourceRequest]DataSourceRequest request, AuthorViewModel authorViewModel)
         {
             try
             {
@@ -202,15 +189,7 @@
                 return this.Json(new[] { authorViewModel }.ToDataSourceResult(request, this.ModelState));
             }
 
-            if (authorViewModel.Id == 0)
-            {
-                this.domainModel.AddAuthor(authorViewModel);
-            }
-            else
-            {
-                this.domainModel.EditAuthor(authorViewModel);
-            }
-
+            this.domainModel.Manage(authorViewModel);
             return this.Json(new[] { authorViewModel }.ToDataSourceResult(request, this.ModelState));
         }
 
@@ -221,7 +200,7 @@
         /// <param name="authorViewModel">Author view model.</param>
         /// <returns>Deleted entity.</returns>
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult Destroy([DataSourceRequest]DataSourceRequest request, AuthorViewModel authorViewModel)
+        public JsonResult Destroy([DataSourceRequest]DataSourceRequest request, AuthorViewModel authorViewModel)
         {
             this.domainModel.DeleteAuthor(authorViewModel.Id);
             return this.Json(new[] { authorViewModel }.ToDataSourceResult(request, this.ModelState));

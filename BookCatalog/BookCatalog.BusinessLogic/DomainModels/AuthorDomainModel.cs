@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
+    using System.Text;
     using AutoMapper;
     using DAL.Interfaces;
     using DAL.Models;
@@ -63,7 +64,7 @@
         /// </summary>
         /// <param name="authorId">Author id.</param>
         /// <returns>List of author's books.</returns>
-        public List<Book> GetBooks(int authorId)
+        public string GetBooks(int authorId)
         {
             Author author = this.authorRepository.FindById(authorId);
             if (author == null)
@@ -71,7 +72,16 @@
                 throw new InvalidFieldValueException("Author does not exist.");
             }
 
-            return author.Books.ToList();
+            StringBuilder books = new StringBuilder();
+            string separator = ", ";
+            foreach (var book in author.Books.ToList())
+            {
+                books.Append(book.Name);
+                books.Append(separator);
+                books.AppendLine(book.PublishedDate.Year.ToString());
+            }
+
+            return books.ToString();
         }
 
         /// <summary>
@@ -82,6 +92,22 @@
         public AuthorViewModel GetAuthor(int id)
         {
             return Mapper.Map<AuthorViewModel>(this.authorRepository.FindById(id));
+        }
+
+        /// <summary>
+        /// Adds or edits an author.
+        /// </summary>
+        /// <param name="authorVM">Author view model.</param>
+        public void Manage(AuthorViewModel authorVM)
+        {
+            if (authorVM.Id == 0)
+            {
+                this.AddAuthor(authorVM);
+            }
+            else
+            {
+                this.EditAuthor(authorVM);
+            }
         }
 
         /// <summary>

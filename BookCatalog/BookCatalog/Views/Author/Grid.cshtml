@@ -56,8 +56,8 @@
               model.Field(p => p.Books).Editable(false);
           })
           .Read(read => read.Action("Read", "Author"))
-          .Create(create => create.Action("Manage", "Author"))
-          .Update(update => update.Action("Manage", "Author"))
+          .Create(create => create.Action("KendoManage", "Author"))
+          .Update(update => update.Action("KendoManage", "Author"))
           .Destroy(destroy => destroy.Action("Destroy", "Author"))
       )
 )
