@@ -6,11 +6,11 @@
                     .Position(ChartTitlePosition.Top))
         .Series(series =>
         {
-            series.Column(valueExpression: model => model.Rating, categoryExpression: model => model.Name);
+            series.Column(valueExpression: model => model.Rating, categoryExpression: model => model.Name, noteTextExpression: model => model.Year.ToString());
         })
         .CategoryAxis(axis => axis
             .Categories(model => model.Name)
-            .Labels(labels => labels.Rotation(90))
+            .Labels(labels => labels.Visible(true).Template("#= dataItem.Year #"))
             .Title(title => title.Text("Book Name"))
             .Crosshair(crosshair => crosshair
                 .Visible(true)
@@ -28,11 +28,11 @@
             .Name("Rating")
         )
         .Legend(legend => legend
-            .Visible(true).Position(ChartLegendPosition.Right)
+            .Visible(false).Position(ChartLegendPosition.Right)
         )
         .ChartArea(chart => chart
             .Background("transparent")
          )
          .Zoomable(true)
-         .Tooltip(true)
+         .Tooltip(model => model.Template("#= dataItem.Name #").Visible(true))
 )
