@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
     #endregion
 
     /// <summary>
@@ -78,5 +79,10 @@
         [Required(ErrorMessage = "You need to specify at least one author.")]
         [Display(Name = "Authors")]
         public List<int> AuthorsIds { get; set; }
+
+        /// <summary>
+        /// Multi select list.
+        /// </summary>
+        public MultiSelectList AuthorsOptions { get; set; }
     }
 }

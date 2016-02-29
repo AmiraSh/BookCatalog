@@ -69,47 +69,28 @@
         }
 
         /// <summary>
-        /// Populates multi select list.
-        /// </summary>
-        /// <param name="options">Options to populate.</param>
-        public void PopulateMultiSelectList(Dictionary<int, string> options)
-        {
-            List<SelectListItem> items = new List<SelectListItem>();
-            foreach (var author in options)
-            {
-                items.Add(new SelectListItem { Value = author.Key.ToString(), Text = author.Value });
-            }
-
-            this.ViewData["AuthorsOptions"] = new MultiSelectList(items, "Value", "Text");
-        }
-
-        /// <summary>
         /// Gets a partial view for creating or editing new book.
         /// </summary>
         /// <param name="id">Identifier.</param>
         /// <returns>Partial view.</returns>
         public ActionResult AddBookForm(int? id)
         {
-            this.PopulateMultiSelectList(this.domainModel.GetAuthorsOptions());
+            BookViewModel book;
             if (id == null)
             {
-                return this.PartialView("BookForm", new BookViewModel());
+                book = new BookViewModel();
             }
-
-            BookViewModel book = this.domainModel.GetBook(id.Value);
+            else
+            {
+                book = this.domainModel.GetBook(id.Value);
+            }
+            
             if (book == null)
             {
                 throw new ArgumentException("Book does not exist.");
             }
-
-            foreach (var item in (ViewData["AuthorsOptions"] as MultiSelectList).Items)
-            {
-                if (book.AuthorsIds.Contains(int.Parse((item as SelectListItem).Value)))
-                {
-                    (item as SelectListItem).Selected = true;
-                }
-            }
-
+            
+            this.domainModel.PopulateMultiSelectList(book);
             return this.PartialView("BookForm", book);
         }
 
@@ -177,13 +158,7 @@
         /// <returns>Grid view.</returns>
         public ActionResult Grid()
         {
-            List<SelectListItem> items = new List<SelectListItem>();
-            foreach (var author in this.domainModel.GetAuthorsOptions())
-            {
-                items.Add(new SelectListItem { Value = author.Key.ToString(), Text = author.Value });
-            }
-
-            this.ViewData["AuthorsOptions"] = new MultiSelectList(items, "Value", "Text");
+            ViewData["AuthorsOptions"] = this.domainModel.PopulateMultiSelectList();
             return this.View();
         }
 
@@ -247,5 +222,10 @@
             this.domainModel.DeleteBook(bookViewModel.Id);
             return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));
         }
+
+        //public ActionResult GetMultiSelectList()
+        //{
+        //    return Json(this.domainModel.GetMultiSelectList(), JsonRequestBehavior.AllowGet);
+        //}
     }
 }

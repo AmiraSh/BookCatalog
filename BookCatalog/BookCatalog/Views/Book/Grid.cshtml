@@ -37,6 +37,7 @@
             ))
         )
       .ColumnMenu()
+      //.Events(events => events.Edit("#= OnEdit(editEvent) #"))
       .Editable(editable =>
       {
           editable.Mode(GridEditMode.PopUp).TemplateName("BookForm");
@@ -60,6 +61,7 @@
               model.Id(p => p.Id);
               model.Field(p => p.Id).Editable(false);
               model.Field(p => p.AuthorsIds).Editable(true);
+              model.Field(p => p.AuthorsOptions).DefaultValue((ViewData["AuthorsOptions"] as MultiSelectList));
           })
           .PageSize(7)
           .Read(read => read.Action("Read", "Book"))
@@ -80,6 +82,16 @@
     </div>
 </script>   
 <script>
+    //function OnEdit(editEvent) {
+    //    $.ajax({
+    //        url: "Book/GetMultiSelectList",
+    //        success: function (selectOptions) {
+    //            editEvent.container.find("[name=AuthorsOptions]")
+    //                .val(selectOptions)
+    //                .trigger("change");
+    //        }
+    //    })
+    //}
     function printAuthors(Authors) {
         var result = "";
         var j = Authors.length;

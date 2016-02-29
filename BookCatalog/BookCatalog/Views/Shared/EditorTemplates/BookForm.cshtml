@@ -52,13 +52,13 @@
     <div class="col-md-10">
         @if (Model.Id == 0)
         {
-            @(Html.Kendo().MultiSelectFor(model => model.AuthorsIds).Name("AuthorsIds").BindTo((MultiSelectList)ViewData["AuthorsOptions"])
+            @(Html.Kendo().MultiSelectFor(model => model.AuthorsIds).Name("AuthorsIds").BindTo(Model.AuthorsOptions)
                 .DataTextField("Text").DataValueField("Value").Placeholder("Choose an author...").Value(null).ValuePrimitive(true)
                 .AutoBind(false))            
         }
         else
         {
-            @(Html.Kendo().MultiSelectFor(model => model.AuthorsIds).Name("AuthorsIds").BindTo((ViewData["AuthorsOptions"] as MultiSelectList))
+            @(Html.Kendo().MultiSelectFor(model => model.AuthorsIds).Name("AuthorsIds").BindTo(Model.AuthorsOptions)
                 .DataTextField("Text").DataValueField("Value").Placeholder("Choose an author...").Value(Model.Authors.Select(author => author.Id)).ValuePrimitive(true)
                 .AutoBind(false))
         }

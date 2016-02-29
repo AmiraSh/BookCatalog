@@ -5,6 +5,7 @@
     using System.ComponentModel;
     using System.Linq;
     using System.Transactions;
+    using System.Web.Mvc;
     using AutoMapper;
     using DAL.Interfaces;
     using DAL.Models;
@@ -37,6 +38,34 @@
         {
             this.bookRepository = bookRepository;
             this.authorRepository = authorRepository;
+        }
+
+        /// <summary>
+        /// Populates multi select list.
+        /// </summary>
+        public MultiSelectList PopulateMultiSelectList()
+        {
+            return new MultiSelectList(
+                this.authorRepository.GetAll().ToList().Select(author => new SelectListItem()
+                {
+                    Text = string.Format("{0} {1}", author.FirstName, author.SecondName),
+                    Value = author.Id.ToString()
+                }), "Value", "Text");
+        }
+
+        /// <summary>
+        /// Populates multi select list.
+        /// </summary>
+        /// <param name="bookVM">Book view model.</param>
+        public void PopulateMultiSelectList(BookViewModel bookVM)
+        {
+            bookVM.AuthorsOptions = new MultiSelectList(
+                this.authorRepository.GetAll().ToList().Select(author => new SelectListItem()
+                {
+                    Text = string.Format("{0} {1}", author.FirstName, author.SecondName),
+                    Value = author.Id.ToString(),
+                    Selected = (bookVM.Authors.FirstOrDefault(bookAuthor => bookAuthor.Id == author.Id) != null)
+                }), "Value", "Text");
         }
 
         /// <summary>
@@ -137,22 +166,6 @@
 
             this.bookRepository.Delete(book);
             this.bookRepository.SaveChanges();
-        }
-
-        /// <summary>
-        /// Gets authors' dictionary.
-        /// </summary>
-        /// <returns>Authors' dictionary.</returns>
-        public Dictionary<int, string> GetAuthorsOptions()
-        {
-            Dictionary<int, string> options = new Dictionary<int, string>();
-            List<Author> authors = this.authorRepository.GetAll().ToList();
-            foreach (Author author in authors)
-            {
-                options.Add(author.Id, string.Format("{0} {1}", author.FirstName, author.SecondName));
-            }
-
-            return options;
         }
 
         /// <summary>
