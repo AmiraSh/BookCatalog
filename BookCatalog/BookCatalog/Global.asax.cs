@@ -8,6 +8,7 @@
     using BusinessLogic.AuthoMapperExtention;
     using BookCatalog.Infrastructure.Logging;
     using BookCatalog.Infrastructure.Logging.Concrete;
+    using System.Web.Http;
     #endregion
 
     /// <summary>
@@ -28,6 +29,7 @@
             this.logger = (ILogger)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(ILogger));
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperConfiguration.Configure();
