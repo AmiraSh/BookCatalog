@@ -32,6 +32,11 @@
                 throw new InvalidFieldValueException("Pages' count should be in range from 1 to 20,000.", "PagesCount");
             }
 
+            if (bookVM.Rating < 1 || bookVM.Rating > 5)
+            {
+                throw new InvalidFieldValueException("Rating should be between 1 and 5.", "Rating");
+            }
+
             if (bookVM.PublishedDate.CompareTo(DateTime.Now) > -1)
             {
                 throw new InvalidFieldValueException("Published day should ealier then today.", "PublishedDate");
