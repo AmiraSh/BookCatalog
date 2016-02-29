@@ -25,7 +25,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PagesCount, htmlAttributes: new { @class = "control-label col-md-1" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.PagesCount, htmlAttributes: new { @class = "form-control col-md-9" })
+                @(Html.Kendo().NumericTextBoxFor(model => model.PagesCount).Name("PagesCount").Min(1).Max(20000).Step(1).Value(150).Decimals(0).Format("#"))
                 @Html.ValidationMessageFor(model => model.PagesCount, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Rating, htmlAttributes: new { @class = "control-label col-md-1" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Rating, htmlAttributes: new { @class = "form-control col-md-9" })
+                @(Html.Kendo().NumericTextBoxFor(model => model.Rating).Name("Rating").Min(1).Max(5).Step(1).Value(3).Decimals(0).Format("#"))
                 @Html.ValidationMessageFor(model => model.Rating, "", new { @class = "text-danger" })
             </div>
         </div>
