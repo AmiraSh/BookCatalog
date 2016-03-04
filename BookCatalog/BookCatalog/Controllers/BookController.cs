@@ -29,14 +29,19 @@
         private BookDomainModel domainModel;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BookController"/> class.
+        /// Gets the domain model or creates new if it was null.
         /// </summary>
-        /// <param name="bookRepository">Book repository.</param>
-        /// <param name="authorRepository">Author repository.</param>
-        /// <param name="logger">Logger.</param>
-        public BookController(IBookRepository bookRepository, IAuthorRepository authorRepository, ILogger logger) : base(logger)
+        private BookDomainModel DomainModel
         {
-            this.domainModel = new BookDomainModel(bookRepository, authorRepository);
+            get
+            {
+                if (domainModel == null)
+                {
+                    domainModel = new BookDomainModel((IBookRepository)DependencyResolver.Current.GetService(typeof(IBookRepository)), (IAuthorRepository)DependencyResolver.Current.GetService(typeof(IAuthorRepository)));
+                }
+
+                return domainModel;
+            }
         }
 
         /// <summary>
@@ -45,7 +50,7 @@
         /// <returns>Main page.</returns>
         public ActionResult Index()
         {
-            return this.View(this.domainModel.GetBooks());
+            return this.View(this.DomainModel.GetBooks());
         }
 
         /// <summary>
@@ -60,7 +65,7 @@
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            BookViewModel book = this.domainModel.GetBook(id.Value);
+            BookViewModel book = this.DomainModel.GetBook(id.Value);
             if (book == null)
             {
                 throw new ArgumentException("Book does not exist.");
@@ -83,7 +88,7 @@
             }
             else
             {
-                book = this.domainModel.GetBook(id.Value);
+                book = this.DomainModel.GetBook(id.Value);
             }
             
             if (book == null)
@@ -91,7 +96,7 @@
                 throw new ArgumentException("Book does not exist.");
             }
             
-            this.domainModel.PopulateMultiSelectList(book);
+            this.DomainModel.PopulateMultiSelectList(book);
             return this.PartialView("BookForm", book);
         }
 
@@ -113,14 +118,14 @@
                 return this.Json(new { error = exception.ValidationMessage });
             }
 
-            this.domainModel.Manage(bookVM);
+            this.DomainModel.Manage(bookVM);
             return this.Json(new
             {
                 Id = bookVM.Id,
                 Name = bookVM.Name,
                 PublishedDate = bookVM.PublishedDate.ToString("MM/dd/yyyy"),
                 PagesCount = bookVM.PagesCount,
-                Authors = this.domainModel.GetAuthors(bookVM.Id)
+                Authors = this.DomainModel.GetAuthors(bookVM.Id)
             });
         }
 
@@ -132,8 +137,17 @@
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            this.domainModel.DeleteBook(id);
+            this.DomainModel.DeleteBook(id);
             return this.Json(id);
+        }
+
+        /// <summary>
+        /// Gets books' count.
+        /// </summary>
+        /// <returns>Books' count.</returns>
+        public JsonResult GetBooksCount()
+        {
+            return this.Json(this.DomainModel.GetBooksCount(), JsonRequestBehavior.AllowGet);
         }
 
         ///-----------------------
@@ -145,7 +159,7 @@
         /// <returns>Grid view.</returns>
         public ActionResult Grid()
         {
-            return this.View(this.domainModel.PopulateMultiSelectList());
+            return this.View(this.DomainModel.PopulateMultiSelectList());
         }
 
         /// <summary>
@@ -158,7 +172,7 @@
             int total;
             var sorts = KendoAnalyser.GetSorts(request.Sorts);
             var filters = KendoAnalyser.GetFilters(request.Filters);
-            var books = this.domainModel.GetBooks(out total, sorts, filters, request.PageSize, (request.Page - 1) * request.PageSize);
+            var books = this.DomainModel.GetBooks(out total, sorts, filters, request.PageSize, (request.Page - 1) * request.PageSize);
             DataSourceResult result = books.ToDataSourceResult(request);
             result.Data = books;
             result.Total = total;
@@ -184,7 +198,7 @@
                 return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));
             }
 
-            this.domainModel.Manage(bookViewModel);
+            this.DomainModel.Manage(bookViewModel);
             return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));
         }
 
@@ -197,7 +211,7 @@
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Destroy([DataSourceRequest]DataSourceRequest request, BookViewModel bookViewModel)
         {
-            this.domainModel.DeleteBook(bookViewModel.Id);
+            this.DomainModel.DeleteBook(bookViewModel.Id);
             return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));
         }
     }

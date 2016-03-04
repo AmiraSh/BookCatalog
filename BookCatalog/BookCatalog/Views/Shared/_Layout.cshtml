@@ -12,6 +12,8 @@
     @Scripts.Render("~/bundles/datatable")
     @Styles.Render("~/Content/kendo/css")
     @Scripts.Render("~/bundles/kendo")
+    @Scripts.Render("~/bundles/angularjs")
+    @Scripts.Render("~/bundles/appjs")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -24,8 +26,10 @@
                 </button>
                 @Html.ActionLink("Books Catalog", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                     <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Books", "Index", "Book")</li>
-                        <li>@Html.ActionLink("Authors", "Index", "Author")</li>
+                        @*<li>@Html.ActionLink("Books", "Index", "Book")</li>
+                        <li>@Html.ActionLink("Authors", "Index", "Author")</li>*@
+                        <li>@Html.ActionLink("Books", "BookGrid", "Home")</li>
+                        <li>@Html.ActionLink("Authors", "AuthorGrid", "Home")</li>
                     </ul>
             </div>
         </div>

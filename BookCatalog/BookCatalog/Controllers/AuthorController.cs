@@ -27,13 +27,19 @@
         private AuthorDomainModel domainModel;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AuthorController"/> class.
+        /// Gets the domain model or creates new if it was null.
         /// </summary>
-        /// <param name="authorRepository">Author repository.</param>
-        /// <param name="logger">Logger.</param>
-        public AuthorController(IAuthorRepository authorRepository, ILogger logger) : base(logger)
+        private AuthorDomainModel DomainModel
         {
-            this.domainModel = new AuthorDomainModel(authorRepository);
+            get
+            {
+                if (domainModel == null)
+                {
+                    domainModel = new AuthorDomainModel((IAuthorRepository)DependencyResolver.Current.GetService(typeof(IAuthorRepository)));
+                }
+
+                return domainModel;
+            }
         }
 
         /// <summary>
@@ -42,7 +48,7 @@
         /// <returns>A page with authors' list.</returns>
         public ActionResult Index()
         {
-            return this.View(this.domainModel.GetAuthors());
+            return this.View(this.DomainModel.GetAuthors());
         }
 
         /// <summary>
@@ -55,7 +61,7 @@
         /// <returns>Author's page.</returns>
         public ActionResult Details(int id, string FirstName, string LastName, int? BooksCount)
         {
-            AuthorViewModel author = this.domainModel.GetAuthor(id);
+            AuthorViewModel author = this.DomainModel.GetAuthor(id);
             if (author == null)
             {
                 throw new ArgumentException("Author does not exist.");
@@ -76,7 +82,7 @@
                 return this.PartialView("AuthorForm", new AuthorViewModel());
             }
 
-            AuthorViewModel author = this.domainModel.GetAuthor(id.Value);
+            AuthorViewModel author = this.DomainModel.GetAuthor(id.Value);
             if (author == null)
             {
                 throw new ArgumentException("Author does not exist.");
@@ -103,14 +109,14 @@
                 return this.Json(new { error = exception.ValidationMessage });
             }
 
-            this.domainModel.Manage(authorVM);            
+            this.DomainModel.Manage(authorVM);            
             return this.Json(new
             {
                 Id = authorVM.Id,
                 FirstName = authorVM.FirstName,
                 SecondName = authorVM.SecondName,
                 BooksCount = authorVM.BooksCount,
-                Books = this.domainModel.GetBooks(authorVM.Id)
+                Books = this.DomainModel.GetBooks(authorVM.Id)
             });
         }
 
@@ -122,8 +128,26 @@
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            this.domainModel.DeleteAuthor(id);
+            this.DomainModel.DeleteAuthor(id);
             return this.Json(id);
+        }
+
+        /// <summary>
+        /// Gets authors' count.
+        /// </summary>
+        /// <returns>Authors' count.</returns>
+        public JsonResult GetAuthorsCount()
+        {
+            return this.Json(this.DomainModel.GetAuthorsCount(), JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Gets authors.
+        /// </summary>
+        /// <returns>Authors.</returns>
+        public JsonResult GetAuthors()
+        {
+            return this.Json(this.DomainModel.GetAuthors(), JsonRequestBehavior.AllowGet);
         }
 
         ///-----------------------
@@ -150,7 +174,7 @@
                 return this.PartialView();
             }
 
-            return this.PartialView(this.domainModel.GetAuthor(Id.Value));
+            return this.PartialView(this.DomainModel.GetAuthor(Id.Value));
         }
 
         /// <summary>
@@ -163,7 +187,7 @@
             int total;
             var sorts = KendoAnalyser.GetSorts(request.Sorts);
             var filters = KendoAnalyser.GetFilters(request.Filters);
-            var authors = this.domainModel.GetAuthors(out total, sorts, filters, request.PageSize, (request.Page - 1) * request.PageSize);
+            var authors = this.DomainModel.GetAuthors(out total, sorts, filters, request.PageSize, (request.Page - 1) * request.PageSize);
             DataSourceResult result = authors.ToDataSourceResult(request);
             result.Data = authors;
             result.Total = total;
@@ -189,7 +213,7 @@
                 return this.Json(new[] { authorViewModel }.ToDataSourceResult(request, this.ModelState));
             }
 
-            this.domainModel.Manage(authorViewModel);
+            this.DomainModel.Manage(authorViewModel);
             return this.Json(new[] { authorViewModel }.ToDataSourceResult(request, this.ModelState));
         }
 
@@ -202,7 +226,7 @@
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Destroy([DataSourceRequest]DataSourceRequest request, AuthorViewModel authorViewModel)
         {
-            this.domainModel.DeleteAuthor(authorViewModel.Id);
+            this.DomainModel.DeleteAuthor(authorViewModel.Id);
             return this.Json(new[] { authorViewModel }.ToDataSourceResult(request, this.ModelState));
         }
     }

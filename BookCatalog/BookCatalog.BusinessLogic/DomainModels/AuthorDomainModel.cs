@@ -42,6 +42,15 @@
         }
 
         /// <summary>
+        /// Gets authors' count.
+        /// </summary>
+        /// <returns>Authors' count.</returns>
+        public int GetAuthorsCount()
+        {
+            return this.authorRepository.GetSize();
+        }
+
+        /// <summary>
         /// Gets authors.
         /// </summary>
         /// <param name="sorts">Sotrs.</param>

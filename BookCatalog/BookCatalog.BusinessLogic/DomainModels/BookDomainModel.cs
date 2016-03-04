@@ -42,6 +42,15 @@
         }
 
         /// <summary>
+        /// Gets books' count.
+        /// </summary>
+        /// <returns>Books' count.</returns>
+        public int GetBooksCount()
+        {
+            return this.bookRepository.GetSize();
+        }
+
+        /// <summary>
         /// Populates multi select list.
         /// </summary>
         public List<SelectListItem> PopulateMultiSelectList()

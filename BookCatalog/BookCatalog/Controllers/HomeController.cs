@@ -17,5 +17,23 @@
         {
             return this.View();
         }
+
+        /// <summary>
+        /// Displays a page with books grid.
+        /// </summary>
+        /// <returns>The page.</returns>
+        public ActionResult BookGrid()
+        {
+            return this.View();
+        }
+
+        /// <summary>
+        /// Displays a page with authors grid.
+        /// </summary>
+        /// <returns>The page.</returns>
+        public ActionResult AuthorGrid()
+        {
+            return this.View();
+        }
     }
 }

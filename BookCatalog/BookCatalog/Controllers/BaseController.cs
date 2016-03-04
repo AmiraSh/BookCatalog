@@ -19,9 +19,9 @@
         /// Initializes a new instance of the <see cref="BaseController"/> class.
         /// </summary>
         /// <param name="logger">Logger instance.</param>
-        public BaseController(ILogger logger)
+        public BaseController()
         {
-            this.logger = logger;
+            this.logger = (ILogger)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(ILogger));
         }
 
         /// <summary>

@@ -56,6 +56,13 @@
                 "~/Content/kendo/kendo.common-bootstrap.min.css",
                 "~/Content/kendo/kendo.bootstrap.min.css"));
 
+            bundles.Add(new ScriptBundle("~/bundles/angularjs").Include(
+                      "~/Scripts/angular.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/appjs").Include(
+                      "~/Scripts/angularController/authorController.js",
+                      "~/Scripts/angularController/bookController.js"));            
+
             bundles.IgnoreList.Clear();
         }
     }

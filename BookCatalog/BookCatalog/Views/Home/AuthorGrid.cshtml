@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Author Grid";
+}
+<div data-ng-controller="authorController" class="container" ng-app="angularAuthorController">
+    <div class="row">
+        <div class="col-md-12">
+            <strong class="error">{{ error }}</strong>
+            <p data-ng-hide="addMode"><a data-ng-click="toggleAdd()" href="javascript:;" class="btn btn-primary">Add New</a></p>
+            <form name="addAuthor" data-ng-show="addMode" style="width:600px;margin:0px auto;">
+                <div class="form-group">
+                    <label for="firstname" class="col-sm-3 control-label">First Name:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="firstname" placeholder="First name" data-ng-model="newauthor.FirstName" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="secondname" class="col-sm-3 control-label">Last Name:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="secondname" placeholder="last name" data-ng-model="newauthor.SecondName" required />
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" value="Add" data-ng-click="add()" data-ng-disabled="!addAuthor.$valid" class="btn btn-primary" />
+                        <input type="button" value="Cancel" data-ng-click="toggleAdd()" class="btn btn-primary" />
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </div>
+    <div class="row" style="margin:5px">
+        <input type="text" ng-model="searchText" placeholder="Search text" class="form-control" />
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-hover" style="width:80%">
+                <tr>
+                    <th>Id</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Books</th>
+                    <th></th>
+                </tr>
+                <tr data-ng-repeat="author in authors | filter : searchText">
+                    <td><strong data-ng-hide="author.editMode">{{ author.Id }}</strong></td>
+                    <td>
+                        <p data-ng-hide="author.editMode">{{ author.FirstName }}</p>
+                        <input data-ng-show="author.editMode" type="text" data-ng-model="author.FirstName" />
+                    </td>
+                    <td>
+                        <p data-ng-hide="author.editMode">{{ author.SecondName }}</p>
+                        <input data-ng-show="author.editMode" type="text" data-ng-model="author.SecondName" />
+                    </td>
+                    <td>
+                        <ul data-ng-hide="author.editMode" style="list-style: decimal;">
+                            <li ng-repeat="book in author.Books">
+                                {{ book.Name }}
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <p data-ng-hide="author.editMode"><a data-ng-click="toggleEdit(author)" href="javascript:;">Edit</a> | <a data-ng-click="deleteAuthor(author)" href="javascript:;">Delete</a></p>
+                        <p data-ng-show="author.editMode"><a data-ng-click="save(author)" href="javascript:;">Save</a> | <a data-ng-click="toggleEdit(author)" href="javascript:;">Cancel</a></p>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+        </div>
+    </div>
+    @*<pagination ng-model="currentPage"
+                total-items="authors.length"
+                max-size="maxSize"
+                boundary-links="true">
+    </pagination>*@
+    <div id="mydiv" data-ng-show="loading">
+        <img src="~/Content/Images/ajax-loader.gif" class="ajax-loader" />
+    </div>
+</div>
