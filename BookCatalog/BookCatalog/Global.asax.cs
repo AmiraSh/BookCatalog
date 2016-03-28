@@ -1,4 +1,4 @@
-﻿namespace BookCatalog
+﻿namespace BookCatalog.UI
 {
     #region Using
     using System;
@@ -9,6 +9,7 @@
     using BookCatalog.Infrastructure.Logging;
     using BookCatalog.Infrastructure.Logging.Concrete;
     using System.Web.Http;
+    using App_Start;
     #endregion
 
     /// <summary>

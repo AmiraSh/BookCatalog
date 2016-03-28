@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog", "BookCatalog\BookCatalog.csproj", "{D1BAB331-124D-42D1-B1EF-8F6E1F8E8FDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.UI", "BookCatalog\BookCatalog.UI.csproj", "{D1BAB331-124D-42D1-B1EF-8F6E1F8E8FDA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.BusinessLogic", "BookCatalog.BusinessLogic\BookCatalog.BusinessLogic.csproj", "{89544EAF-CCA2-4A44-82AA-3E6B086FD3CA}"
 EndProject

@@ -13,7 +13,7 @@
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BookCatalog</RootNamespace>
+    <RootNamespace>BookCatalog.UI</RootNamespace>
     <AssemblyName>BookCatalog</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
@@ -194,15 +194,27 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\KendoAngular\Controllers\AuthorController.cs" />
+    <Compile Include="Areas\KendoAngular\Controllers\BookController.cs" />
+    <Compile Include="Areas\KendoAngular\Controllers\CatalogController.cs" />
+    <Compile Include="Areas\KendoAngular\KendoAngularAreaRegistration.cs" />
     <Compile Include="Controllers\AuthorController.cs" />
-    <Compile Include="Controllers\AuthorsController.cs" />
-    <Compile Include="Controllers\BaseController.cs" />
-    <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\BookController.cs" />
-    <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\FileBrowserController.cs" />
+    <Compile Include="Areas\Angular\AngularAreaRegistration.cs" />
+    <Compile Include="Areas\Kendo\Controllers\AuthorController.cs" />
+    <Compile Include="Areas\Kendo\Controllers\BookController.cs" />
+    <Compile Include="Areas\Kendo\Controllers\CatalogController.cs" />
+    <Compile Include="Areas\Kendo\KendoAreaRegistration.cs" />
+    <Compile Include="Areas\MVC\MVCAreaRegistration.cs" />
+    <Compile Include="Areas\MVC\Controllers\AuthorController.cs" />
+    <Compile Include="Areas\System\SystemAreaRegistration.cs" />
+    <Compile Include="Areas\System\Controllers\BaseController.cs" />
+    <Compile Include="Areas\MVC\Controllers\BookController.cs" />
+    <Compile Include="Areas\System\Controllers\ErrorController.cs" />
+    <Compile Include="Areas\System\Controllers\FileBrowserController.cs" />
+    <Compile Include="Areas\Angular\Controllers\CatalogController.cs" />
+    <Compile Include="Areas\System\Controllers\ImageBrowserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ImageBrowserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -210,6 +222,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\System\Views\Shared\ApplicationError.htm" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker.min.css" />
     <Content Include="Content\bootstrap-datepicker.standalone.css" />
@@ -297,6 +310,42 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Areas\MVC\Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Kendo\Views\web.config" />
+    <Content Include="Areas\System\Views\web.config" />
+    <Content Include="Areas\Angular\Views\web.config" />
+    <Content Include="Areas\System\Views\Shared\Error.cshtml" />
+    <Content Include="Areas\System\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\MVC\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Angular\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Kendo\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\System\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\MVC\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Angular\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\web.config" />
+    <Content Include="Areas\KendoAngular\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\AuthorForm.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\BookForm.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\BooksChart.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\CustomDate.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\Description.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\Email.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\Integer.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\Number.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\Time.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Shared\EditorTemplates\Url.cshtml" />
+    <Content Include="Areas\KendoAngular\Views\Catalog\Index.cshtml" />
     <None Include="Properties\PublishProfiles\BookCatalogIIS.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
@@ -404,39 +453,46 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Book\BookForm.cshtml" />
-    <Content Include="Views\Book\Details.cshtml" />
-    <Content Include="Views\Book\Index.cshtml" />
-    <Content Include="Views\Author\Index.cshtml" />
-    <Content Include="Views\Author\AuthorForm.cshtml" />
-    <Content Include="Views\Author\Details.cshtml" />
-    <Content Include="Views\Error\Index.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Currency.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Email.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Integer.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Number.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Time.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Url.cshtml" />
+    <Content Include="Areas\MVC\Views\Book\BookForm.cshtml" />
+    <Content Include="Areas\MVC\Views\Book\Details.cshtml" />
+    <Content Include="Areas\MVC\Views\Book\Index.cshtml" />
+    <Content Include="Areas\MVC\Views\Author\Index.cshtml" />
+    <Content Include="Areas\MVC\Views\Author\AuthorForm.cshtml" />
+    <Content Include="Areas\MVC\Views\Author\Details.cshtml" />
+    <Content Include="Areas\System\Views\Error\Index.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\Currency.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\Date.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\Email.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\GridForeignKey.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\Integer.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\Number.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\Time.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\Url.cshtml" />
+    <Content Include="Areas\Kendo\Views\Catalog\Index.cshtml" />
+    <Content Include="Areas\Kendo\Views\Book\Grid.cshtml" />
+    <Content Include="Areas\Kendo\Views\Author\Grid.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\CustomDate.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\Description.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\AuthorForm.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\BookForm.cshtml" />
+    <Content Include="Areas\Kendo\Views\Shared\EditorTemplates\BooksChart.cshtml" />
+    <Content Include="Areas\Kendo\Views\Book\BooksChart.cshtml" />
+    <Content Include="Areas\Angular\Views\Catalog\Books.cshtml" />
+    <Content Include="Areas\Angular\Views\Catalog\Authors.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Book\Grid.cshtml" />
-    <Content Include="Views\Author\Grid.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\CustomDate.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\Description.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\AuthorForm.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\BookForm.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\BooksChart.cshtml" />
-    <Content Include="Views\Author\BooksChart.cshtml" />
-    <Content Include="Views\Home\BookGrid.cshtml" />
-    <Content Include="Views\Home\AuthorGrid.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Angular\Models\" />
+    <Folder Include="Areas\KendoAngular\Models\" />
+    <Folder Include="Areas\KendoAngular\Views\Author\" />
+    <Folder Include="Areas\KendoAngular\Views\Book\" />
+    <Folder Include="Areas\Kendo\Models\" />
+    <Folder Include="Areas\MVC\Models\" />
     <Folder Include="Content\UserFiles\Files\" />
     <Folder Include="Content\UserFiles\Images\" />
   </ItemGroup>
