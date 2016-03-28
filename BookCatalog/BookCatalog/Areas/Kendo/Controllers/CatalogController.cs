@@ -1,16 +1,13 @@
-﻿namespace BookCatalog.UI.Controllers
+﻿namespace BookCatalog.UI.Areas.Kendo.Controllers
 {
     #region Using
-    using System.Web.Mvc;
+    using global::System.Web.Mvc;
     #endregion
 
-    /// <summary>
-    /// Home controller.
-    /// </summary>
-    public class HomeController : Controller
+    public class CatalogController : Controller
     {
         /// <summary>
-        /// Displays main page.
+        /// Gets main page.
         /// </summary>
         /// <returns>Main page.</returns>
         public ActionResult Index()

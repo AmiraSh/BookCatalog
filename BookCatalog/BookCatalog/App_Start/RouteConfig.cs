@@ -1,4 +1,4 @@
-﻿namespace BookCatalog
+﻿namespace BookCatalog.UI
 {
     #region Using
     using System.Web.Mvc;
@@ -17,17 +17,13 @@
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            
             routes.MapRoute(
                 name: "ErrorPage",
-                url: "Error/Index",
-                defaults: new { controller = "Error", action = "Index" });
-
-            routes.MapRoute(
-                name: "AuthorDetails",
-                url: "Author/Details/{id}/{FirstName}/{LastName}/{BooksCount}",
-                defaults: new { controller = "Author", action = "Details", id = UrlParameter.Optional, FirstName = UrlParameter.Optional, LastName = UrlParameter.Optional, BooksCount = UrlParameter.Optional });
-
+                url: "System/Error/Index",
+                defaults: new { area = "System", controller = "Error", action = "Index" },
+                namespaces: new[] { "BookCatalog.UI.Areas.System.Controllers" });
+            
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

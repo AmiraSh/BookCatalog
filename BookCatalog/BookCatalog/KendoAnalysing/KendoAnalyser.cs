@@ -1,4 +1,4 @@
-﻿namespace BookCatalog.KendoAnalysing
+﻿namespace BookCatalog.UI.KendoAnalysing
 {
     #region Using
     using System.Collections.Generic;

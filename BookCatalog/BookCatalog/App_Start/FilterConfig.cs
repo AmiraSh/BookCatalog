@@ -1,4 +1,4 @@
-﻿namespace BookCatalog
+﻿namespace BookCatalog.UI
 {
     #region Using
     using System.Web.Mvc;

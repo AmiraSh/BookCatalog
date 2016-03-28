@@ -1,27 +1,22 @@
-﻿namespace BookCatalog.Controllers
+﻿namespace BookCatalog.API.Controllers
 {
     #region Using
-    using System;
     using System.Collections.Generic;
-    using System.Net;
-    using System.Text;
+    using System.Linq;
+    using System.Web.Http;
+    using System.Web.Http.Description;
     using System.Web.Mvc;
     using BusinessLogic.DomainModel;
     using BusinessLogic.Validation;
     using BusinessLogic.ViewModels;
     using DAL.Interfaces;
     using Infrastructure.Errors;
-    using Infrastructure.Logging;
-    using Kendo.Mvc.Extensions;
-    using Kendo.Mvc.UI;
-    using KendoAnalysing;
-    using Newtonsoft.Json;
     #endregion
 
     /// <summary>
-    /// Book's catalog controller.
+    /// Book api controller.
     /// </summary>
-    public class BookController : BaseController
+    public class BookController : ApiController
     {
         /// <summary>
         /// Domain model.
@@ -45,174 +40,73 @@
         }
 
         /// <summary>
-        /// Displays main page with books' list.
+        /// Gets all books.
         /// </summary>
-        /// <returns>Main page.</returns>
-        public ActionResult Index()
+        /// <returns>Books' list.</returns>
+        public IEnumerable<BookViewModel> GetAll()
         {
-            return this.View(this.DomainModel.GetBooks());
+            return this.DomainModel.GetBooks();
         }
 
         /// <summary>
-        /// Displays a book.
+        /// Gets book's details.
         /// </summary>
-        /// <param name="id">Book id.</param>
-        /// <returns>Book page.</returns>
-        public ActionResult Details(int? id)
+        /// <param name="id">Book identifier.</param>
+        /// <returns>Book details.</returns>
+        [ResponseType(typeof(BookViewModel))]
+        public IHttpActionResult Get(int id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            BookViewModel book = this.DomainModel.GetBook(id.Value);
+            BookViewModel book = this.DomainModel.GetBook(id);
             if (book == null)
             {
-                throw new ArgumentException("Book does not exist.");
+                return NotFound();
             }
 
-            return this.View(book);
-        }
-
-        /// <summary>
-        /// Gets a partial view for creating or editing new book.
-        /// </summary>
-        /// <param name="id">Identifier.</param>
-        /// <returns>Partial view.</returns>
-        public ActionResult AddBookForm(int? id)
-        {
-            BookViewModel book;
-            if (id == null)
-            {
-                book = new BookViewModel();
-            }
-            else
-            {
-                book = this.DomainModel.GetBook(id.Value);
-            }
-            
-            if (book == null)
-            {
-                throw new ArgumentException("Book does not exist.");
-            }
-            
-            this.DomainModel.PopulateMultiSelectList(book);
-            return this.PartialView("BookForm", book);
-        }
-
-        /// <summary>
-        /// Creates or edits a book.
-        /// </summary>
-        /// <param name="bookVM">Book view model.</param>
-        /// <returns>Json.</returns>
-        [HttpPost]
-        public JsonResult Manage(BookViewModel bookVM)
-        {
-            try
-            {
-                Validator.Validate(bookVM);
-            }
-            catch (InvalidFieldValueException exception)
-            {
-                ModelState.AddModelError(exception.Field, exception.ValidationMessage);
-                return this.Json(new { error = exception.ValidationMessage });
-            }
-
-            this.DomainModel.Manage(bookVM);
-            return this.Json(new
-            {
-                Id = bookVM.Id,
-                Name = bookVM.Name,
-                PublishedDate = bookVM.PublishedDate.ToString("MM/dd/yyyy"),
-                PagesCount = bookVM.PagesCount,
-                Authors = this.DomainModel.GetAuthors(bookVM.Id)
-            });
+            return Ok(book);
         }
 
         /// <summary>
         /// Deletes a book.
         /// </summary>
-        /// <param name="id">Book id.</param>
-        /// <returns>Identifier of deleted item.</returns>
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            this.DomainModel.DeleteBook(id);
-            return this.Json(id);
-        }
-
-        /// <summary>
-        /// Gets books' count.
-        /// </summary>
-        /// <returns>Books' count.</returns>
-        public JsonResult GetBooksCount()
-        {
-            return this.Json(this.DomainModel.GetBooksCount(), JsonRequestBehavior.AllowGet);
-        }
-
-        ///-----------------------
-        ///      Kendo Part
-        ///-----------------------
-        /// <summary>
-        /// Grid.
-        /// </summary>
-        /// <returns>Grid view.</returns>
-        public ActionResult Grid()
-        {
-            return this.View(this.DomainModel.PopulateMultiSelectList());
-        }
-
-        /// <summary>
-        /// Reads grids' elements.
-        /// </summary>
-        /// <param name="request">Request.</param>
-        /// <returns>Grids' elements.</returns>
-        public JsonResult Read([DataSourceRequest]DataSourceRequest request)
-        {
-            int total;
-            var sorts = KendoAnalyser.GetSorts(request.Sorts);
-            var filters = KendoAnalyser.GetFilters(request.Filters);
-            var books = this.DomainModel.GetBooks(out total, sorts, filters, request.PageSize, (request.Page - 1) * request.PageSize);
-            DataSourceResult result = books.ToDataSourceResult(request);
-            result.Data = books;
-            result.Total = total;
-            return this.Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Creates or updates an entity.
-        /// </summary>
-        /// <param name="request">Request.</param>
-        /// <param name="bookViewModel">Book view model.</param>
-        /// <returns>Created or updated entity.</returns>
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult KendoManage([DataSourceRequest]DataSourceRequest request, BookViewModel bookViewModel)
+        /// <param name="id">Book identifier.</param>
+        /// <returns></returns>
+        [ResponseType(typeof(BookViewModel))]
+        public IHttpActionResult Delete(int id)
         {
             try
             {
-                Validator.Validate(bookViewModel);
+                this.DomainModel.DeleteBook(id);
             }
-            catch (InvalidFieldValueException exception)
+            catch (InvalidFieldValueException)
             {
-                this.ModelState.AddModelError(exception.Field, exception.ValidationMessage);
-                return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));
+                return NotFound();
             }
 
-            this.DomainModel.Manage(bookViewModel);
-            return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));
+            return Ok(this.DomainModel.GetBook(id));
         }
 
         /// <summary>
-        /// Deletes an entity.
+        /// Creates a book.
         /// </summary>
-        /// <param name="request">Request.</param>
-        /// <param name="bookViewModel">Book view model.</param>
-        /// <returns>Deleted entity.</returns>
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult Destroy([DataSourceRequest]DataSourceRequest request, BookViewModel bookViewModel)
+        /// <param name="book">Book view model.</param>
+        /// <returns></returns>
+        [ResponseType(typeof(BookViewModel))]
+        [System.Web.Http.HttpPost]
+        public IHttpActionResult Manage(BookViewModel book)
         {
-            this.DomainModel.DeleteBook(bookViewModel.Id);
-            return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));
+            book.AuthorsIds.AddRange(book.Authors.Select(author => author.Id).ToList());
+            try
+            {
+                Validator.Validate(book);
+            }
+            catch (InvalidFieldValueException exception)
+            {
+                ModelState.AddModelError("error", exception.ValidationMessage);
+                return BadRequest(ModelState);
+            }
+
+            this.DomainModel.Manage(book);
+            return CreatedAtRoute("DefaultApi", new { id = book.Id }, book);
         }
     }
 }

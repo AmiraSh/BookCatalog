@@ -1,0 +1,121 @@
+﻿@{
+    ViewBag.Title = "Book Grid";
+}
+<div data-ng-controller="bookController" class="container" ng-app="angularBookController">
+    <div class="row">
+        <div class="col-md-12">
+            <strong class="error">{{ error }}</strong>
+            <p data-ng-hide="addMode"><a data-ng-click="toggleAdd()" href="javascript:;" class="btn btn-primary">Add New</a></p>
+            <form name="addBook" data-ng-show="addMode" style="width:600px;margin:0px auto;">
+                <div class="form-group">
+                    <label for="name" class="col-sm-3 control-label">Name:</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" id="name" placeholder="Book name" data-ng-model="newbook.Name" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="publisheddate" class="col-sm-3 control-label">Published date:</label>
+                    <div class="col-sm-8">
+                        <input kendo-date-picker type="date" class="form-control" id="publisheddate" placeholder="Published date" data-ng-model="newbook.PublishedDate" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pagescount" class="col-sm-3 control-label">Pages count:</label>
+                    <div class="col-sm-8">
+                        <input type="number" class="form-control" id="pagescount" placeholder="Pages count" data-ng-model="newbook.PagesCount" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="description" class="col-sm-3 control-label">Description:</label>
+                    <div class="col-sm-8">
+                        <textarea type="text" class="form-control" rows="4" id="description" placeholder="Description" data-ng-model="newbook.Description"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rating" class="col-sm-3 control-label">Rating:</label>
+                    <div class="col-sm-8">
+                        <input type="range" min="1" max="5" id="rating" placeholder="Rating" data-ng-model="newbook.Rating" value="3" required />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="authors" class="col-sm-3 control-label">Authors:</label>
+                    <div class="col-sm-8">
+                        <select id="authors" class="form-control" data-ng-model="newbook.Authors" multiple=""
+                                ng-options="(author.FirstName + ' ' + author.LastName) for author in authorsInfo"
+                                required>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <input type="submit" value="Add" data-ng-click="add()" data-ng-disabled="!addBook.$valid" class="btn btn-primary" />
+                        <input type="button" value="Cancel" data-ng-click="toggleAdd()" class="btn btn-primary" />
+                    </div>
+                </div>
+                <br />
+            </form>
+        </div>
+    </div>
+    <div class="row" style="margin:5px">
+        <input type="text" ng-model="searchText" placeholder="Search text" class="form-control" />
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover" style="width:80%">
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>PublishedDate</th>
+                    <th>PagesCount</th>
+                    <th>Description</th>
+                    <th>Rating</th>
+                    <th>Authors</th>
+                    <th></th>
+                </tr>
+                <tr data-ng-repeat="book in books | filter : searchText">
+                    <td><strong data-ng-hide="book.editMode">{{ book.Id }}</strong></td>
+                    <td>
+                        <p data-ng-hide="book.editMode">{{ book.Name }}</p>
+                        <input data-ng-show="book.editMode" type="text" data-ng-model="book.Name" />
+                    </td>
+                    <td>
+                        <p data-ng-hide="book.editMode">{{ book.PublishedDate | date:'MM/dd/yyyy' }}</p>
+                        <input data-ng-show="book.editMode" type="date" data-ng-model="book.PublishedDate" />
+                    </td>
+                    <td>
+                        <p data-ng-hide="book.editMode">{{ book.PagesCount }}</p>
+                        <input data-ng-show="book.editMode" type="number" data-ng-model="book.PagesCount" />
+                    </td>
+                    <td>
+                        <p data-ng-hide="book.editMode">{{book.Description}}</p>
+                        <input data-ng-show="book.editMode" type="text" data-ng-model="book.Description" />
+                    </td>
+                    <td>
+                        <p data-ng-hide="book.editMode">{{ book.Rating }}</p>
+                        <input data-ng-show="book.editMode" type="range" min="1" max="5" data-ng-model="book.Rating" />
+                    </td>
+                    <td>
+                        <ul data-ng-hide="book.editMode" style="list-style: none;">
+                            <li ng-repeat="author in book.Authors">
+                                {{ author.FirstName + ' ' + author.LastName }}
+                            </li>
+                        </ul>
+                        <select data-ng-show="book.editMode" class="form-control" data-ng-model="newbook.Authors"
+                                ng-options="(author.FirstName + ' ' + author.LastName) for author in authorsInfo"
+                                multiple=""
+                                required></select>
+                    </td>
+                    <td>
+                        <p data-ng-hide="book.editMode"><a data-ng-click="toggleEdit(book)" href="javascript:;">Edit</a> | <a data-ng-click="deletebook(book)" href="javascript:;">Delete</a></p>
+                        <p data-ng-show="book.editMode"><a data-ng-click="save(book)" href="javascript:;">Save</a> | <a data-ng-click="toggleEdit(book)" href="javascript:;">Cancel</a></p>
+                    </td>
+                </tr>
+            </table>
+            <hr />
+        </div>
+    </div>
+    <div id="mydiv" data-ng-show="loading">
+        <img src="~/Content/Images/ajax-loader.gif" class="ajax-loader" />
+    </div>
+</div>

@@ -1,7 +1,7 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BookCatalog.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BookCatalog.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BookCatalog.UI.App_Start.NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BookCatalog.UI.App_Start.NinjectWebCommon), "Stop")]
 
-namespace BookCatalog.App_Start
+namespace BookCatalog.UI.App_Start
 {
     #region Using
     using System;

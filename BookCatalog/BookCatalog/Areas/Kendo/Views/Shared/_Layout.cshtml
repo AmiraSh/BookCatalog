@@ -9,6 +9,8 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jquery-validate")
     @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/kendo/css")
+    @Scripts.Render("~/bundles/kendo")
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -21,14 +23,7 @@
                 </button>
                 @Html.ActionLink("Books Catalog", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                     <ul class="nav navbar-nav">
-                        <li>mvc: </li>
-                        <li>@Html.ActionLink("Books", "Index", "Book", new { area = "MVC" }, new { })</li>
-                        <li>@Html.ActionLink("Authors", "Index", "Author", new { area = "MVC" }, new { })</li>
-                        <li>kendo: </li>
                         <li>@Html.ActionLink("Catalog", "Index", "Catalog", new { area = "Kendo" }, new { })</li>
-                        <li>kendo angular: </li>
-                        <li>@Html.ActionLink("Books", "Books", "Catalog", new { area = "Angular" }, new { })</li>
-                        <li>@Html.ActionLink("Authors", "Authors", "Catalog", new { area = "Angular" }, new { })</li>
                     </ul>
             </div>
         </div>

@@ -1,25 +1,18 @@
-﻿namespace BookCatalog.Controllers
+﻿namespace BookCatalog.API.Controllers
 {
     #region Using
-    using System;
-    using System.Text;
+    using System.Collections.Generic;
+    using System.Web.Http;
+    using System.Web.Http.Description;
     using System.Web.Mvc;
-    using BusinessLogic.DomainModels;
-    using BusinessLogic.Validation;
-    using BusinessLogic.ViewModels;
-    using DAL.Interfaces;
-    using Infrastructure.Errors;
-    using Infrastructure.Logging;
-    using Kendo.Mvc.Extensions;
-    using Kendo.Mvc.UI;
-    using KendoAnalysing;
-    using Newtonsoft.Json;
+    using BookCatalog.BusinessLogic.DomainModels;
+    using BookCatalog.BusinessLogic.Validation;
+    using BookCatalog.BusinessLogic.ViewModels;
+    using BookCatalog.DAL.Interfaces;
+    using BookCatalog.Infrastructure.Errors;
     #endregion
 
-    /// <summary>
-    /// Author controller.
-    /// </summary>
-    public class AuthorController : BaseController
+    public class AuthorController : ApiController
     {
         /// <summary>
         /// Domain model.
@@ -43,191 +36,72 @@
         }
 
         /// <summary>
-        /// Displays a page with authors list.
+        /// Gets all authors.
         /// </summary>
-        /// <returns>A page with authors' list.</returns>
-        public ActionResult Index()
+        /// <returns>Authors' list.</returns>
+        public IEnumerable<AuthorViewModel> GetAll()
         {
-            return this.View(this.DomainModel.GetAuthors());
+            return this.DomainModel.GetAuthors();
         }
 
         /// <summary>
-        /// Displays an author.
+        /// Gets author's details.
         /// </summary>
-        /// <param name="id">Identifier.</param>
-        /// <param name="FirstName">First name.</param>
-        /// <param name="LastName">Last name.</param>
-        /// <param name="BooksCount">Books count (optional).</param>
-        /// <returns>Author's page.</returns>
-        public ActionResult Details(int id, string FirstName, string LastName, int? BooksCount)
+        /// <param name="id">Author identifier.</param>
+        /// <returns>Author details.</returns>
+        [ResponseType(typeof(AuthorViewModel))]
+        public IHttpActionResult Get(int id)
         {
             AuthorViewModel author = this.DomainModel.GetAuthor(id);
             if (author == null)
             {
-                throw new ArgumentException("Author does not exist.");
+                return NotFound();
             }
 
-            return this.View(author);
-        }
-
-        /// <summary>
-        /// Gets a partial view for creating new book.
-        /// </summary>
-        /// <param name="id">Book's identifier.</param>
-        /// <returns>Partial view.</returns>
-        public ActionResult AddAuthorForm(int? id)
-        {
-            if (id == null)
-            {
-                return this.PartialView("AuthorForm", new AuthorViewModel());
-            }
-
-            AuthorViewModel author = this.DomainModel.GetAuthor(id.Value);
-            if (author == null)
-            {
-                throw new ArgumentException("Author does not exist.");
-            }
-
-            return this.PartialView("AuthorForm", author);
-        }
-
-        /// <summary>
-        /// Creates of edits an author.
-        /// </summary>
-        /// <param name="authorVM">Author view model.</param>
-        /// <returns>Json.</returns>
-        [HttpPost]
-        public JsonResult Manage(AuthorViewModel authorVM)
-        {
-            try
-            {
-                Validator.Validate(authorVM);
-            }
-            catch (InvalidFieldValueException exception)
-            {
-                ModelState.AddModelError(exception.Field, exception.ValidationMessage);
-                return this.Json(new { error = exception.ValidationMessage });
-            }
-
-            this.DomainModel.Manage(authorVM);            
-            return this.Json(new
-            {
-                Id = authorVM.Id,
-                FirstName = authorVM.FirstName,
-                SecondName = authorVM.SecondName,
-                BooksCount = authorVM.BooksCount,
-                Books = this.DomainModel.GetBooks(authorVM.Id)
-            });
+            return Ok(author);
         }
 
         /// <summary>
         /// Deletes an author.
         /// </summary>
-        /// <param name="id">Author id.</param>
-        /// <returns>Json.</returns>
-        [HttpPost]
-        public ActionResult Delete(int id)
-        {
-            this.DomainModel.DeleteAuthor(id);
-            return this.Json(id);
-        }
-
-        /// <summary>
-        /// Gets authors' count.
-        /// </summary>
-        /// <returns>Authors' count.</returns>
-        public JsonResult GetAuthorsCount()
-        {
-            return this.Json(this.DomainModel.GetAuthorsCount(), JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Gets authors.
-        /// </summary>
-        /// <returns>Authors.</returns>
-        public JsonResult GetAuthors()
-        {
-            return this.Json(this.DomainModel.GetAuthors(), JsonRequestBehavior.AllowGet);
-        }
-
-        ///-----------------------
-        ///      Kendo Part
-        ///-----------------------
-        /// <summary>
-        /// Grid.
-        /// </summary>
-        /// <returns>Grid view.</returns>
-        public ActionResult Grid()
-        {
-            return this.View();
-        }
-
-        /// <summary>
-        /// Gets partial view for books' rating chart.
-        /// </summary>
-        /// <param name="Id">Author identifier.</param>
-        /// <returns>Partial view for books' rating chart.</returns>
-        public ActionResult BooksChart(int? Id)
-        {
-            if (Id == null)
-            {
-                return this.PartialView();
-            }
-
-            return this.PartialView(this.DomainModel.GetAuthor(Id.Value));
-        }
-
-        /// <summary>
-        /// Reads grids' elements.
-        /// </summary>
-        /// <param name="request">Request.</param>
-        /// <returns>Grids' elements.</returns>
-        public JsonResult Read([DataSourceRequest]DataSourceRequest request)
-        {
-            int total;
-            var sorts = KendoAnalyser.GetSorts(request.Sorts);
-            var filters = KendoAnalyser.GetFilters(request.Filters);
-            var authors = this.DomainModel.GetAuthors(out total, sorts, filters, request.PageSize, (request.Page - 1) * request.PageSize);
-            DataSourceResult result = authors.ToDataSourceResult(request);
-            result.Data = authors;
-            result.Total = total;
-            return this.Json(result, JsonRequestBehavior.AllowGet);
-        }
-
-        /// <summary>
-        /// Creates or updates an entity.
-        /// </summary>
-        /// <param name="request">Request.</param>
-        /// <param name="authorViewModel">Author view model.</param>
-        /// <returns>Created or updated entity.</returns>
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult KendoManage([DataSourceRequest]DataSourceRequest request, AuthorViewModel authorViewModel)
+        /// <param name="id">Author identifier.</param>
+        /// <returns></returns>
+        [ResponseType(typeof(AuthorViewModel))]
+        public IHttpActionResult Delete(int id)
         {
             try
             {
-                Validator.Validate(authorViewModel);
+                this.DomainModel.DeleteAuthor(id);
             }
-            catch (InvalidFieldValueException exception)
+            catch (InvalidFieldValueException)
             {
-                this.ModelState.AddModelError(exception.Field, exception.ValidationMessage);
-                return this.Json(new[] { authorViewModel }.ToDataSourceResult(request, this.ModelState));
+                return NotFound();
             }
 
-            this.DomainModel.Manage(authorViewModel);
-            return this.Json(new[] { authorViewModel }.ToDataSourceResult(request, this.ModelState));
+            return Ok(this.DomainModel.GetAuthor(id));
         }
 
         /// <summary>
-        /// Deletes an entity.
+        /// Creates or edits an author.
         /// </summary>
-        /// <param name="request">Request.</param>
-        /// <param name="authorViewModel">Author view model.</param>
-        /// <returns>Deleted entity.</returns>
-        [AcceptVerbs(HttpVerbs.Post)]
-        public JsonResult Destroy([DataSourceRequest]DataSourceRequest request, AuthorViewModel authorViewModel)
+        /// <param name="author">Author view model.</param>
+        /// <returns></returns>
+        [ResponseType(typeof(AuthorViewModel))]
+        [System.Web.Http.HttpPost]
+        public IHttpActionResult Manage(AuthorViewModel author)
         {
-            this.DomainModel.DeleteAuthor(authorViewModel.Id);
-            return this.Json(new[] { authorViewModel }.ToDataSourceResult(request, this.ModelState));
+            try
+            {
+                Validator.Validate(author);
+            }
+            catch (InvalidFieldValueException exception)
+            {
+                ModelState.AddModelError(exception.Field, exception.ValidationMessage);
+                return BadRequest(ModelState);
+            }
+
+            this.DomainModel.Manage(author);
+            return CreatedAtRoute("DefaultApi", new { id = author.Id }, author);
         }
     }
 }

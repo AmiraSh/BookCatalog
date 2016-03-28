@@ -11,7 +11,7 @@
         $scope.filteredAuthors = [];
         $scope.authors = [];
 
-        $http.get('/api/Authors/GetAuthors').success(function (data) {
+        $http.get('/api/Author/GetAll').success(function (data) {
             $scope.authors = data;
             $scope.loading = false;
         })
@@ -30,7 +30,7 @@
 
         $scope.add = function () {
             $scope.loading = true;
-            $http.post('/api/Authors/ManageAuthor', this.newauthor).success(function (data) {
+            $http.post('/api/Author/Manage', this.newauthor).success(function (data) {
                 $scope.addMode = false;
                 $scope.authors.push(data);
                 $scope.loading = false;
@@ -44,7 +44,7 @@
         $scope.save = function () {
             $scope.loading = true;
             var frien = this.author;
-            $http.post('/api/Authors/ManageAuthor', frien).success(function (data) {
+            $http.post('/api/Author/Manage', frien).success(function (data) {
                 frien.editMode = false;
                 $scope.loading = false;
             }).error(function (data) {
@@ -56,7 +56,7 @@
         $scope.deletebook = function () {
             $scope.loading = true;
             var Id = this.author.Id;
-            $http.delete('/api/Authors/DeleteAuthor' + Id).success(function (data) {
+            $http.delete('/api/Author/Delete' + Id).success(function (data) {
                 $.each($scope.authors, function (i) {
                     if ($scope.authors[i].Id === Id) {
                         $scope.authors.splice(i, 1);

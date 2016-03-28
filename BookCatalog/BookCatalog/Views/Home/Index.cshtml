@@ -1,15 +1,9 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Book Catalog";
 }
-@(Html.Kendo().TabStrip()
-              .Name("tabstrip")
-              .Items(tabstrip =>
-              {
-                  tabstrip.Add().Text("Books")
-                      .Selected(true)
-                      .LoadContentFrom(Url.Action("Grid", "Book"));
 
-                  tabstrip.Add().Text("Authors")
-                      .LoadContentFrom(Url.Action("Grid", "Author"));
-              })
-)
+<h2>Index</h2>
+<li>@Html.ActionLink("MVC", "Index", "Book", new { area = "Mvc" }, new { })</li>
+<li>@Html.ActionLink("Kendo", "Index", "Catalog", new { area = "Kendo" }, new { })</li>
+<li>@Html.ActionLink("Angular", "Books", "Catalog", new { area = "Angular" }, new { })</li>
+
