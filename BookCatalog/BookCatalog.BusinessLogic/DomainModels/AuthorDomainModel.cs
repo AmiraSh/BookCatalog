@@ -53,6 +53,7 @@
         /// <summary>
         /// Gets authors.
         /// </summary>
+        /// <param name="total">Total count.</param>
         /// <param name="sorts">Sotrs.</param>
         /// <param name="filters">Filters.</param>
         /// <param name="take">Count of elements to take.</param>
@@ -156,6 +157,16 @@
 
             this.authorRepository.Delete(author);
             this.authorRepository.SaveChanges();
+        }
+
+        /// <summary>
+        /// Gets x top authors in period no linger then 10 years.
+        /// </summary>
+        /// <param name="searchModel">Search model.</param>
+        /// <returns>List of top authors.</returns>
+        public List<AuthorViewModel> GetTopAuthors(SearchTopAuthorsViewModel searchModel)
+        {
+            return Mapper.Map<List<AuthorViewModel>>(this.authorRepository.GetTopAuthors(searchModel.Count, searchModel.BeginDate, searchModel.EndDate));
         }
     }
 }

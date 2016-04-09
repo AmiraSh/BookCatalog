@@ -1,7 +1,10 @@
 ﻿namespace BookCatalog.DAL.Concrete
 {
     #region Using
+    using System;
     using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
     using BookCatalog.DAL.Models;
     using Interfaces;
     #endregion
@@ -37,6 +40,46 @@
         {
             Author author = FindById(authorId);
             author.Books.Add(book);
+        }
+
+        /// <summary>
+        /// Gets top x authors in specific period, no longer then 10 years.
+        /// </summary>
+        /// <param name="count">Count of authors to return.</param>
+        /// <param name="beginDate">Begin date.</param>
+        /// <param name="endDate">End date.</param>
+        /// <returns>Top authors.</returns>
+        public IEnumerable<Author> GetTopAuthors(int count, DateTime beginDate, DateTime endDate)
+        {
+            SqlConnection sqlConnection = new SqlConnection(base.Context.Database.Connection.ConnectionString);
+            SqlCommand command = new SqlCommand();
+
+            command.CommandText = "sp_GetTopAuthors";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@count", SqlDbType.Int).Value = count;
+            command.Parameters.Add("@beginDate", SqlDbType.Date).Value = beginDate.Date;
+            command.Parameters.Add("@endDate", SqlDbType.Date).Value = endDate.Date;
+            command.Connection = sqlConnection;
+
+            sqlConnection.Open();
+
+            List<Author> authors = new List<Author>();
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    authors.Add(
+                        new Author()
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            FirstName = Convert.ToString(reader["FirstName"]),
+                            SecondName = Convert.ToString(reader["SecondName"])
+                        });
+                }
+            }
+
+            sqlConnection.Close();
+            return authors;
         }
     }
 }
