@@ -41,8 +41,8 @@
                     <label for="authors" class="col-sm-3 control-label">Authors:</label>
                     <div class="col-sm-8">
                         <select id="authors" class="form-control" data-ng-model="newbook.Authors" multiple=""
-                                ng-options="(author.FirstName + ' ' + author.LastName) for author in authorsInfo"
-                                required>
+                                ng-options="author in authorsInfo"
+                                required>{{ author.FirstName }} {{ author.SecondName }}
                         </select>
                     </div>
                 </div>
@@ -96,13 +96,13 @@
                         <input data-ng-show="book.editMode" type="range" min="1" max="5" data-ng-model="book.Rating" />
                     </td>
                     <td>
-                        <ul data-ng-hide="book.editMode" style="list-style: none;">
+                        <ul data-ng-hide="book.editMode" style="list-style: circle;">
                             <li ng-repeat="author in book.Authors">
-                                {{ author.FirstName + ' ' + author.LastName }}
+                                {{ author.FirstName }} {{ author.SecondName }}
                             </li>
                         </ul>
                         <select data-ng-show="book.editMode" class="form-control" data-ng-model="newbook.Authors"
-                                ng-options="(author.FirstName + ' ' + author.LastName) for author in authorsInfo"
+                                ng-options="author.FirstName + ' ' + author.LastName for author in authorsInfo"
                                 multiple=""
                                 required></select>
                     </td>

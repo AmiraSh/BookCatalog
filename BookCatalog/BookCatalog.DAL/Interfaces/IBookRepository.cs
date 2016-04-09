@@ -2,6 +2,7 @@
 {
     #region Using
     using System.Collections.Generic;
+    using System.Xml;
     using BookCatalog.DAL.Models;
     #endregion
 
@@ -30,5 +31,11 @@
         /// <param name="bookId">Book id.</param>
         /// <param name="authorsIds">Book authors' ids.</param>
         void SetAuthors(int bookId, List<int> authorsIds);
+
+        /// <summary>
+        /// Gets data in XML document.
+        /// </summary>
+        /// <returns>XML document.</returns>
+        XmlDocument GetXML();
     }
 }

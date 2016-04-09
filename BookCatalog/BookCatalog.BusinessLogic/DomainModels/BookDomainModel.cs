@@ -7,6 +7,7 @@
     using System.Text;
     using System.Transactions;
     using System.Web.Mvc;
+    using System.Xml;
     using AutoMapper;
     using DAL.Interfaces;
     using DAL.Models;
@@ -74,7 +75,7 @@
                 {
                     Text = string.Format("{0} {1}", author.FirstName, author.SecondName),
                     Value = author.Id.ToString(),
-                    Selected = (bookVM.Authors.FirstOrDefault(bookAuthor => bookAuthor.Id == author.Id) != null)
+                    Selected = bookVM.Authors.FirstOrDefault(bookAuthor => bookAuthor.Id == author.Id) != null
                 }), "Value", "Text").ToList();
         }
 
@@ -90,6 +91,7 @@
         /// <summary>
         /// Gets books.
         /// </summary>
+        /// <param name="total">Total count.</param>
         /// <param name="sorts">Sotrs.</param>
         /// <param name="filters">Filters.</param>
         /// <param name="take">Count of elements to take.</param>
@@ -209,6 +211,15 @@
             }
 
             return authors.ToString();
+        }
+
+        /// <summary>
+        /// Gets data in XML document.
+        /// </summary>
+        /// <returns>XML catalog.</returns>
+        public XmlDocument GetXML()
+        {
+            return this.bookRepository.GetXML();
         }
     }
 }

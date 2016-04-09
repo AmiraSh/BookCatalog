@@ -2,6 +2,9 @@
 {
     #region Using
     using System.Collections.Generic;
+    using System.Data;
+    using System.Data.SqlClient;
+    using System.Xml;
     using Interfaces;
     using Models;
     #endregion
@@ -52,6 +55,33 @@
                 Author author = this.Context.Set<Author>().Find(authorId);
                 book.Authors.Add(author);
             }
+        }
+        
+        /// <summary>
+        /// Gets data in XML document.
+        /// </summary>
+        /// <returns>XML document.</returns>
+        public XmlDocument GetXML()
+        {
+            SqlConnection sqlConnection = new SqlConnection(base.Context.Database.Connection.ConnectionString);
+            SqlCommand command = new SqlCommand();
+
+            command.CommandText = "sp_GetXMLExpand";
+            command.CommandType = CommandType.StoredProcedure;
+            command.Connection = sqlConnection;
+
+            sqlConnection.Open();
+            XmlDocument document = new XmlDocument();
+            using (SqlDataReader reader = command.ExecuteReader())
+            {
+                if (reader.Read())
+                {
+                    document.LoadXml((string)reader["XML_FILE"]);
+                }
+            }
+
+            sqlConnection.Close();
+            return document;
         }
     }
 }

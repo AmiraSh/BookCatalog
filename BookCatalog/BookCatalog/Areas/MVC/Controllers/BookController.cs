@@ -8,7 +8,9 @@
     using DAL.Interfaces;
     using global::System;
     using global::System.Net;
+    using global::System.Text;
     using global::System.Web.Mvc;
+    using global::System.Xml;
     using Infrastructure.Errors;
     using KendoAnalysing;
     #endregion
@@ -143,6 +145,16 @@
         public JsonResult GetBooksCount()
         {
             return this.Json(this.DomainModel.GetBooksCount(), JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Returns XML file.
+        /// </summary>
+        /// <returns>XML file.</returns>
+        public FileResult GetXMLFile()
+        {
+            byte[] bytes = Encoding.Default.GetBytes(this.DomainModel.GetXML().OuterXml);
+            return File(bytes, global::System.Net.Mime.MediaTypeNames.Text.Xml, "bookcatalog.xml");
         }
     }
 }
