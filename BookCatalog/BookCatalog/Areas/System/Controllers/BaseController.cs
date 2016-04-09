@@ -18,7 +18,6 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseController"/> class.
         /// </summary>
-        /// <param name="logger">Logger instance.</param>
         public BaseController()
         {
             this.logger = (ILogger)DependencyResolver.Current.GetService(typeof(ILogger));

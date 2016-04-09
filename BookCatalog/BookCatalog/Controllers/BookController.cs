@@ -59,10 +59,10 @@
             BookViewModel book = this.DomainModel.GetBook(id);
             if (book == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            return Ok(book);
+            return this.Ok(book);
         }
 
         /// <summary>
@@ -79,10 +79,10 @@
             }
             catch (InvalidFieldValueException)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            return Ok(this.DomainModel.GetBook(id));
+            return this.Ok(this.DomainModel.GetBook(id));
         }
 
         /// <summary>
@@ -101,12 +101,12 @@
             }
             catch (InvalidFieldValueException exception)
             {
-                ModelState.AddModelError("error", exception.ValidationMessage);
+                this.ModelState.AddModelError("error", exception.ValidationMessage);
                 return BadRequest(ModelState);
             }
 
             this.DomainModel.Manage(book);
-            return CreatedAtRoute("DefaultApi", new { id = book.Id }, book);
+            return this.CreatedAtRoute("DefaultApi", new { id = book.Id }, book);
         }
     }
 }

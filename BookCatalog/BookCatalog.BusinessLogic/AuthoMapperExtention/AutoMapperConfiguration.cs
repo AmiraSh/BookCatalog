@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using ViewModels;
     using DAL.Models;
+    using ViewModels;
     #endregion
 
     /// <summary>
@@ -20,6 +20,19 @@
         {
             ConfigureAuthorMapping();
             ConfigureBookMapping();
+        }
+
+        /// <summary>
+        /// Ignores all unmapped members.
+        /// </summary>
+        /// <typeparam name="TSource">Source.</typeparam>
+        /// <typeparam name="TDest">Destination.</typeparam>
+        /// <param name="expression">Expression.</param>
+        /// <returns>Mapping expression.</returns>
+        public static IMappingExpression<TSource, TDest> IgnoreAllUnmapped<TSource, TDest>(this IMappingExpression<TSource, TDest> expression)
+        {
+            expression.ForAllMembers(opt => opt.Ignore());
+            return expression;
         }
 
         /// <summary>
@@ -161,19 +174,6 @@
 
                 return default(List<AuthorViewModel>);
             });
-        }
-
-        /// <summary>
-        /// Ignores all unmapped members.
-        /// </summary>
-        /// <typeparam name="TSource">Source.</typeparam>
-        /// <typeparam name="TDest">Destination.</typeparam>
-        /// <param name="expression">Expression.</param>
-        /// <returns>Mapping expression.</returns>
-        public static IMappingExpression<TSource, TDest> IgnoreAllUnmapped<TSource, TDest>(this IMappingExpression<TSource, TDest> expression)
-        {
-            expression.ForAllMembers(opt => opt.Ignore());
-            return expression;
         }
     }
 }

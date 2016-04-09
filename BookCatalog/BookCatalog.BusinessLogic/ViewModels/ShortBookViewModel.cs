@@ -4,6 +4,9 @@
     using Newtonsoft.Json;
     #endregion
 
+    /// <summary>
+    /// Short book view model.
+    /// </summary>
     public class ShortBookViewModel
     {
         /// <summary>

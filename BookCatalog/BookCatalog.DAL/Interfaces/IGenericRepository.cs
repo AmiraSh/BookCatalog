@@ -36,6 +36,7 @@
         /// <summary>
         /// Gets specified count of entities from database.
         /// </summary>
+        /// <param name="total">Total count.</param>
         /// <param name="sorts">Sortings.</param>
         /// <param name="filters">Filters.</param>
         /// <param name="take">Count of elements to take.</param>

@@ -65,6 +65,7 @@
         /// <summary>
         /// Gets specified count of entities from database.
         /// </summary>
+        /// <param name="total">Total count.</param>
         /// <param name="sorts">Sotrings.</param>
         /// <param name="filters">Filters.</param>
         /// <param name="take">Count of elements to take.</param>
@@ -101,7 +102,7 @@
         {
             foreach (var filter in filters)
             {
-                string operatorString = "";
+                string operatorString = string.Empty;
                 if (filter.MemberType == typeof(string))
                 {
                     operatorString = ".Contains(@0)";
@@ -124,6 +125,7 @@
                             break;
                     }
                 }
+
                 set = set.Where(filter.Member + operatorString, filter.Value);
             }
         }

@@ -15,7 +15,7 @@
         /// <returns>Main page.</returns>
         public ActionResult Index()
         {
-            return View();
+            return this.View();
         }
     }
 }

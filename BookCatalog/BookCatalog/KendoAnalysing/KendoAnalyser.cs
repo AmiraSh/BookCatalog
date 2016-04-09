@@ -13,7 +13,7 @@
     public static class KendoAnalyser
     {
         /// <summary>
-        /// Gets sortings dictionary.
+        /// Gets sorts dictionary.
         /// </summary>
         /// <param name="sortDescriptors">Sorting descriptors.</param>
         /// <returns>Dictionary for sorting descriptors.</returns>

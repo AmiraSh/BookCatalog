@@ -91,7 +91,7 @@
         public List<int> AuthorsIds { get; set; }
 
         /// <summary>
-        /// Multi select list.
+        /// Gets or sets multi select list.
         /// </summary>
         [JsonProperty(PropertyName = "AuthorsOptions")]
         public List<SelectListItem> AuthorsOptions { get; set; }

@@ -12,6 +12,9 @@
     using BookCatalog.Infrastructure.Errors;
     #endregion
 
+    /// <summary>
+    /// Author api controller.
+    /// </summary>
     public class AuthorController : ApiController
     {
         /// <summary>
@@ -55,10 +58,10 @@
             AuthorViewModel author = this.DomainModel.GetAuthor(id);
             if (author == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            return Ok(author);
+            return this.Ok(author);
         }
 
         /// <summary>
@@ -75,10 +78,10 @@
             }
             catch (InvalidFieldValueException)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            return Ok(this.DomainModel.GetAuthor(id));
+            return this.Ok(this.DomainModel.GetAuthor(id));
         }
 
         /// <summary>
@@ -96,12 +99,12 @@
             }
             catch (InvalidFieldValueException exception)
             {
-                ModelState.AddModelError(exception.Field, exception.ValidationMessage);
+                this.ModelState.AddModelError(exception.Field, exception.ValidationMessage);
                 return BadRequest(ModelState);
             }
 
             this.DomainModel.Manage(author);
-            return CreatedAtRoute("DefaultApi", new { id = author.Id }, author);
+            return this.CreatedAtRoute("DefaultApi", new { id = author.Id }, author);
         }
     }
 }

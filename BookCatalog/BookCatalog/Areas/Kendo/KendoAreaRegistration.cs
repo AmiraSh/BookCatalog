@@ -1,11 +1,17 @@
-﻿using System.Web.Mvc;
-
-namespace BookCatalog.UI.Areas.Kendo
+﻿namespace BookCatalog.UI.Areas.Kendo
 {
+    #region Using
+    using global::System.Web.Mvc;
+    #endregion
 
-
-    public class KendoAreaRegistration : AreaRegistration 
+    /// <summary>
+    /// Kendo area registration.
+    /// </summary>
+    public class KendoAreaRegistration : AreaRegistration
     {
+        /// <summary>
+        /// Area name.
+        /// </summary>
         public override string AreaName 
         {
             get 
@@ -14,6 +20,10 @@ namespace BookCatalog.UI.Areas.Kendo
             }
         }
 
+        /// <summary>
+        /// Registers ares.
+        /// </summary>
+        /// <param name="context">Context.</param>
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(

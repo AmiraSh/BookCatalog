@@ -1,9 +1,17 @@
-﻿using System.Web.Mvc;
-
-namespace BookCatalog.UI.Areas.System
+﻿namespace BookCatalog.UI.Areas.System
 {
-    public class SystemAreaRegistration : AreaRegistration 
+    #region Using
+    using global::System.Web.Mvc;
+    #endregion
+
+    /// <summary>
+    /// System area registration.
+    /// </summary>
+    public class SystemAreaRegistration : AreaRegistration
     {
+        /// <summary>
+        /// Area name.
+        /// </summary>
         public override string AreaName 
         {
             get 
@@ -12,6 +20,10 @@ namespace BookCatalog.UI.Areas.System
             }
         }
 
+        /// <summary>
+        /// Registers ares.
+        /// </summary>
+        /// <param name="context">Context.</param>
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(

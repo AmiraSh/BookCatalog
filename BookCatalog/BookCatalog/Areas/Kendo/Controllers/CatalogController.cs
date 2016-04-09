@@ -4,6 +4,9 @@
     using global::System.Web.Mvc;
     #endregion
 
+    /// <summary>
+    /// Catalog controller.
+    /// </summary>
     public class CatalogController : Controller
     {
         /// <summary>
@@ -12,7 +15,7 @@
         /// <returns>Main page.</returns>
         public ActionResult Index()
         {
-            return View();
+            return this.View();
         }
     }
 }

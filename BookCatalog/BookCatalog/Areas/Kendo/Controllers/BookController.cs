@@ -38,10 +38,7 @@
                 return domainModel;
             }
         }
-
-        ///-----------------------
-        ///      Kendo Part
-        ///-----------------------
+        
         /// <summary>
         /// Grid.
         /// </summary>
