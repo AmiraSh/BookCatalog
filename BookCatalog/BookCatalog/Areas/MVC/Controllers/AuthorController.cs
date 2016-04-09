@@ -9,7 +9,6 @@
     using global::System;
     using global::System.Web.Mvc;
     using Infrastructure.Errors;
-    using KendoAnalysing;
     #endregion
 
     /// <summary>
@@ -144,6 +143,16 @@
         public JsonResult GetAuthors()
         {
             return this.Json(this.DomainModel.GetAuthors(), JsonRequestBehavior.AllowGet);
+        }
+
+        /// <summary>
+        /// Gets x top authors.
+        /// </summary>
+        /// <param name="searchModel">Search model.</param>
+        /// <returns>Top authors.</returns>
+        public ActionResult TopAuthors(SearchTopAuthorsViewModel searchModel)
+        {
+            return this.View(this.DomainModel.GetTopAuthors(searchModel));
         }
     }
 }

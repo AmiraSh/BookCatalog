@@ -1,6 +1,7 @@
 ﻿namespace BookCatalog.DAL.Interfaces
 {
     #region Using
+    using System;
     using System.Collections.Generic;
     using BookCatalog.DAL.Models;
     #endregion
@@ -23,5 +24,14 @@
         /// <param name="authorId">Author id.</param>
         /// <param name="book">New author book.</param>
         void SetBook(int authorId, Book book);
+
+        /// <summary>
+        /// Gets top x authors in specific period, no longer then 10 years.
+        /// </summary>
+        /// <param name="count">Count of authors to return.</param>
+        /// <param name="beginDate">Begin date.</param>
+        /// <param name="endDate">End date.</param>
+        /// <returns>Top authors.</returns>
+        IEnumerable<Author> GetTopAuthors(int count, DateTime beginDate, DateTime endDate);
     }
 }
