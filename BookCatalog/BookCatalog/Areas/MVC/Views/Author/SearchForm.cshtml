@@ -1,6 +1,6 @@
 ﻿@model BookCatalog.BusinessLogic.ViewModels.SearchTopAuthorsViewModel
 
-@using (Ajax.BeginForm("TopAuthors", "Author", new { Model, area = "MVC" }, new AjaxOptions() { }))
+@using (Html.BeginForm("TopAuthors", "Author", new { Model, area = "MVC" }))
 {
     @Html.AntiForgeryToken()
 
