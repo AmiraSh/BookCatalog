@@ -32,6 +32,6 @@
         /// <param name="beginDate">Begin date.</param>
         /// <param name="endDate">End date.</param>
         /// <returns>Top authors.</returns>
-        IEnumerable<Author> GetTopAuthors(int count, DateTime beginDate, DateTime endDate);
+        IDictionary<Author, int> GetTopAuthors(int count, DateTime beginDate, DateTime endDate);
     }
 }

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BookCatalog.BusinessLogic.ViewModels.AuthorViewModel>
+﻿@model IEnumerable<BookCatalog.BusinessLogic.ViewModels.TopAuthorViewModel>
 @{
     ViewBag.Title = "TopAuthors";
 }
@@ -18,6 +18,9 @@
             <th>
                 @Html.DisplayName("Name")
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TotalRating)
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +32,9 @@
                 </td>
                 <td>
                     @Html.ActionLink(string.Format("{0} {1}", item.FirstName, item.SecondName), "Details", "Author", new { area = "MVC" }, new { id = item.Id, FirstName = item.FirstName.Replace(" ", String.Empty).Replace(".", String.Empty), LastName = item.SecondName.Replace(" ", String.Empty).Replace(".", String.Empty) })                    
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalRating)
                 </td>
             </tr>
         }

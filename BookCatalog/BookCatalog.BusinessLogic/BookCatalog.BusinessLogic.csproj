@@ -61,6 +61,7 @@
     <Compile Include="ViewModels\BookViewModel.cs" />
     <Compile Include="ViewModels\SearchTopAuthorsViewModel.cs" />
     <Compile Include="ViewModels\ShortBookViewModel.cs" />
+    <Compile Include="ViewModels\TopAuthorViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BookCatalog.DAL\BookCatalog.DAL.csproj">

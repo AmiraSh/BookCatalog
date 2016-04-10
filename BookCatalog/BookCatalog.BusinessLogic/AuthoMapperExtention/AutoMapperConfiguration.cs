@@ -174,6 +174,27 @@
 
                 return default(List<AuthorViewModel>);
             });
+
+            Mapper.CreateMap<Dictionary<Author, int>, List<TopAuthorViewModel>>().ConstructUsing(authors =>
+            {
+                if (authors != null)
+                {
+                    List<TopAuthorViewModel> authorVMlist = new List<TopAuthorViewModel>();
+                    foreach (KeyValuePair<Author, int> author in authors)
+                    {
+                        TopAuthorViewModel topAuthor = new TopAuthorViewModel();
+                        topAuthor.Id = author.Key.Id;
+                        topAuthor.FirstName = author.Key.FirstName;
+                        topAuthor.SecondName = author.Key.SecondName;
+                        topAuthor.TotalRating = author.Value;
+                        authorVMlist.Add(topAuthor);
+                    }
+
+                    return authorVMlist;
+                }
+
+                return default(List<TopAuthorViewModel>);
+            });            
         }
     }
 }

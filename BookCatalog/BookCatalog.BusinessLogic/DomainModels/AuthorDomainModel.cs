@@ -164,9 +164,9 @@
         /// </summary>
         /// <param name="searchModel">Search model.</param>
         /// <returns>List of top authors.</returns>
-        public List<AuthorViewModel> GetTopAuthors(SearchTopAuthorsViewModel searchModel)
+        public List<TopAuthorViewModel> GetTopAuthors(SearchTopAuthorsViewModel searchModel)
         {
-            return Mapper.Map<List<AuthorViewModel>>(this.authorRepository.GetTopAuthors(searchModel.Count, searchModel.BeginDate, searchModel.EndDate));
+            return Mapper.Map<List<TopAuthorViewModel>>(this.authorRepository.GetTopAuthors(searchModel.Count, searchModel.BeginDate, searchModel.EndDate));
         }
     }
 }

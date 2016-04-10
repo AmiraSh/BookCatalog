@@ -49,7 +49,7 @@
         /// <param name="beginDate">Begin date.</param>
         /// <param name="endDate">End date.</param>
         /// <returns>Top authors.</returns>
-        public IEnumerable<Author> GetTopAuthors(int count, DateTime beginDate, DateTime endDate)
+        public IDictionary<Author, int> GetTopAuthors(int count, DateTime beginDate, DateTime endDate)
         {
             SqlConnection sqlConnection = new SqlConnection(base.Context.Database.Connection.ConnectionString);
             SqlCommand command = new SqlCommand();
@@ -63,7 +63,7 @@
 
             sqlConnection.Open();
 
-            List<Author> authors = new List<Author>();
+            Dictionary<Author, int> authors = new Dictionary<Author, int>();
             using (SqlDataReader reader = command.ExecuteReader())
             {
                 while (reader.Read())
@@ -74,7 +74,8 @@
                             Id = Convert.ToInt32(reader["Id"]),
                             FirstName = Convert.ToString(reader["FirstName"]),
                             SecondName = Convert.ToString(reader["SecondName"])
-                        });
+                        },
+                        Convert.ToInt32(reader["TotalRating"]));
                 }
             }
 
