@@ -3,15 +3,14 @@
     ViewBag.Title = "Book Catalog";
 }
 <br />
-<div>
-    @Html.ActionLink("Download XML file", "GetXMLFile")
-    <br />
+<div style="margin-bottom:5px;">
+    @Html.ActionLink("Download XML file", "GetXMLFile", new { }, new { @class="btn btn-default" })
 </div>
-<p>
+<div>
     <input type="button" value="Add" id="CreateBook" class="btn btn-default" />
     <div id="BookForm" style="display:none">        
     </div>
-</p>
+</div>
 <table id="booksTable" class="table table-striped table-bordered" cellspacing="0">
     <thead>
         <tr>
