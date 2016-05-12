@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.Infrastructure.Filtration
+﻿//-----------------------------------------------------------------------
+// <copyright file="CustomOperator.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.Infrastructure.Filtration
 {
     /// <summary>
     /// Custom operator for filtering.

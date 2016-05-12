@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.Infrastructure.Logging.Concrete
+﻿//-----------------------------------------------------------------------
+// <copyright file="Logger.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.Infrastructure.Logging.Concrete
 {
     #region Using
 

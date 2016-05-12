@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.Infrastructure.Logging
+﻿//-----------------------------------------------------------------------
+// <copyright file="ILogger.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.Infrastructure.Logging
 {
     #region Using
 

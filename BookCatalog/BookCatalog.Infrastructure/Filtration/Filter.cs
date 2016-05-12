@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.Infrastructure.Filtration
+﻿//-----------------------------------------------------------------------
+// <copyright file="CustomFilter.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.Infrastructure.Filtration
 {
     #region Using
     using System;

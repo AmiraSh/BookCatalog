@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.Infrastructure.Errors
+﻿//-----------------------------------------------------------------------
+// <copyright file="InvalidFieldValueException.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.Infrastructure.Errors
 {
     #region Using
     using System;
