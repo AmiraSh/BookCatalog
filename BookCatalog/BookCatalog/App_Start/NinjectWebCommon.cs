@@ -6,8 +6,6 @@ namespace BookCatalog.UI.App_Start
     #region Using
     using System;
     using System.Web;
-    using DAL.Concrete;
-    using DAL.Interfaces;
     using Infrastructure.Logging;
     using Infrastructure.Logging.Concrete;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -72,8 +70,8 @@ namespace BookCatalog.UI.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<ILogger>().To<Logger>();
-            kernel.Bind<IBookRepository>().To<BookRepository>();
-            kernel.Bind<IAuthorRepository>().To<AuthorRepository>();
+            kernel.Bind<BookService.IBookService>().To<BookService.BookServiceClient>();
+            kernel.Bind<AuthorService.IAuthorService>().To<AuthorService.AuthorServiceClient>();
         }        
     }
 }
