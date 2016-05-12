@@ -8,10 +8,9 @@ namespace BookCatalog.BusinessLogic.AutoMapperExtention
     #region Using
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using AutoMapper;
     using DAL.Models;
-    using ViewModels.ViewModels;
+    using Components.ViewModels;
     #endregion
 
     /// <summary>

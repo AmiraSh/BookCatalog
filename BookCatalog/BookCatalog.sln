@@ -3,8 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.UI", "BookCatalog\BookCatalog.UI.csproj", "{D1BAB331-124D-42D1-B1EF-8F6E1F8E8FDA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.UI", "BookCatalog.UI\BookCatalog.UI.csproj", "{D1BAB331-124D-42D1-B1EF-8F6E1F8E8FDA}"
 	ProjectSection(ProjectDependencies) = postProject
+		{27F4558B-AB69-4CB8-BC5B-2D1E98AFB90E} = {27F4558B-AB69-4CB8-BC5B-2D1E98AFB90E}
 		{ACA84EBE-B272-47E4-BDCD-8364035E3A03} = {ACA84EBE-B272-47E4-BDCD-8364035E3A03}
 	EndProjectSection
 EndProject
@@ -14,9 +15,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.Infrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.DAL", "BookCatalog.DAL\BookCatalog.DAL.csproj", "{1E2A569E-0D14-42FF-92C3-5CB2ACEF6543}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalogService", "BookCatalogService\BookCatalogService.csproj", "{ACA84EBE-B272-47E4-BDCD-8364035E3A03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalogService", "BookCatalog.WcfService\BookCatalogService.csproj", "{ACA84EBE-B272-47E4-BDCD-8364035E3A03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.ViewModels", "BookCatalog.ViewModels\BookCatalog.ViewModels.csproj", "{0F17F994-5D9A-4373-84E1-F5EB9B36EC5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.Components", "BookCatalog.Components\BookCatalog.Components.csproj", "{0F17F994-5D9A-4373-84E1-F5EB9B36EC5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.WebService", "BookCatalog.WebService\BookCatalog.WebService.csproj", "{27F4558B-AB69-4CB8-BC5B-2D1E98AFB90E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BookCatalog.DataBase", "BookCatalog.DataBase", "{6A7D9653-7277-4645-9EBC-B1CA05F80D38}"
+	ProjectSection(SolutionItems) = preProject
+		BookCatalog.DataBase111\BookCatalogDb.mdf = BookCatalog.DataBase111\BookCatalogDb.mdf
+		BookCatalog.DataBase111\BookCatalogDb_log.ldf = BookCatalog.DataBase111\BookCatalogDb_log.ldf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -48,6 +57,10 @@ Global
 		{0F17F994-5D9A-4373-84E1-F5EB9B36EC5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F17F994-5D9A-4373-84E1-F5EB9B36EC5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F17F994-5D9A-4373-84E1-F5EB9B36EC5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F4558B-AB69-4CB8-BC5B-2D1E98AFB90E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F4558B-AB69-4CB8-BC5B-2D1E98AFB90E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F4558B-AB69-4CB8-BC5B-2D1E98AFB90E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F4558B-AB69-4CB8-BC5B-2D1E98AFB90E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

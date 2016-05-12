@@ -11,13 +11,12 @@ namespace BookCatalog.BusinessLogic.DomainModels
     using System.Linq;
     using System.Text;
     using AutoMapper;
-    using AutoMapperExtention;
     using DAL.Concrete;
     using DAL.Interfaces;
     using DAL.Models;
     using Infrastructure.Errors;
     using Infrastructure.Filtration;
-    using ViewModels.ViewModels;
+    using Components.ViewModels;
     #endregion
 
     /// <summary>
@@ -76,6 +75,20 @@ namespace BookCatalog.BusinessLogic.DomainModels
             }
 
             return Mapper.Map<List<AuthorViewModel>>(this.AuthorRepository.Take(out total, sorts, filters, take, skip).ToList());
+        }
+
+        /// <summary>
+        /// Gets authors.
+        /// </summary>
+        /// <param name="total">Total count.</param>
+        /// <param name="sorts">Sotrs.</param>
+        /// <param name="filters">Filters.</param>
+        /// <param name="take">Count of elements to take.</param>
+        /// <param name="skip">Count of elements to skip.</param>
+        /// <returns>List of authors view model.</returns>
+        public List<AuthorViewModel> GetAuthors(out int total, List<Sort> sorts, List<CustomFilter> filters, int take, int skip)
+        {
+            return this.GetAuthors(out total, sorts.ToDictionary(s => s.FieldName, s => s.SortDirection), filters, take, skip);
         }
 
         /// <summary>

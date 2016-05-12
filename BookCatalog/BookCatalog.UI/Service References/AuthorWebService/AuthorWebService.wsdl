@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://bookcatalogwebservice.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://bookcatalogwebservice.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://bookcatalogwebservice.org/">
+      <s:element name="GetAllAuthors">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAllAuthorsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAllAuthorsResult" type="tns:ArrayOfAuthorViewModel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfAuthorViewModel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="AuthorViewModel" nillable="true" type="tns:AuthorViewModel" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="AuthorViewModel">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecondName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="BooksCount" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="Books" type="tns:ArrayOfShortBookViewModel" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfShortBookViewModel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ShortBookViewModel" nillable="true" type="tns:ShortBookViewModel" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ShortBookViewModel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Name" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Year" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="Rating" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetAuthorsCount">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetAuthorsCountResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetAuthorsCountResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAuthors">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="sorts" type="tns:ArrayOfSort" />
+            <s:element minOccurs="0" maxOccurs="1" name="filters" type="tns:ArrayOfCustomFilter" />
+            <s:element minOccurs="1" maxOccurs="1" name="take" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="skip" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfSort">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Sort" nillable="true" type="tns:Sort" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Sort">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FieldName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="SortDirection" type="tns:ListSortDirection" />
+        </s:sequence>
+      </s:complexType>
+      <s:simpleType name="ListSortDirection">
+        <s:restriction base="s:string">
+          <s:enumeration value="Ascending" />
+          <s:enumeration value="Descending" />
+        </s:restriction>
+      </s:simpleType>
+      <s:complexType name="ArrayOfCustomFilter">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="CustomFilter" nillable="true" type="tns:CustomFilter" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="CustomFilter">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Value" />
+          <s:element minOccurs="0" maxOccurs="1" name="MemberType" type="tns:Type" />
+          <s:element minOccurs="0" maxOccurs="1" name="Member" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="Operator" type="tns:CustomOperator" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="Type" abstract="true">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:MemberInfo" />
+        </s:complexContent>
+      </s:complexType>
+      <s:complexType name="MemberInfo" abstract="true" />
+      <s:simpleType name="CustomOperator">
+        <s:restriction base="s:string">
+          <s:enumeration value="Contains" />
+          <s:enumeration value="Greater" />
+          <s:enumeration value="Less" />
+          <s:enumeration value="GreaterOrEqual" />
+          <s:enumeration value="LessOrEqual" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="GetAuthorsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAuthorsResult" type="tns:ArrayOfAuthorViewModel" />
+            <s:element minOccurs="1" maxOccurs="1" name="total" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBooks">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="authorId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetBooksResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetBooksResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAuthor">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="id" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetAuthorResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetAuthorResult" type="tns:AuthorViewModel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Manage">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="authorVM" type="tns:AuthorViewModel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ManageResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ManageResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Delete">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="authorId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DeleteResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetTopAuthors">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="searchModel" type="tns:SearchTopAuthorsViewModel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="SearchTopAuthorsViewModel">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Count" type="s:int" />
+          <s:element minOccurs="1" maxOccurs="1" name="BeginDate" type="s:dateTime" />
+          <s:element minOccurs="1" maxOccurs="1" name="EndDate" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="TopAuthorViewModel">
+        <s:sequence>
+          <s:element minOccurs="1" maxOccurs="1" name="Id" type="s:int" />
+          <s:element minOccurs="0" maxOccurs="1" name="FirstName" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecondName" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="TotalRating" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ArrayOfTopAuthorViewModel">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="TopAuthorViewModel" nillable="true" type="tns:TopAuthorViewModel" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="GetTopAuthorsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetTopAuthorsResult" type="tns:ArrayOfTopAuthorViewModel" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ArrayOfAuthorViewModel" nillable="true" type="tns:ArrayOfAuthorViewModel" />
+      <s:element name="int" type="s:int" />
+      <s:element name="string" nillable="true" type="s:string" />
+      <s:element name="AuthorViewModel" nillable="true" type="tns:AuthorViewModel" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetAllAuthorsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAllAuthors" />
+  </wsdl:message>
+  <wsdl:message name="GetAllAuthorsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAllAuthorsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorsCountSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAuthorsCount" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorsCountSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAuthorsCountResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAuthors" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAuthorsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetBooksSoapIn">
+    <wsdl:part name="parameters" element="tns:GetBooks" />
+  </wsdl:message>
+  <wsdl:message name="GetBooksSoapOut">
+    <wsdl:part name="parameters" element="tns:GetBooksResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorSoapIn">
+    <wsdl:part name="parameters" element="tns:GetAuthor" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorSoapOut">
+    <wsdl:part name="parameters" element="tns:GetAuthorResponse" />
+  </wsdl:message>
+  <wsdl:message name="ManageSoapIn">
+    <wsdl:part name="parameters" element="tns:Manage" />
+  </wsdl:message>
+  <wsdl:message name="ManageSoapOut">
+    <wsdl:part name="parameters" element="tns:ManageResponse" />
+  </wsdl:message>
+  <wsdl:message name="DeleteSoapIn">
+    <wsdl:part name="parameters" element="tns:Delete" />
+  </wsdl:message>
+  <wsdl:message name="DeleteSoapOut">
+    <wsdl:part name="parameters" element="tns:DeleteResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTopAuthorsSoapIn">
+    <wsdl:part name="parameters" element="tns:GetTopAuthors" />
+  </wsdl:message>
+  <wsdl:message name="GetTopAuthorsSoapOut">
+    <wsdl:part name="parameters" element="tns:GetTopAuthorsResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetAllAuthorsHttpGetIn" />
+  <wsdl:message name="GetAllAuthorsHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfAuthorViewModel" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorsCountHttpGetIn" />
+  <wsdl:message name="GetAuthorsCountHttpGetOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetBooksHttpGetIn">
+    <wsdl:part name="authorId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBooksHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorHttpGetIn">
+    <wsdl:part name="id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorHttpGetOut">
+    <wsdl:part name="Body" element="tns:AuthorViewModel" />
+  </wsdl:message>
+  <wsdl:message name="DeleteHttpGetIn">
+    <wsdl:part name="authorId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteHttpGetOut" />
+  <wsdl:message name="GetAllAuthorsHttpPostIn" />
+  <wsdl:message name="GetAllAuthorsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfAuthorViewModel" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorsCountHttpPostIn" />
+  <wsdl:message name="GetAuthorsCountHttpPostOut">
+    <wsdl:part name="Body" element="tns:int" />
+  </wsdl:message>
+  <wsdl:message name="GetBooksHttpPostIn">
+    <wsdl:part name="authorId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetBooksHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorHttpPostIn">
+    <wsdl:part name="id" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthorHttpPostOut">
+    <wsdl:part name="Body" element="tns:AuthorViewModel" />
+  </wsdl:message>
+  <wsdl:message name="DeleteHttpPostIn">
+    <wsdl:part name="authorId" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="DeleteHttpPostOut" />
+  <wsdl:portType name="AuthorWebServiceSoap">
+    <wsdl:operation name="GetAllAuthors">
+      <wsdl:input message="tns:GetAllAuthorsSoapIn" />
+      <wsdl:output message="tns:GetAllAuthorsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthorsCount">
+      <wsdl:input message="tns:GetAuthorsCountSoapIn" />
+      <wsdl:output message="tns:GetAuthorsCountSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthors">
+      <wsdl:input message="tns:GetAuthorsSoapIn" />
+      <wsdl:output message="tns:GetAuthorsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBooks">
+      <wsdl:input message="tns:GetBooksSoapIn" />
+      <wsdl:output message="tns:GetBooksSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthor">
+      <wsdl:input message="tns:GetAuthorSoapIn" />
+      <wsdl:output message="tns:GetAuthorSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Manage">
+      <wsdl:input message="tns:ManageSoapIn" />
+      <wsdl:output message="tns:ManageSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <wsdl:input message="tns:DeleteSoapIn" />
+      <wsdl:output message="tns:DeleteSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTopAuthors">
+      <wsdl:input message="tns:GetTopAuthorsSoapIn" />
+      <wsdl:output message="tns:GetTopAuthorsSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="AuthorWebServiceHttpGet">
+    <wsdl:operation name="GetAllAuthors">
+      <wsdl:input message="tns:GetAllAuthorsHttpGetIn" />
+      <wsdl:output message="tns:GetAllAuthorsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthorsCount">
+      <wsdl:input message="tns:GetAuthorsCountHttpGetIn" />
+      <wsdl:output message="tns:GetAuthorsCountHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBooks">
+      <wsdl:input message="tns:GetBooksHttpGetIn" />
+      <wsdl:output message="tns:GetBooksHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthor">
+      <wsdl:input message="tns:GetAuthorHttpGetIn" />
+      <wsdl:output message="tns:GetAuthorHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <wsdl:input message="tns:DeleteHttpGetIn" />
+      <wsdl:output message="tns:DeleteHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="AuthorWebServiceHttpPost">
+    <wsdl:operation name="GetAllAuthors">
+      <wsdl:input message="tns:GetAllAuthorsHttpPostIn" />
+      <wsdl:output message="tns:GetAllAuthorsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthorsCount">
+      <wsdl:input message="tns:GetAuthorsCountHttpPostIn" />
+      <wsdl:output message="tns:GetAuthorsCountHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBooks">
+      <wsdl:input message="tns:GetBooksHttpPostIn" />
+      <wsdl:output message="tns:GetBooksHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthor">
+      <wsdl:input message="tns:GetAuthorHttpPostIn" />
+      <wsdl:output message="tns:GetAuthorHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <wsdl:input message="tns:DeleteHttpPostIn" />
+      <wsdl:output message="tns:DeleteHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AuthorWebServiceSoap" type="tns:AuthorWebServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllAuthors">
+      <soap:operation soapAction="http://bookcatalogwebservice.org/GetAllAuthors" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthorsCount">
+      <soap:operation soapAction="http://bookcatalogwebservice.org/GetAuthorsCount" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthors">
+      <soap:operation soapAction="http://bookcatalogwebservice.org/GetAuthors" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBooks">
+      <soap:operation soapAction="http://bookcatalogwebservice.org/GetBooks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthor">
+      <soap:operation soapAction="http://bookcatalogwebservice.org/GetAuthor" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Manage">
+      <soap:operation soapAction="http://bookcatalogwebservice.org/Manage" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <soap:operation soapAction="http://bookcatalogwebservice.org/Delete" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTopAuthors">
+      <soap:operation soapAction="http://bookcatalogwebservice.org/GetTopAuthors" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AuthorWebServiceSoap12" type="tns:AuthorWebServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllAuthors">
+      <soap12:operation soapAction="http://bookcatalogwebservice.org/GetAllAuthors" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthorsCount">
+      <soap12:operation soapAction="http://bookcatalogwebservice.org/GetAuthorsCount" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthors">
+      <soap12:operation soapAction="http://bookcatalogwebservice.org/GetAuthors" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBooks">
+      <soap12:operation soapAction="http://bookcatalogwebservice.org/GetBooks" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthor">
+      <soap12:operation soapAction="http://bookcatalogwebservice.org/GetAuthor" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Manage">
+      <soap12:operation soapAction="http://bookcatalogwebservice.org/Manage" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <soap12:operation soapAction="http://bookcatalogwebservice.org/Delete" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTopAuthors">
+      <soap12:operation soapAction="http://bookcatalogwebservice.org/GetTopAuthors" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AuthorWebServiceHttpGet" type="tns:AuthorWebServiceHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="GetAllAuthors">
+      <http:operation location="/GetAllAuthors" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthorsCount">
+      <http:operation location="/GetAuthorsCount" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBooks">
+      <http:operation location="/GetBooks" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthor">
+      <http:operation location="/GetAuthor" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <http:operation location="/Delete" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AuthorWebServiceHttpPost" type="tns:AuthorWebServiceHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="GetAllAuthors">
+      <http:operation location="/GetAllAuthors" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthorsCount">
+      <http:operation location="/GetAuthorsCount" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBooks">
+      <http:operation location="/GetBooks" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAuthor">
+      <http:operation location="/GetAuthor" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Delete">
+      <http:operation location="/Delete" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output />
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AuthorWebService">
+    <wsdl:port name="AuthorWebServiceSoap" binding="tns:AuthorWebServiceSoap">
+      <soap:address location="http://localhost:57813/AuthorWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AuthorWebServiceSoap12" binding="tns:AuthorWebServiceSoap12">
+      <soap12:address location="http://localhost:57813/AuthorWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AuthorWebServiceHttpGet" binding="tns:AuthorWebServiceHttpGet">
+      <http:address location="http://localhost:57813/AuthorWebService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AuthorWebServiceHttpPost" binding="tns:AuthorWebServiceHttpPost">
+      <http:address location="http://localhost:57813/AuthorWebService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -47,6 +47,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web">
       <Private>True</Private>
@@ -83,6 +84,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoMapperExtention\Configurations\AutomapServiceBehavior.cs" />
     <Compile Include="DomainModels\AuthorDomainModel.cs" />
     <Compile Include="AutoMapperExtention\AutoMapperConfiguration.cs" />
     <Compile Include="DomainModels\BookDomainModel.cs" />
@@ -97,9 +99,9 @@
       <Project>{4ea7a47a-ff7d-47a1-8d34-4b29f262d7e1}</Project>
       <Name>BookCatalog.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\BookCatalog.ViewModels\BookCatalog.ViewModels.csproj">
+    <ProjectReference Include="..\BookCatalog.Components\BookCatalog.Components.csproj">
       <Project>{0f17f994-5d9a-4373-84e1-f5eb9b36ec5d}</Project>
-      <Name>BookCatalog.ViewModels</Name>
+      <Name>BookCatalog.Components</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

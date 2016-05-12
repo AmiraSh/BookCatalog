@@ -1,0 +1,38 @@
+﻿@model BookCatalog.Components.ViewModels.AuthorViewModel
+@(Html.Kendo().Chart(Model.Books)
+        .Name("Books_" + Model.Id)
+                .Title(title => title
+                    .Text("Books' rating")
+                    .Position(ChartTitlePosition.Top))
+        .Series(series =>
+        {
+            series.Column(valueExpression: model => model.Rating, categoryExpression: model => model.Name, noteTextExpression: model => model.Year.ToString());
+        })
+        .CategoryAxis(axis => axis
+            .Categories(model => model.Name)
+            .Labels(labels => labels.Visible(true).Template("#= dataItem.Year #"))
+            .Title(title => title.Text("Book Name"))
+            .Crosshair(crosshair => crosshair
+                .Visible(true)
+            )
+            .Name("Name")
+        )
+        .ValueAxis(axis => axis.Numeric()
+            .Labels(labels => labels.Format("{0}"))
+            .Title(title => title.Text("Rating"))
+            .Crosshair(crosshair => crosshair
+                .Visible(true)
+            )
+            .Min(1)
+            .Max(5)
+            .Name("Rating")
+        )
+        .Legend(legend => legend
+            .Visible(false).Position(ChartLegendPosition.Right)
+        )
+        .ChartArea(chart => chart
+            .Background("transparent")
+         )
+         .Zoomable(false)
+         .Tooltip(model => model.Template("#= dataItem.Name #").Visible(true))
+)
