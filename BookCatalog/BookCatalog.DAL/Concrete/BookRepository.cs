@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.DAL.Concrete
+﻿//-----------------------------------------------------------------------
+// <copyright file="BookRepository.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.DAL.Concrete
 {
     #region Using
     using System.Collections.Generic;
@@ -63,7 +68,7 @@
         /// <returns>XML document.</returns>
         public XmlDocument GetXML()
         {
-            SqlConnection sqlConnection = new SqlConnection(base.Context.Database.Connection.ConnectionString);
+            SqlConnection sqlConnection = new SqlConnection(Context.Database.Connection.ConnectionString);
             SqlCommand command = new SqlCommand();
 
             command.CommandText = "sp_GetXMLExpand";

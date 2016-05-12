@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.DAL.Models
+﻿//-----------------------------------------------------------------------
+// <copyright file="Author.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.DAL.Models
 {
     #region Using
     using System.Collections.Generic;

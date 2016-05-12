@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.DAL.Concrete
+﻿//-----------------------------------------------------------------------
+// <copyright file="AuthorRepository.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.DAL.Concrete
 {
     #region Using
     using System;
@@ -51,7 +56,7 @@
         /// <returns>Top authors.</returns>
         public IDictionary<Author, int> GetTopAuthors(int count, DateTime beginDate, DateTime endDate)
         {
-            SqlConnection sqlConnection = new SqlConnection(base.Context.Database.Connection.ConnectionString);
+            SqlConnection sqlConnection = new SqlConnection(Context.Database.Connection.ConnectionString);
             SqlCommand command = new SqlCommand();
 
             command.CommandText = "sp_GetTopAuthors";

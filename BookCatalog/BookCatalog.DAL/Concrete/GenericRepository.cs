@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.DAL.Concrete
+﻿//-----------------------------------------------------------------------
+// <copyright file="GenericRepository.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.DAL.Concrete
 {
     #region Using
     using System;
@@ -37,7 +42,7 @@
         /// <summary>
         /// Finds instance by id.
         /// </summary>
-        /// <param name="id">Identifier.</param>
+        /// <param name="id">The identifier.</param>
         /// <returns>Found instance.</returns>
         public T FindById(int id)
         {
@@ -66,25 +71,25 @@
         /// Gets specified count of entities from database.
         /// </summary>
         /// <param name="total">Total count.</param>
-        /// <param name="sorts">Sotrings.</param>
-        /// <param name="filters">Filters.</param>
+        /// <param name="sorts">Sorting settings.</param>
+        /// <param name="filters">Filters settings.</param>
         /// <param name="take">Count of elements to take.</param>
         /// <param name="skip">Count of elements to skip.</param>
         /// <returns>Some entities from database.</returns>
         public IEnumerable<T> Take(out int total, Dictionary<string, ListSortDirection> sorts, List<CustomFilter> filters, int take, int skip = 0)
         {
             var result = this.entities.Set<T>().AsQueryable();
-            Sort(ref result, sorts);
-            Filter(ref result, filters);
+            this.Sort(ref result, sorts);
+            this.Filter(ref result, filters);
             total = result.Count();
             return result.Skip(skip).Take(take);
         }
-        
+
         /// <summary>
         /// Sorts queryable set.
         /// </summary>
         /// <param name="set">Queryable set.</param>
-        /// <param name="sorts">Sortings.</param>
+        /// <param name="sorts">Sorting settings.</param>
         public void Sort(ref IQueryable<T> set, Dictionary<string, ListSortDirection> sorts)
         {
             foreach (var sort in sorts)
@@ -97,7 +102,7 @@
         /// Filters queryable set.
         /// </summary>
         /// <param name="set">Queryable set.</param>
-        /// <param name="filters">Filters.</param>
+        /// <param name="filters">Filters settings.</param>
         public void Filter(ref IQueryable<T> set, List<CustomFilter> filters)
         {
             foreach (var filter in filters)
@@ -170,7 +175,7 @@
         /// <summary>
         /// Finds the first instance that matches the filter.
         /// </summary>
-        /// <param name="filter">Filter.</param>
+        /// <param name="filter">Filter settings.</param>
         /// <returns>Found instance.</returns>
         public virtual T FirstOrDefault(Func<T, bool> filter)
         {
@@ -180,7 +185,7 @@
         /// <summary>
         /// Finds all instances that match the filter.
         /// </summary>
-        /// <param name="filter">Filter.</param>
+        /// <param name="filter">Filter settings.</param>
         /// <returns>Found instances.</returns>
         public virtual IEnumerable<T> FindBy(Func<T, bool> filter)
         {

@@ -1,3 +1,8 @@
+//-----------------------------------------------------------------------
+// <copyright file="AddedRatingColumn.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace BookCatalog.DAL.Migrations
 {
     #region Using
@@ -14,7 +19,7 @@ namespace BookCatalog.DAL.Migrations
         /// </summary>
         public override void Up()
         {
-            AddColumn("dbo.Book", "Rating", c => c.Int(nullable: false));
+            this.AddColumn("dbo.Book", "Rating", c => c.Int(nullable: false));
         }
 
         /// <summary>
@@ -22,7 +27,7 @@ namespace BookCatalog.DAL.Migrations
         /// </summary>
         public override void Down()
         {
-            DropColumn("dbo.Book", "Rating");
+            this.DropColumn("dbo.Book", "Rating");
         }
     }
 }

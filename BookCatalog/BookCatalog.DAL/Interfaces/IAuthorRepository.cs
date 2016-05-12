@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.DAL.Interfaces
+﻿//-----------------------------------------------------------------------
+// <copyright file="IAuthorRepository.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.DAL.Interfaces
 {
     #region Using
     using System;
