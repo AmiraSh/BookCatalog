@@ -1,11 +1,17 @@
-﻿namespace BookCatalog.BusinessLogic.AuthoMapperExtention
+﻿//-----------------------------------------------------------------------
+// <copyright file="AutoMapperConfiguration.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.BusinessLogic.AutoMapperExtention
 {
     #region Using
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using AutoMapper;
     using DAL.Models;
-    using ViewModels;
+    using ViewModels.ViewModels;
     #endregion
 
     /// <summary>
@@ -90,29 +96,12 @@
                 return default(List<BookViewModel>);
             });
 
-            Mapper.CreateMap<BookViewModel, Book>().ConstructUsing(bookVM =>
-                {
-                    if (bookVM != null)
-                    {
-                        Book book = new Book();
-                        book.Name = bookVM.Name;
-                        book.PagesCount = bookVM.PagesCount;
-                        book.PublishedDate = bookVM.PublishedDate;
-                        book.Description = bookVM.Description;
-                        book.Rating = bookVM.Rating;
-                        return book;
-                    }
-
-                    return default(Book);
-                });
-
-            Mapper.CreateMap<BookViewModel, Book>()
+            Mapper.CreateMap<BookViewModel, Book>().IgnoreAllUnmapped()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.PagesCount, opt => opt.MapFrom(src => src.PagesCount))
                 .ForMember(dest => dest.PublishedDate, opt => opt.MapFrom(src => src.PublishedDate))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-                .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating))
-                .IgnoreAllUnmapped();
+                .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating));
         }
 
         /// <summary>
@@ -120,23 +109,9 @@
         /// </summary>
         private static void ConfigureAuthorMapping()
         {
-            Mapper.CreateMap<AuthorViewModel, Author>().ConstructUsing(authorVM =>
-            {
-                if (authorVM != null)
-                {
-                    Author author = new Author();
-                    author.FirstName = authorVM.FirstName;
-                    author.SecondName = authorVM.SecondName;
-                    return author;
-                }
-
-                return default(Author);
-            });
-
-            Mapper.CreateMap<AuthorViewModel, Author>()
+            Mapper.CreateMap<AuthorViewModel, Author>().IgnoreAllUnmapped()
                 .ForMember(dest => dest.FirstName, opt => opt.MapFrom(src => src.FirstName))
-                .ForMember(dest => dest.SecondName, opt => opt.MapFrom(src => src.SecondName))
-                .IgnoreAllUnmapped();
+                .ForMember(dest => dest.SecondName, opt => opt.MapFrom(src => src.SecondName));
 
             Mapper.CreateMap<Author, AuthorViewModel>().ConstructUsing(author =>
             {
