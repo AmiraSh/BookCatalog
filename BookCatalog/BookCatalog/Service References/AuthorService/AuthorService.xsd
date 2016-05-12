@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/BookCatalog.Infrastructure.Filtration" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/BookCatalog.Infrastructure.Filtration" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:63753/Services/AuthorService.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System" />
+  <xs:complexType name="ArrayOfCustomFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomFilter" nillable="true" type="tns:CustomFilter" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCustomFilter" nillable="true" type="tns:ArrayOfCustomFilter" />
+  <xs:complexType name="CustomFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Member" nillable="true" type="xs:string" />
+      <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/System" minOccurs="0" name="MemberType" nillable="true" type="q1:Type" />
+      <xs:element minOccurs="0" name="Operator" type="tns:CustomOperator" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:anyType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CustomFilter" nillable="true" type="tns:CustomFilter" />
+  <xs:simpleType name="CustomOperator">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Contains" />
+      <xs:enumeration value="Greater" />
+      <xs:enumeration value="Less" />
+      <xs:enumeration value="GreaterOrEqual" />
+      <xs:enumeration value="LessOrEqual" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CustomOperator" nillable="true" type="tns:CustomOperator" />
+</xs:schema>

@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.BusinessLogic.DomainModels
+﻿//-----------------------------------------------------------------------
+// <copyright file="AuthorDomainModel.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.BusinessLogic.DomainModels
 {
     #region Using
     using System.Collections.Generic;
@@ -6,11 +11,13 @@
     using System.Linq;
     using System.Text;
     using AutoMapper;
+    using AutoMapperExtention;
+    using DAL.Concrete;
     using DAL.Interfaces;
     using DAL.Models;
     using Infrastructure.Errors;
     using Infrastructure.Filtration;
-    using ViewModels;
+    using ViewModels.ViewModels;
     #endregion
 
     /// <summary>
@@ -22,14 +29,16 @@
         /// Author repository.
         /// </summary>
         private IAuthorRepository authorRepository;
-
+        
         /// <summary>
-        /// Initializes a new instance of the <see cref="AuthorDomainModel"/> class.
+        /// Gets author repository.
         /// </summary>
-        /// <param name="authorRepository">Author repository.</param>
-        public AuthorDomainModel(IAuthorRepository authorRepository)
+        private IAuthorRepository AuthorRepository
         {
-            this.authorRepository = authorRepository;
+            get
+            {
+                return this.authorRepository != null ? this.authorRepository : this.authorRepository = new AuthorRepository();
+            }
         }
 
         /// <summary>
@@ -38,7 +47,7 @@
         /// <returns>List of authors view model.</returns>
         public List<AuthorViewModel> GetAuthors()
         {
-            return Mapper.Map<List<AuthorViewModel>>(this.authorRepository.GetAll().ToList());
+            return Mapper.Map<List<AuthorViewModel>>(this.AuthorRepository.GetAll().ToList());
         }
 
         /// <summary>
@@ -47,7 +56,7 @@
         /// <returns>Authors' count.</returns>
         public int GetAuthorsCount()
         {
-            return this.authorRepository.GetSize();
+            return this.AuthorRepository.GetSize();
         }
 
         /// <summary>
@@ -66,7 +75,7 @@
                 sorts.Add("Id", ListSortDirection.Ascending);
             }
 
-            return Mapper.Map<List<AuthorViewModel>>(this.authorRepository.Take(out total, sorts, filters, take, skip).ToList());
+            return Mapper.Map<List<AuthorViewModel>>(this.AuthorRepository.Take(out total, sorts, filters, take, skip).ToList());
         }
 
         /// <summary>
@@ -76,7 +85,7 @@
         /// <returns>List of author's books.</returns>
         public string GetBooks(int authorId)
         {
-            Author author = this.authorRepository.FindById(authorId);
+            Author author = this.AuthorRepository.FindById(authorId);
             if (author == null)
             {
                 throw new InvalidFieldValueException("Author does not exist.");
@@ -101,46 +110,40 @@
         /// <returns>Author view model.</returns>
         public AuthorViewModel GetAuthor(int id)
         {
-            return Mapper.Map<AuthorViewModel>(this.authorRepository.FindById(id));
+            return Mapper.Map<AuthorViewModel>(this.AuthorRepository.FindById(id));
         }
 
         /// <summary>
         /// Adds or edits an author.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
-        public void Manage(AuthorViewModel authorVM)
+        public int Manage(AuthorViewModel authorVM)
         {
-            if (authorVM.Id == 0)
-            {
-                this.AddAuthor(authorVM);
-            }
-            else
-            {
-                this.EditAuthor(authorVM);
-            }
+            return authorVM.Id == 0 ? this.AddAuthor(authorVM) : this.EditAuthor(authorVM);
         }
 
         /// <summary>
         /// Adds a new author to database.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
-        public void AddAuthor(AuthorViewModel authorVM)
+        public int AddAuthor(AuthorViewModel authorVM)
         {
             Author author = Mapper.Map<Author>(authorVM);
-            this.authorRepository.Add(author);
-            this.authorRepository.SaveChanges();
-            authorVM.Id = author.Id;
+            this.AuthorRepository.Add(author);
+            this.AuthorRepository.SaveChanges();
+            return authorVM.Id = author.Id;
         }
 
         /// <summary>
         /// Edits an author in database.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
-        public void EditAuthor(AuthorViewModel authorVM)
+        public int EditAuthor(AuthorViewModel authorVM)
         {
-            Author author = this.authorRepository.FindById(authorVM.Id);
-            Mapper.Map(authorVM, author);
-            this.authorRepository.SaveChanges();
+            Author author = this.AuthorRepository.FindById(authorVM.Id);
+            Mapper.Map<AuthorViewModel, Author>(authorVM, author);
+            this.AuthorRepository.SaveChanges();
+            return author.Id;
         }
 
         /// <summary>
@@ -149,14 +152,14 @@
         /// <param name="authorId">Author id.</param>
         public void DeleteAuthor(int authorId)
         {
-            Author author = this.authorRepository.FindById(authorId);
+            Author author = this.AuthorRepository.FindById(authorId);
             if (author == null)
             {
                 throw new InvalidFieldValueException("Author does not exist.");
             }
 
-            this.authorRepository.Delete(author);
-            this.authorRepository.SaveChanges();
+            this.AuthorRepository.Delete(author);
+            this.AuthorRepository.SaveChanges();
         }
 
         /// <summary>
@@ -166,7 +169,7 @@
         /// <returns>List of top authors.</returns>
         public List<TopAuthorViewModel> GetTopAuthors(SearchTopAuthorsViewModel searchModel)
         {
-            return Mapper.Map<List<TopAuthorViewModel>>(this.authorRepository.GetTopAuthors(searchModel.Count, searchModel.BeginDate, searchModel.EndDate));
+            return Mapper.Map<List<TopAuthorViewModel>>(this.AuthorRepository.GetTopAuthors(searchModel.Count, searchModel.BeginDate, searchModel.EndDate));
         }
     }
 }

@@ -6,11 +6,10 @@
     using System.Web.Http;
     using System.Web.Http.Description;
     using System.Web.Mvc;
-    using BusinessLogic.DomainModel;
-    using BusinessLogic.Validation;
-    using BusinessLogic.ViewModels;
-    using DAL.Interfaces;
+    using ViewModels.Validation;
+    using ViewModels.ViewModels;
     using Infrastructure.Errors;
+    using UI.BookService;
     #endregion
 
     /// <summary>
@@ -21,21 +20,16 @@
         /// <summary>
         /// Domain model.
         /// </summary>
-        private BookDomainModel domainModel;
+        private IBookService domainModel;
 
         /// <summary>
         /// Gets the domain model or creates new if it was null.
         /// </summary>
-        private BookDomainModel DomainModel
+        private IBookService DomainModel
         {
             get
             {
-                if (domainModel == null)
-                {
-                    domainModel = new BookDomainModel((IBookRepository)DependencyResolver.Current.GetService(typeof(IBookRepository)), (IAuthorRepository)DependencyResolver.Current.GetService(typeof(IAuthorRepository)));
-                }
-
-                return domainModel;
+                return domainModel != null ? domainModel : domainModel = (IBookService)DependencyResolver.Current.GetService(typeof(IBookService));
             }
         }
 
@@ -45,7 +39,7 @@
         /// <returns>Books' list.</returns>
         public IEnumerable<BookViewModel> GetAll()
         {
-            return this.DomainModel.GetBooks();
+            return this.DomainModel.GetAllBooks().AsEnumerable();
         }
 
         /// <summary>
@@ -75,7 +69,7 @@
         {
             try
             {
-                this.DomainModel.DeleteBook(id);
+                this.DomainModel.Delete(id);
             }
             catch (InvalidFieldValueException)
             {

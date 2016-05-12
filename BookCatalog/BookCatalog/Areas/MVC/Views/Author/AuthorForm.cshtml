@@ -1,9 +1,11 @@
-﻿@model BookCatalog.BusinessLogic.ViewModels.AuthorViewModel
+﻿@model BookCatalog.ViewModels.ViewModels.AuthorViewModel
 
 @using (Ajax.BeginForm("Manage", "Author", new { Model, area = "MVC" }, new AjaxOptions() { OnSuccess = "onSuccess" })) 
 {
     @Html.AntiForgeryToken()
-    
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.BooksCount)
+
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">

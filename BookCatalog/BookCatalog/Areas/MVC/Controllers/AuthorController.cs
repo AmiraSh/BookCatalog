@@ -2,10 +2,9 @@
 {
     #region Using
     using System.Controllers;
-    using BusinessLogic.DomainModels;
-    using BusinessLogic.Validation;
-    using BusinessLogic.ViewModels;
-    using DAL.Interfaces;
+    using AuthorService;
+    using ViewModels.Validation;
+    using ViewModels.ViewModels;
     using global::System;
     using global::System.Web.Mvc;
     using Infrastructure.Errors;
@@ -19,21 +18,16 @@
         /// <summary>
         /// Domain model.
         /// </summary>
-        private AuthorDomainModel domainModel;
+        private IAuthorService domainModel;
 
         /// <summary>
         /// Gets the domain model or creates new if it was null.
         /// </summary>
-        private AuthorDomainModel DomainModel
+        private IAuthorService DomainModel
         {
             get
             {
-                if (domainModel == null)
-                {
-                    domainModel = new AuthorDomainModel((IAuthorRepository)DependencyResolver.Current.GetService(typeof(IAuthorRepository)));
-                }
-
-                return domainModel;
+                return domainModel != null ? domainModel : domainModel = (IAuthorService)DependencyResolver.Current.GetService(typeof(IAuthorService));
             }
         }
 
@@ -43,7 +37,7 @@
         /// <returns>A page with authors' list.</returns>
         public ActionResult Index()
         {
-            return this.View(this.DomainModel.GetAuthors());
+            return this.View(this.DomainModel.GetAllAuthors());
         }
 
         /// <summary>
@@ -104,7 +98,7 @@
                 return this.Json(new { error = exception.ValidationMessage });
             }
 
-            this.DomainModel.Manage(authorVM);            
+            authorVM.Id = this.DomainModel.Manage(authorVM);            
             return this.Json(new
             {
                 Id = authorVM.Id,
@@ -123,7 +117,7 @@
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            this.DomainModel.DeleteAuthor(id);
+            this.DomainModel.Delete(id);
             return this.Json(id);
         }
 
@@ -142,7 +136,7 @@
         /// <returns>Authors.</returns>
         public JsonResult GetAuthors()
         {
-            return this.Json(this.DomainModel.GetAuthors(), JsonRequestBehavior.AllowGet);
+            return this.Json(this.DomainModel.GetAllAuthors(), JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>

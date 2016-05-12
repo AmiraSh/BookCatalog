@@ -2,14 +2,16 @@
 {
     #region Using
     using System.Controllers;
-    using BusinessLogic.DomainModel;
-    using BusinessLogic.Validation;
-    using BusinessLogic.ViewModels;
-    using DAL.Interfaces;
+    using BookService;
+    using ViewModels.Validation;
+    using ViewModels.ViewModels;
     using global::Kendo.Mvc.Extensions;
     using global::Kendo.Mvc.UI;
+    using global::System.Collections.Generic;
+    using global::System.ComponentModel;
     using global::System.Web.Mvc;
     using Infrastructure.Errors;
+    using Infrastructure.Filtration;
     using KendoAnalysing;
     #endregion
 
@@ -21,21 +23,16 @@
         /// <summary>
         /// Domain model.
         /// </summary>
-        private BookDomainModel domainModel;
+        private IBookService domainModel;
 
         /// <summary>
         /// Gets the domain model or creates new if it was null.
         /// </summary>
-        private BookDomainModel DomainModel
+        private IBookService DomainModel
         {
             get
             {
-                if (domainModel == null)
-                {
-                    domainModel = new BookDomainModel((IBookRepository)DependencyResolver.Current.GetService(typeof(IBookRepository)), (IAuthorRepository)DependencyResolver.Current.GetService(typeof(IAuthorRepository)));
-                }
-
-                return domainModel;
+                return domainModel != null ? domainModel : domainModel = (IBookService)DependencyResolver.Current.GetService(typeof(IBookService));
             }
         }
         
@@ -55,13 +52,13 @@
         /// <returns>Grids' elements.</returns>
         public JsonResult Read([DataSourceRequest]DataSourceRequest request)
         {
-            int total;
-            var sorts = KendoAnalyser.GetSorts(request.Sorts);
-            var filters = KendoAnalyser.GetFilters(request.Filters);
-            var books = this.DomainModel.GetBooks(out total, sorts, filters, request.PageSize, (request.Page - 1) * request.PageSize);
-            DataSourceResult result = books.ToDataSourceResult(request);
-            result.Data = books;
-            result.Total = total;
+            Dictionary<string, ListSortDirection> sorts = KendoAnalyser.GetSorts(request.Sorts);
+            List<CustomFilter> filters = KendoAnalyser.GetFilters(request.Filters);
+            ////List<BookViewModel> books = this.DomainModel.GetBooks(out total, sorts, filters, request.PageSize, (request.Page - 1) * request.PageSize);
+            GetBooksResponse response = this.DomainModel.GetBooks(new GetBooksRequest(sorts, filters.ToArray(), request.PageSize, (request.Page - 1) * request.PageSize));
+            DataSourceResult result = response.GetBooksResult.ToDataSourceResult(request);
+            result.Data = response.GetBooksResult;
+            result.Total = response.total;
             return this.Json(result, JsonRequestBehavior.AllowGet);
         }
 
@@ -97,7 +94,7 @@
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult Destroy([DataSourceRequest]DataSourceRequest request, BookViewModel bookViewModel)
         {
-            this.DomainModel.DeleteBook(bookViewModel.Id);
+            this.DomainModel.Delete(bookViewModel.Id);
             return this.Json(new[] { bookViewModel }.ToDataSourceResult(request, this.ModelState));
         }
     }

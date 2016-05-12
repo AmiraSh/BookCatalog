@@ -29,8 +29,7 @@
             context.MapRoute(
                 "Angular_default",
                 "Angular/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
-            );
+                new { action = "Index", id = UrlParameter.Optional });
         }
     }
 }

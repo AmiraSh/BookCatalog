@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.BusinessLogic.Validation
+﻿//-----------------------------------------------------------------------
+// <copyright file="Validator.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.ViewModels.Validation
 {
     #region Using
     using System;

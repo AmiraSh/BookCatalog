@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.BusinessLogic.DomainModel
+﻿//-----------------------------------------------------------------------
+// <copyright file="BookDomainModel.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.BusinessLogic.DomainModel
 {
     #region Using
     using System.Collections.Generic;
@@ -9,11 +14,13 @@
     using System.Web.Mvc;
     using System.Xml;
     using AutoMapper;
+    using AutoMapperExtention;
+    using DAL.Concrete;
     using DAL.Interfaces;
     using DAL.Models;
     using Infrastructure.Errors;
     using Infrastructure.Filtration;
-    using ViewModels;
+    using ViewModels.ViewModels;
     #endregion
 
     /// <summary>
@@ -32,14 +39,25 @@
         private IAuthorRepository authorRepository;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BookDomainModel"/> class.
+        /// Gets book repository.
         /// </summary>
-        /// <param name="bookRepository">Book repository.</param>
-        /// <param name="authorRepository">Author repository.</param>
-        public BookDomainModel(IBookRepository bookRepository, IAuthorRepository authorRepository)
+        private IBookRepository BookRepository
         {
-            this.bookRepository = bookRepository;
-            this.authorRepository = authorRepository;
+            get
+            {
+                return this.bookRepository != null ? this.bookRepository : this.bookRepository = new BookRepository();
+            }
+        }
+
+        /// <summary>
+        /// Gets author repository.
+        /// </summary>
+        private IAuthorRepository AuthorRepository
+        {
+            get
+            {
+                return this.authorRepository != null ? this.authorRepository : this.authorRepository = new AuthorRepository();
+            }
         }
 
         /// <summary>
@@ -48,7 +66,7 @@
         /// <returns>Books' count.</returns>
         public int GetBooksCount()
         {
-            return this.bookRepository.GetSize();
+            return this.BookRepository.GetSize();
         }
 
         /// <summary>
@@ -56,12 +74,7 @@
         /// </summary>
         public List<SelectListItem> PopulateMultiSelectList()
         {
-            return new MultiSelectList(
-                this.authorRepository.GetAll().ToList().Select(author => new SelectListItem()
-                {
-                    Text = string.Format("{0} {1}", author.FirstName, author.SecondName),
-                    Value = author.Id.ToString()
-                }), "Value", "Text").ToList();
+            return new MultiSelectList(this.AuthorRepository.GetAll().ToList().Select(author => new SelectListItem() { Text = string.Format("{0} {1}", author.FirstName, author.SecondName), Value = author.Id.ToString() }).ToList(), "Value", "Text").ToList();
         }
 
         /// <summary>
@@ -71,7 +84,7 @@
         public void PopulateMultiSelectList(BookViewModel bookVM)
         {
             bookVM.AuthorsOptions = new MultiSelectList(
-                this.authorRepository.GetAll().ToList().Select(author => new SelectListItem()
+                this.AuthorRepository.GetAll().ToList().Select(author => new SelectListItem()
                 {
                     Text = string.Format("{0} {1}", author.FirstName, author.SecondName),
                     Value = author.Id.ToString(),
@@ -80,12 +93,21 @@
         }
 
         /// <summary>
+        /// Gets authors' names.
+        /// </summary>
+        /// <returns>Authors' names.</returns>
+        public Dictionary<int, string> GetAuthorsList()
+        {
+            return this.AuthorRepository.GetAll().ToDictionary(author => author.Id, author => string.Format("{0} {1}", author.FirstName, author.SecondName));
+        }
+
+        /// <summary>
         /// Gets all books.
         /// </summary>
         /// <returns>Books list.</returns>
         public List<BookViewModel> GetBooks()
         {
-            return Mapper.Map<List<BookViewModel>>(this.bookRepository.GetAll().ToList());
+            return Mapper.Map<List<BookViewModel>>(this.BookRepository.GetAll().ToList());
         }
 
         /// <summary>
@@ -104,7 +126,7 @@
                 sorts.Add("Id", ListSortDirection.Ascending);
             }
 
-            return Mapper.Map<List<BookViewModel>>(this.bookRepository.Take(out total, sorts, filters, take, skip).ToList());
+            return Mapper.Map<List<BookViewModel>>(this.BookRepository.Take(out total, sorts, filters, take, skip).ToList());
         }
 
         /// <summary>
@@ -114,7 +136,7 @@
         /// <returns>True if the book exists, false otherwise.</returns>
         public bool BookExists(int id)
         {
-            return this.bookRepository.FindById(id) != null;
+            return this.BookRepository.FindById(id) != null;
         }
 
         /// <summary>
@@ -124,60 +146,56 @@
         /// <returns>Book view model.</returns>
         public BookViewModel GetBook(int id)
         {
-            return Mapper.Map<BookViewModel>(this.bookRepository.FindById(id));
+            return Mapper.Map<BookViewModel>(this.BookRepository.FindById(id));
         }
 
         /// <summary>
         /// Adds or edits a book.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
-        public void Manage(BookViewModel bookVM)
+        public int Manage(BookViewModel bookVM)
         {
-            if (bookVM.Id == 0)
-            {
-                this.AddBook(bookVM);
-            }
-            else
-            {
-                this.EditBook(bookVM);
-            }
+            return bookVM.Id == 0 ? this.AddBook(bookVM) : this.EditBook(bookVM);
         }
 
         /// <summary>
         /// Adds a new book to database.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
-        public void AddBook(BookViewModel bookVM)
+        public int AddBook(BookViewModel bookVM)
         {
+            int bookId = 0;
             using (TransactionScope scope = new TransactionScope())
             {
                 Book book = Mapper.Map<Book>(bookVM);
-                this.bookRepository.Add(book);
-                this.bookRepository.SaveChanges();
-                this.bookRepository.SetAuthors(book.Id, bookVM.AuthorsIds);
-                this.bookRepository.SaveChanges();
-                bookVM.Id = book.Id;
+                this.BookRepository.Add(book);
+                this.BookRepository.SaveChanges();
+                this.BookRepository.SetAuthors(book.Id, bookVM.AuthorsIds);
+                this.BookRepository.SaveChanges();
+                bookId = bookVM.Id = book.Id;
                 scope.Complete();
             }
+            return bookId;
         }
 
         /// <summary>
         /// Edits a book in database.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
-        public void EditBook(BookViewModel bookVM)
+        public int EditBook(BookViewModel bookVM)
         {
             using (TransactionScope scope = new TransactionScope())
             {
-                Book book = this.bookRepository.FindById(bookVM.Id);
+                Book book = this.BookRepository.FindById(bookVM.Id);
                 Mapper.Map(bookVM, book);
-                this.bookRepository.Modify(book);
-                this.bookRepository.SaveChanges();
+                this.BookRepository.Modify(book);
+                this.BookRepository.SaveChanges();
                 book.Authors.Clear();
-                this.bookRepository.SetAuthors(book.Id, bookVM.AuthorsIds);
-                this.bookRepository.SaveChanges();
+                this.BookRepository.SetAuthors(book.Id, bookVM.AuthorsIds);
+                this.BookRepository.SaveChanges();
                 scope.Complete();
             }
+            return bookVM.Id;
         }
 
         /// <summary>
@@ -186,14 +204,14 @@
         /// <param name="bookId">Book id.</param>
         public void DeleteBook(int bookId)
         {
-            Book book = this.bookRepository.FindById(bookId);
+            Book book = this.BookRepository.FindById(bookId);
             if (book == null)
             {
                 throw new InvalidFieldValueException("Book does not exists.");
             }
 
-            this.bookRepository.Delete(book);
-            this.bookRepository.SaveChanges();
+            this.BookRepository.Delete(book);
+            this.BookRepository.SaveChanges();
         }
 
         /// <summary>
@@ -204,7 +222,7 @@
         public string GetAuthors(int bookId)
         {
             StringBuilder authors = new StringBuilder();
-            Book book = this.bookRepository.FindById(bookId);
+            Book book = this.BookRepository.FindById(bookId);
             foreach (Author author in book.Authors)
             {
                 authors.AppendLine(string.Format("{0} {1}", author.FirstName, author.SecondName));
@@ -219,7 +237,7 @@
         /// <returns>XML catalog.</returns>
         public XmlDocument GetXML()
         {
-            return this.bookRepository.GetXML();
+            return this.BookRepository.GetXML();
         }
     }
 }

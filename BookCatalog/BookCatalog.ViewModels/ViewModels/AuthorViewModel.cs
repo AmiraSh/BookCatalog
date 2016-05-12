@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.BusinessLogic.ViewModels
+﻿//-----------------------------------------------------------------------
+// <copyright file="AuthorViewModel.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.ViewModels.ViewModels
 {
     #region Using
     using System.Collections.Generic;

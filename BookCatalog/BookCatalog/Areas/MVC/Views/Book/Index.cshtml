@@ -1,12 +1,12 @@
-﻿@model IEnumerable<BookCatalog.BusinessLogic.ViewModels.BookViewModel>
+﻿@model IEnumerable<BookCatalog.ViewModels.ViewModels.BookViewModel>
 @{
-    ViewBag.Title = "Book Catalog";
+    ViewBag.Title = "Books";
 }
 <br />
 <div style="margin-bottom:5px;">
     @Html.ActionLink("Download XML file", "GetXMLFile", new { }, new { @class="btn btn-default" })
 </div>
-<div>
+<div style="margin-bottom:5px;">
     <input type="button" value="Add" id="CreateBook" class="btn btn-default" />
     <div id="BookForm" style="display:none">        
     </div>
@@ -62,7 +62,7 @@
                 </td>
                 <td>
                     <input type="button" value="Edit" id="Edit" onclick="editBook(@item.Id)" class="makealink" /> |
-                    @Html.ActionLink("Details", "Details", "Book", new { area = "MVC" }, new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", "Book", new { id = item.Id , area = "MVC" }, null) |
                     <input type="button" value="Delete" id="Delete" onclick="deleteBook(@item.Id)" class="makealink" />
                 </td>
             </tr>
@@ -80,6 +80,7 @@
                 { "sClass": "Name", "mDataProp": "Name" },
                 { "sClass": "PublishedDate", "mDataProp": "PublishedDate" },
                 { "sClass": "PagesCount", "mDataProp": "PagesCount" },
+                { "sClass": "Rating", "mDataProp": "Rating" },
                 { "sClass": "Authors", "mDataProp": "Authors" },
                 { "sClass": "Controls", "mDataProp": "Controls" }
             ]

@@ -5,11 +5,11 @@
     using System.Web.Http;
     using System.Web.Http.Description;
     using System.Web.Mvc;
-    using BookCatalog.BusinessLogic.DomainModels;
-    using BookCatalog.BusinessLogic.Validation;
-    using BookCatalog.BusinessLogic.ViewModels;
-    using BookCatalog.DAL.Interfaces;
+    using BookCatalog.ViewModels.Validation;
+    using BookCatalog.ViewModels.ViewModels;
     using BookCatalog.Infrastructure.Errors;
+    using UI.AuthorService;
+    using System.Linq;
     #endregion
 
     /// <summary>
@@ -20,21 +20,16 @@
         /// <summary>
         /// Domain model.
         /// </summary>
-        private AuthorDomainModel domainModel;
+        private IAuthorService domainModel;
 
         /// <summary>
         /// Gets the domain model or creates new if it was null.
         /// </summary>
-        private AuthorDomainModel DomainModel
+        private IAuthorService DomainModel
         {
             get
             {
-                if (domainModel == null)
-                {
-                    domainModel = new AuthorDomainModel((IAuthorRepository)DependencyResolver.Current.GetService(typeof(IAuthorRepository)));
-                }
-
-                return domainModel;
+                return domainModel != null ? domainModel : domainModel = (IAuthorService)DependencyResolver.Current.GetService(typeof(IAuthorService));
             }
         }
 
@@ -44,7 +39,7 @@
         /// <returns>Authors' list.</returns>
         public IEnumerable<AuthorViewModel> GetAll()
         {
-            return this.DomainModel.GetAuthors();
+            return this.DomainModel.GetAllAuthors().AsEnumerable();
         }
 
         /// <summary>
@@ -74,7 +69,7 @@
         {
             try
             {
-                this.DomainModel.DeleteAuthor(id);
+                this.DomainModel.Delete(id);
             }
             catch (InvalidFieldValueException)
             {

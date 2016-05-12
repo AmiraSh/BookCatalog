@@ -2,17 +2,17 @@
 {
     #region Using
     using System.Controllers;
-    using BusinessLogic.DomainModel;
-    using BusinessLogic.Validation;
-    using BusinessLogic.ViewModels;
-    using DAL.Interfaces;
+    using BookService;
+    using ViewModels.Validation;
+    using ViewModels.ViewModels;
     using global::System;
+    using global::System.Collections.Generic;
+    using global::System.Linq;
     using global::System.Net;
     using global::System.Text;
     using global::System.Web.Mvc;
     using global::System.Xml;
     using Infrastructure.Errors;
-    using KendoAnalysing;
     #endregion
 
     /// <summary>
@@ -23,21 +23,16 @@
         /// <summary>
         /// Domain model.
         /// </summary>
-        private BookDomainModel domainModel;
+        private IBookService domainModel;
 
         /// <summary>
         /// Gets the domain model or creates new if it was null.
         /// </summary>
-        private BookDomainModel DomainModel
+        private IBookService DomainModel
         {
             get
             {
-                if (domainModel == null)
-                {
-                    domainModel = new BookDomainModel((IBookRepository)DependencyResolver.Current.GetService(typeof(IBookRepository)), (IAuthorRepository)DependencyResolver.Current.GetService(typeof(IAuthorRepository)));
-                }
-
-                return domainModel;
+                return domainModel != null ? domainModel : domainModel = (IBookService)DependencyResolver.Current.GetService(typeof(IBookService));
             }
         }
 
@@ -47,7 +42,7 @@
         /// <returns>Main page.</returns>
         public ActionResult Index()
         {
-            return this.View(this.DomainModel.GetBooks());
+            return this.View(this.DomainModel.GetAllBooks());
         }
 
         /// <summary>
@@ -78,22 +73,20 @@
         /// <returns>Partial view.</returns>
         public ActionResult AddBookForm(int? id)
         {
-            BookViewModel book;
-            if (id == null)
-            {
-                book = new BookViewModel();
-            }
-            else
-            {
-                book = this.DomainModel.GetBook(id.Value);
-            }
+            BookViewModel book = id == null ? new BookViewModel() : this.DomainModel.GetBook(id.Value);
             
             if (book == null)
             {
                 throw new ArgumentException("Book does not exist.");
             }
             
-            this.DomainModel.PopulateMultiSelectList(book);
+            book.AuthorsOptions = new List<SelectListItem>();
+            book.AuthorsOptions.AddRange(this.DomainModel.PopulateMultiSelectList());
+            foreach (var author in book.AuthorsOptions)
+            {
+                author.Selected = book.Authors.FirstOrDefault(bookAuthor => bookAuthor.Id == int.Parse(author.Value)) != null;
+            }
+
             return this.PartialView("BookForm", book);
         }
 
@@ -115,13 +108,14 @@
                 return this.Json(new { error = exception.ValidationMessage });
             }
 
-            this.DomainModel.Manage(bookVM);
+            bookVM.Id = this.DomainModel.Manage(bookVM);
             return this.Json(new
             {
                 Id = bookVM.Id,
                 Name = bookVM.Name,
                 PublishedDate = bookVM.PublishedDate.ToString("MM/dd/yyyy"),
                 PagesCount = bookVM.PagesCount,
+                Rating = bookVM.Rating,
                 Authors = this.DomainModel.GetAuthors(bookVM.Id)
             });
         }
@@ -134,7 +128,7 @@
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            this.DomainModel.DeleteBook(id);
+            this.DomainModel.Delete(id);
             return this.Json(id);
         }
 
@@ -153,7 +147,7 @@
         /// <returns>XML file.</returns>
         public FileResult GetXMLFile()
         {
-            byte[] bytes = Encoding.Default.GetBytes(this.DomainModel.GetXML().OuterXml);
+            byte[] bytes = Encoding.Default.GetBytes(this.DomainModel.GetXML(new GetXMLRequest()).Body.GetXMLResult.ToString());
             return File(bytes, global::System.Net.Mime.MediaTypeNames.Text.Xml, "bookcatalog.xml");
         }
     }

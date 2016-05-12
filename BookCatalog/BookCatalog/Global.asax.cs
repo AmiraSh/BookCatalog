@@ -5,11 +5,9 @@
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
-    using BusinessLogic.AuthoMapperExtention;
     using BookCatalog.Infrastructure.Logging;
     using BookCatalog.Infrastructure.Logging.Concrete;
     using System.Web.Http;
-    using App_Start;
     #endregion
 
     /// <summary>
@@ -33,7 +31,6 @@
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AutoMapperConfiguration.Configure();
         }
 
         /// <summary>
