@@ -130,6 +130,7 @@ namespace BookCatalog.BusinessLogic.DomainModels
         /// Adds or edits an author.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
+        /// <returns>Author identifier.</returns>
         public int Manage(AuthorViewModel authorVM)
         {
             return authorVM.Id == 0 ? this.AddAuthor(authorVM) : this.EditAuthor(authorVM);
@@ -139,6 +140,7 @@ namespace BookCatalog.BusinessLogic.DomainModels
         /// Adds a new author to database.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
+        /// <returns>Author identifier.</returns>
         public int AddAuthor(AuthorViewModel authorVM)
         {
             Author author = Mapper.Map<Author>(authorVM);
@@ -151,6 +153,7 @@ namespace BookCatalog.BusinessLogic.DomainModels
         /// Edits an author in database.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
+        /// <returns>Author identifier.</returns>
         public int EditAuthor(AuthorViewModel authorVM)
         {
             Author author = this.AuthorRepository.FindById(authorVM.Id);

@@ -67,6 +67,7 @@ namespace BookCatalogService
         /// Adds or edits a book.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
+        /// <returns>Book identifier.</returns>
         [OperationContract]
         int Manage(BookViewModel bookVM);
 

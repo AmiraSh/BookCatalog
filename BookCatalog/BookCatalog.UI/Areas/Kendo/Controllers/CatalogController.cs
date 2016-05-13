@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.UI.Areas.Kendo.Controllers
+﻿//-----------------------------------------------------------------------
+// <copyright file="CatalogController.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI.Areas.Kendo.Controllers
 {
     #region Using
     using global::System.Web.Mvc;

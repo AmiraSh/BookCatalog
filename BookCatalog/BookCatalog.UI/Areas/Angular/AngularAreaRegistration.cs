@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.UI.Areas.Angular
+﻿//-----------------------------------------------------------------------
+// <copyright file="AngularAreaRegistration.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI.Areas.Angular
 {
     #region Using
     using global::System.Web.Mvc;
@@ -23,7 +28,7 @@
         /// <summary>
         /// Registers ares.
         /// </summary>
-        /// <param name="context">Context.</param>
+        /// <param name="context">Area registration context.</param>
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.MapRoute(

@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.API.Controllers
+﻿//-----------------------------------------------------------------------
+// <copyright file="BookController.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.API.Controllers
 {
     #region Using
     using System.Collections.Generic;
@@ -29,7 +34,7 @@
         {
             get
             {
-                return domainModel != null ? domainModel : domainModel = (IBookServiceWrapper)DependencyResolver.Current.GetService(typeof(IBookServiceWrapper));
+                return this.domainModel != null ? this.domainModel : this.domainModel = (IBookServiceWrapper)DependencyResolver.Current.GetService(typeof(IBookServiceWrapper));
             }
         }
 
@@ -63,7 +68,7 @@
         /// Deletes a book.
         /// </summary>
         /// <param name="id">Book identifier.</param>
-        /// <returns></returns>
+        /// <returns>Http action result.</returns>
         [ResponseType(typeof(BookViewModel))]
         public IHttpActionResult Delete(int id)
         {
@@ -83,7 +88,7 @@
         /// Creates a book.
         /// </summary>
         /// <param name="book">Book view model.</param>
-        /// <returns></returns>
+        /// <returns>Http action result.</returns>
         [ResponseType(typeof(BookViewModel))]
         [System.Web.Http.HttpPost]
         public IHttpActionResult Manage(BookViewModel book)
@@ -96,7 +101,7 @@
             catch (InvalidFieldValueException exception)
             {
                 this.ModelState.AddModelError("error", exception.ValidationMessage);
-                return BadRequest(ModelState);
+                return this.BadRequest(ModelState);
             }
 
             this.DomainModel.Manage(book);

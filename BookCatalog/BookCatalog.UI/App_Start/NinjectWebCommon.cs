@@ -1,3 +1,8 @@
+//-----------------------------------------------------------------------
+// <copyright file="NinjectWebCommon.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(BookCatalog.UI.App_Start.NinjectWebCommon), "Start")]
 [assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(BookCatalog.UI.App_Start.NinjectWebCommon), "Stop")]
 

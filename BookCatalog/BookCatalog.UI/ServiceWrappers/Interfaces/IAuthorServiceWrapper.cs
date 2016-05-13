@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.UI.ServiceWrappers.Interfaces
+﻿//-----------------------------------------------------------------------
+// <copyright file="IAuthorServiceWrapper.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI.ServiceWrappers.Interfaces
 {
     #region Using
     using System.Collections.Generic;

@@ -1,13 +1,17 @@
-﻿namespace BookCatalog.WebService
+﻿//-----------------------------------------------------------------------
+// <copyright file="AuthorWebService.asmx.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.WebService
 {
     #region Using
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Web.Services;
+    using Components.ViewModels;
+    using BusinessLogic.AutoMapperExtention;
     using BusinessLogic.DomainModels;
     using Infrastructure.Filtration;
-    using Components.ViewModels;
-    using BusinessLogic.AutoMapperExtention.Configurations;
     #endregion Using
 
     /// <summary>
@@ -15,7 +19,6 @@
     /// </summary>
     [WebService(Namespace = "http://bookcatalogwebservice.org/", Name = "AuthorWebService")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [AutomapServiceBehavior]
     public class AuthorWebService : WebService
     {
         /// <summary>
@@ -95,6 +98,7 @@
         /// Adds or edits an author.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
+        /// <returns>Author identifier.</returns>
         [WebMethod]
         public int Manage(AuthorViewModel authorVM)
         {

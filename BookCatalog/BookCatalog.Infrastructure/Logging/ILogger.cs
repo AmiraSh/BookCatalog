@@ -12,7 +12,7 @@ namespace BookCatalog.Infrastructure.Logging
     #endregion
 
     /// <summary>
-    /// Logger.
+    /// Logger interface.
     /// </summary>
     public interface ILogger
     {

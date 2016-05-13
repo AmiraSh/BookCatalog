@@ -94,6 +94,7 @@ namespace BookCatalogService
         /// Adds or edits a book.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
+        /// <returns>Book identifier.</returns>
         public int Manage(BookViewModel bookVM)
         {
             return this.DomainModel.Manage(bookVM);

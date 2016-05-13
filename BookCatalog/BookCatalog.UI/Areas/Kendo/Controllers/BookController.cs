@@ -1,14 +1,19 @@
-﻿namespace BookCatalog.UI.Areas.Kendo.Controllers
+﻿//-----------------------------------------------------------------------
+// <copyright file="BookController.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI.Areas.Kendo.Controllers
 {
     #region Using
     using System.Controllers;
+    using global::System.Collections.Generic;
+    using global::System.ComponentModel;
+    using global::System.Web.Mvc;
     using Components.Validation;
     using Components.ViewModels;
     using global::Kendo.Mvc.Extensions;
     using global::Kendo.Mvc.UI;
-    using global::System.Collections.Generic;
-    using global::System.ComponentModel;
-    using global::System.Web.Mvc;
     using Infrastructure.Errors;
     using Infrastructure.Filtration;
     using KendoAnalysing;
@@ -32,12 +37,12 @@
         {
             get
             {
-                return domainModel != null ? domainModel : domainModel = (IBookServiceWrapper)DependencyResolver.Current.GetService(typeof(IBookServiceWrapper));
+                return this.domainModel != null ? this.domainModel : this.domainModel = (IBookServiceWrapper)DependencyResolver.Current.GetService(typeof(IBookServiceWrapper));
             }
         }
         
         /// <summary>
-        /// Grid.
+        /// Gets grid view.
         /// </summary>
         /// <returns>Grid view.</returns>
         public ActionResult Grid()
@@ -48,7 +53,7 @@
         /// <summary>
         /// Reads grids' elements.
         /// </summary>
-        /// <param name="request">Request.</param>
+        /// <param name="request">Data source request.</param>
         /// <returns>Grids' elements.</returns>
         public JsonResult Read([DataSourceRequest]DataSourceRequest request)
         {
@@ -65,7 +70,7 @@
         /// <summary>
         /// Creates or updates an entity.
         /// </summary>
-        /// <param name="request">Request.</param>
+        /// <param name="request">Data source request.</param>
         /// <param name="bookViewModel">Book view model.</param>
         /// <returns>Created or updated entity.</returns>
         [AcceptVerbs(HttpVerbs.Post)]
@@ -88,7 +93,7 @@
         /// <summary>
         /// Deletes an entity.
         /// </summary>
-        /// <param name="request">Request.</param>
+        /// <param name="request">Data source request.</param>
         /// <param name="bookViewModel">Book view model.</param>
         /// <returns>Deleted entity.</returns>
         [AcceptVerbs(HttpVerbs.Post)]

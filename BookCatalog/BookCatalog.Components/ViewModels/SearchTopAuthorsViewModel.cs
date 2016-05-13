@@ -11,7 +11,7 @@ namespace BookCatalog.Components.ViewModels
     #endregion
 
     /// <summary>
-    /// View model for searching top autors.
+    /// View model for searching top authors.
     /// </summary>
     public class SearchTopAuthorsViewModel
     {
@@ -26,14 +26,14 @@ namespace BookCatalog.Components.ViewModels
         }
 
         /// <summary>
-        /// Authors' count to find.
+        /// Gets or sets authors' count to find.
         /// </summary>
         [Required(ErrorMessage = "Count is required.")]
         [Display(Name = "Count")]
         public int Count { get; set; }
 
         /// <summary>
-        /// Begin date.
+        /// Gets or sets begin date.
         /// </summary>
         [Required(ErrorMessage = "Begin date is required.")]
         [Display(Name = "Begin Date")]
@@ -42,7 +42,7 @@ namespace BookCatalog.Components.ViewModels
         public DateTime BeginDate { get; set; }
 
         /// <summary>
-        /// End date.
+        /// Gets or sets end date.
         /// </summary>
         [Required(ErrorMessage = "End date is required.")]
         [Display(Name = "End Date")]

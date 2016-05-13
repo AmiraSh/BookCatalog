@@ -199,7 +199,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="AutoMapperExtention\AutoMapperConfiguration.cs" />
+    <Compile Include="AutoMapperExtention\AutoMapperWebServiceConfiguration.cs" />
     <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Areas\Angular\AngularAreaRegistration.cs" />
@@ -485,6 +485,7 @@
     <Content Include="Service References\AuthorWebService\BookCatalog.UI.AuthorWebService.GetAuthorsResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <None Include="Service References\AuthorWebService\AuthorWebService.wsdl" />
     <None Include="Service References\AuthorWebService\configuration91.svcinfo" />
     <None Include="Service References\AuthorWebService\configuration.svcinfo" />
     <None Include="Service References\AuthorWebService\Reference.svcmap">
@@ -497,7 +498,6 @@
     <Content Include="Service References\BookService\BookCatalog.UI.BookService.GetXMLResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\AuthorWebService\AuthorWebService.wsdl" />
     <None Include="Service References\BookService\BookService.disco" />
     <None Include="Service References\BookService\configuration91.svcinfo" />
     <None Include="Service References\BookService\configuration.svcinfo" />
@@ -514,13 +514,14 @@
     <Content Include="Service References\BookWebService\BookCatalog.UI.BookWebService.SelectListItem.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\BookWebService\BookWebService.disco" />
+    <None Include="Service References\BookWebService\BookWebService.wsdl" />
     <None Include="Service References\BookWebService\configuration91.svcinfo" />
     <None Include="Service References\BookWebService\configuration.svcinfo" />
     <None Include="Service References\BookWebService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\BookWebService\BookWebService.disco" />
     <Content Include="Views\Shared\ApplicationError.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -621,7 +622,6 @@
     <None Include="Service References\BookService\BookService8.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\BookWebService\BookWebService.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

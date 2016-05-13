@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.UI
+﻿//-----------------------------------------------------------------------
+// <copyright file="FilterConfig.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI
 {
     #region Using
     using System.Web.Mvc;

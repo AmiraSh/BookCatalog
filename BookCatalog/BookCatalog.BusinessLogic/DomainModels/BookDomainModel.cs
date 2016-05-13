@@ -71,6 +71,7 @@ namespace BookCatalog.BusinessLogic.DomainModel
         /// <summary>
         /// Populates multi select list.
         /// </summary>
+        /// <returns>Select list.</returns>
         public List<SelectListItem> PopulateMultiSelectList()
         {
             return new MultiSelectList(this.AuthorRepository.GetAll().ToList().Select(author => new SelectListItem() { Text = string.Format("{0} {1}", author.FirstName, author.SecondName), Value = author.Id.ToString() }).ToList(), "Value", "Text").ToList();
@@ -82,13 +83,7 @@ namespace BookCatalog.BusinessLogic.DomainModel
         /// <param name="bookVM">Book view model.</param>
         public void PopulateMultiSelectList(BookViewModel bookVM)
         {
-            bookVM.AuthorsOptions = new MultiSelectList(
-                this.AuthorRepository.GetAll().ToList().Select(author => new SelectListItem()
-                {
-                    Text = string.Format("{0} {1}", author.FirstName, author.SecondName),
-                    Value = author.Id.ToString(),
-                    Selected = bookVM.Authors.FirstOrDefault(bookAuthor => bookAuthor.Id == author.Id) != null
-                }), "Value", "Text").ToList();
+            bookVM.AuthorsOptions = new MultiSelectList(this.AuthorRepository.GetAll().ToList().Select(author => new SelectListItem() { Text = string.Format("{0} {1}", author.FirstName, author.SecondName), Value = author.Id.ToString(), Selected = bookVM.Authors.FirstOrDefault(bookAuthor => bookAuthor.Id == author.Id) != null }), "Value", "Text").ToList();
         }
 
         /// <summary>
@@ -166,6 +161,7 @@ namespace BookCatalog.BusinessLogic.DomainModel
         /// Adds or edits a book.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
+        /// <returns>Book identifier.</returns>
         public int Manage(BookViewModel bookVM)
         {
             return bookVM.Id == 0 ? this.AddBook(bookVM) : this.EditBook(bookVM);
@@ -175,6 +171,7 @@ namespace BookCatalog.BusinessLogic.DomainModel
         /// Adds a new book to database.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
+        /// <returns>Book identifier.</returns>
         public int AddBook(BookViewModel bookVM)
         {
             int bookId = 0;
@@ -188,6 +185,7 @@ namespace BookCatalog.BusinessLogic.DomainModel
                 bookId = bookVM.Id = book.Id;
                 scope.Complete();
             }
+
             return bookId;
         }
 
@@ -195,6 +193,7 @@ namespace BookCatalog.BusinessLogic.DomainModel
         /// Edits a book in database.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
+        /// <returns>Book identifier.</returns>
         public int EditBook(BookViewModel bookVM)
         {
             using (TransactionScope scope = new TransactionScope())
@@ -208,6 +207,7 @@ namespace BookCatalog.BusinessLogic.DomainModel
                 this.BookRepository.SaveChanges();
                 scope.Complete();
             }
+
             return bookVM.Id;
         }
 

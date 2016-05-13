@@ -24,8 +24,8 @@
     <MetadataSource Address="http://localhost:57813/BookWebService.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="BookWebService.wsdl" MetadataType="Wsdl" ID="7fbc66d3-e079-4e1c-81b2-b968ae7ec565" SourceId="1" SourceUrl="http://localhost:57813/BookWebService.asmx?wsdl" />
-    <MetadataFile FileName="BookWebService.disco" MetadataType="Disco" ID="2dd7c2a4-73a0-4fa9-b4d0-9454195a6e31" SourceId="1" SourceUrl="http://localhost:57813/BookWebService.asmx?disco" />
+    <MetadataFile FileName="BookWebService.wsdl" MetadataType="Wsdl" ID="006d18b3-daad-4c69-92a6-9403d2e91a15" SourceId="1" SourceUrl="http://localhost:57813/BookWebService.asmx?wsdl" />
+    <MetadataFile FileName="BookWebService.disco" MetadataType="Disco" ID="6d4d5794-ebf0-4b9e-8174-dbae28c6a293" SourceId="1" SourceUrl="http://localhost:57813/BookWebService.asmx?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

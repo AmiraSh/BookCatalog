@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.UI.Areas.Kendo
+﻿//-----------------------------------------------------------------------
+// <copyright file="KendoAreaRegistration.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI.Areas.Kendo
 {
     #region Using
     using global::System.Web.Mvc;
@@ -23,14 +28,10 @@
         /// <summary>
         /// Registers ares.
         /// </summary>
-        /// <param name="context">Context.</param>
+        /// <param name="context">Area registration context.</param>
         public override void RegisterArea(AreaRegistrationContext context) 
         {
-            context.MapRoute(
-                "Kendo_default",
-                "Kendo/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
-            );
+            context.MapRoute("Kendo_default", "Kendo/{controller}/{action}/{id}", new { action = "Index", id = UrlParameter.Optional });
         }
     }
 }

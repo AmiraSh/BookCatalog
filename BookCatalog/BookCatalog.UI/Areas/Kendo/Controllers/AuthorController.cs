@@ -7,13 +7,13 @@ namespace BookCatalog.UI.Areas.Kendo.Controllers
 {
     #region Using
     using System.Controllers;
+    using global::System.Collections.Generic;
+    using global::System.ComponentModel;
+    using global::System.Web.Mvc;
     using Components.Validation;
     using Components.ViewModels;
     using global::Kendo.Mvc.Extensions;
     using global::Kendo.Mvc.UI;
-    using global::System.Collections.Generic;
-    using global::System.ComponentModel;
-    using global::System.Web.Mvc;
     using Infrastructure.Errors;
     using Infrastructure.Filtration;
     using KendoAnalysing;
@@ -37,12 +37,12 @@ namespace BookCatalog.UI.Areas.Kendo.Controllers
         {
             get
             {
-                return domainModel != null ? domainModel : domainModel = (IAuthorServiceWrapper)DependencyResolver.Current.GetService(typeof(IAuthorServiceWrapper));
+                return this.domainModel != null ? this.domainModel : this.domainModel = (IAuthorServiceWrapper)DependencyResolver.Current.GetService(typeof(IAuthorServiceWrapper));
             }
         }
         
         /// <summary>
-        /// Grid.
+        /// Gets grid view.
         /// </summary>
         /// <returns>Grid view.</returns>
         public ActionResult Grid()
@@ -53,16 +53,16 @@ namespace BookCatalog.UI.Areas.Kendo.Controllers
         /// <summary>
         /// Gets partial view for books' rating chart.
         /// </summary>
-        /// <param name="Id">Author identifier.</param>
+        /// <param name="id">Author identifier.</param>
         /// <returns>Partial view for books' rating chart.</returns>
-        public ActionResult BooksChart(int? Id)
+        public ActionResult BooksChart(int? id)
         {
-            if (Id == null)
+            if (id == null)
             {
                 return this.PartialView();
             }
 
-            return this.PartialView(this.DomainModel.GetAuthor(Id.Value));
+            return this.PartialView(this.DomainModel.GetAuthor(id.Value));
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace BookCatalog.UI.Areas.Kendo.Controllers
         /// <summary>
         /// Creates or updates an entity.
         /// </summary>
-        /// <param name="request">Request.</param>
+        /// <param name="request">Data source request.</param>
         /// <param name="authorViewModel">Author view model.</param>
         /// <returns>Created or updated entity.</returns>
         [AcceptVerbs(HttpVerbs.Post)]
@@ -108,7 +108,7 @@ namespace BookCatalog.UI.Areas.Kendo.Controllers
         /// <summary>
         /// Deletes an entity.
         /// </summary>
-        /// <param name="request">Request.</param>
+        /// <param name="request">Data source request.</param>
         /// <param name="authorViewModel">Author view model.</param>
         /// <returns>Deleted entity.</returns>
         [AcceptVerbs(HttpVerbs.Post)]

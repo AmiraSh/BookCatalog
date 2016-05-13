@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.Infrastructure.Filtration
+﻿//-----------------------------------------------------------------------
+// <copyright file="Sort.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.Infrastructure.Filtration
 {
     #region Using
     using System.ComponentModel;
@@ -10,12 +15,12 @@
     public class Sort
     {
         /// <summary>
-        /// Field name.
+        /// Gets or sets field name.
         /// </summary>
         public string FieldName { get; set; }
 
         /// <summary>
-        /// Sort direction.
+        /// Gets or sets sort direction.
         /// </summary>
         public ListSortDirection SortDirection { get; set; }
     }

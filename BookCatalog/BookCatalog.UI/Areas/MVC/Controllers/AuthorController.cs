@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.UI.Areas.MVC.Controllers
+﻿//-----------------------------------------------------------------------
+// <copyright file="AuthorController.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI.Areas.MVC.Controllers
 {
     #region Using
     using System.Controllers;
@@ -27,7 +32,7 @@
         {
             get
             {
-                return domainModel != null ? domainModel : domainModel = (IAuthorServiceWrapper)DependencyResolver.Current.GetService(typeof(IAuthorServiceWrapper));
+                return this.domainModel != null ? this.domainModel : this.domainModel = (IAuthorServiceWrapper)DependencyResolver.Current.GetService(typeof(IAuthorServiceWrapper));
             }
         }
 
@@ -43,7 +48,7 @@
         /// <summary>
         /// Displays an author.
         /// </summary>
-        /// <param name="id">Identifier.</param>
+        /// <param name="id">Author identifier.</param>
         /// <param name="FirstName">First name.</param>
         /// <param name="LastName">Last name.</param>
         /// <param name="BooksCount">Books count (optional).</param>
@@ -84,7 +89,7 @@
         /// Creates of edits an author.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
-        /// <returns>Json.</returns>
+        /// <returns>Json with information about the author.</returns>
         [HttpPost]
         public JsonResult Manage(AuthorViewModel authorVM)
         {
@@ -113,7 +118,7 @@
         /// Deletes an author.
         /// </summary>
         /// <param name="id">Author id.</param>
-        /// <returns>Json.</returns>
+        /// <returns>Json with identifier of deleted instance.</returns>
         [HttpPost]
         public ActionResult Delete(int id)
         {
@@ -133,7 +138,7 @@
         /// <summary>
         /// Gets authors.
         /// </summary>
-        /// <returns>Authors.</returns>
+        /// <returns>Authors' list.</returns>
         public JsonResult GetAuthors()
         {
             return this.Json(this.DomainModel.GetAllAuthors(), JsonRequestBehavior.AllowGet);

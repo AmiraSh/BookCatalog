@@ -12,7 +12,7 @@ namespace BookCatalog.Components.Validation
     #endregion
 
     /// <summary>
-    /// Validator.
+    /// The validator.
     /// </summary>
     public static class Validator
     {

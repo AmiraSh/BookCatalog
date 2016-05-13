@@ -1,14 +1,19 @@
-﻿namespace BookCatalog.UI
+﻿//-----------------------------------------------------------------------
+// <copyright file="Global.asax.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI
 {
     #region Using
     using System;
+    using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
+    using AutoMapperExtention;
     using BookCatalog.Infrastructure.Logging;
     using BookCatalog.Infrastructure.Logging.Concrete;
-    using System.Web.Http;
-    using AutoMapperExtention;
     #endregion
 
     /// <summary>
@@ -32,13 +37,13 @@
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AutoMapperConfiguration.Configure();
+            AutoMapperWebServiceConfiguration.Configure();
         }
 
         /// <summary>
         /// Fired when an unhandled exception is encountered within the application.
         /// </summary>
-        /// <param name="sender">Sender.</param>
+        /// <param name="sender">Sender object.</param>
         /// <param name="e">Event arguments.</param>
         protected void Application_Error(object sender, EventArgs e)
         {

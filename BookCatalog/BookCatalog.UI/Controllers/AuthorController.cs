@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.API.Controllers
+﻿//-----------------------------------------------------------------------
+// <copyright file="AuthorController.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.API.Controllers
 {
     #region Using
     using System.Collections.Generic;
@@ -29,7 +34,7 @@
         {
             get
             {
-                return domainModel != null ? domainModel : domainModel = (IAuthorServiceWrapper)DependencyResolver.Current.GetService(typeof(IAuthorServiceWrapper));
+                return this.domainModel != null ? this.domainModel : this.domainModel = (IAuthorServiceWrapper)DependencyResolver.Current.GetService(typeof(IAuthorServiceWrapper));
             }
         }
 
@@ -63,7 +68,7 @@
         /// Deletes an author.
         /// </summary>
         /// <param name="id">Author identifier.</param>
-        /// <returns></returns>
+        /// <returns>Http action result.</returns>
         [ResponseType(typeof(AuthorViewModel))]
         public IHttpActionResult Delete(int id)
         {
@@ -83,7 +88,7 @@
         /// Creates or edits an author.
         /// </summary>
         /// <param name="author">Author view model.</param>
-        /// <returns></returns>
+        /// <returns>Http action result.</returns>
         [ResponseType(typeof(AuthorViewModel))]
         [System.Web.Http.HttpPost]
         public IHttpActionResult Manage(AuthorViewModel author)
@@ -95,7 +100,7 @@
             catch (InvalidFieldValueException exception)
             {
                 this.ModelState.AddModelError(exception.Field, exception.ValidationMessage);
-                return BadRequest(ModelState);
+                return this.BadRequest(ModelState);
             }
 
             this.DomainModel.Manage(author);

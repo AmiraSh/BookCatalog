@@ -1,15 +1,19 @@
-﻿namespace BookCatalog.WebService
+﻿//-----------------------------------------------------------------------
+// <copyright file="BookWebService.asmx.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.WebService
 {
     #region Using
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Web.Services;
     using System.Xml;
-    using BusinessLogic.DomainModel;
-    using Infrastructure.Filtration;
-    using Components.ViewModels;
     using System.Web.Mvc;
-    using BusinessLogic.AutoMapperExtention.Configurations;
+    using BusinessLogic.AutoMapperExtention;
+    using BusinessLogic.DomainModel;
+    using Components.ViewModels;
+    using Infrastructure.Filtration;
     #endregion Using
 
     /// <summary>
@@ -17,7 +21,6 @@
     /// </summary>
     [WebService(Namespace = "http://bookcatalogwebservice.org/", Name = "BookWebService")]
     [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
-    [AutomapServiceBehavior]
     public class BookWebService : WebService
     {
         /// <summary>
@@ -97,6 +100,7 @@
         /// Adds or edits a book.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
+        /// <returns>Book identifier.</returns>
         [WebMethod]
         public int Manage(BookViewModel bookVM)
         {

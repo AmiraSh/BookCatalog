@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.UI.Areas.System.Controllers
+﻿//-----------------------------------------------------------------------
+// <copyright file="BaseController.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI.Areas.System.Controllers
 {
     #region Using
     using BookCatalog.Infrastructure.Logging;
@@ -11,7 +16,7 @@
     public class BaseController : Controller
     {
         /// <summary>
-        /// Logger.
+        /// The logger.
         /// </summary>
         private ILogger logger;
 

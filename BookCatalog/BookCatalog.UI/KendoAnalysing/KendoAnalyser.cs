@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.UI.KendoAnalysing
+﻿//-----------------------------------------------------------------------
+// <copyright file="KendoAnalyser.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI.KendoAnalysing
 {
     #region Using
     using System.Collections.Generic;

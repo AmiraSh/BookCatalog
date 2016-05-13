@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.UI.ServiceWrappers.Concrete.WcfService
+﻿//-----------------------------------------------------------------------
+// <copyright file="WcfBookServiceWrapper.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI.ServiceWrappers.Concrete.WcfService
 {
     #region Using
     using System.Collections.Generic;
@@ -28,7 +33,7 @@
         {
             get
             {                
-                return domainModel != null ? domainModel : domainModel = (IBookService)DependencyResolver.Current.GetService(typeof(IBookService));
+                return this.domainModel != null ? this.domainModel : this.domainModel = (IBookService)DependencyResolver.Current.GetService(typeof(IBookService));
             }
         }
 

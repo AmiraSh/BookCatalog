@@ -1,4 +1,9 @@
-﻿namespace BBookCatalog.UI.Areas.System.Controllers
+﻿//-----------------------------------------------------------------------
+// <copyright file="FileBrowserController.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BBookCatalog.UI.Areas.System.Controllers
 {
     #region Using
     using global::System.IO;
@@ -24,8 +29,7 @@
         /// Folders to copy.
         /// </summary>
         private static readonly string[] FoldersToCopy = new[] { "~/Content/shared/" };
-
-
+        
         /// <summary>
         /// Gets the base paths from which content will be served.
         /// </summary>
@@ -33,7 +37,7 @@
         {
             get
             {
-                return CreateUserFolder();
+                return this.CreateUserFolder();
             }
         }
 
@@ -62,7 +66,7 @@
                 Directory.CreateDirectory(path);
                 foreach (var sourceFolder in FoldersToCopy)
                 {
-                    CopyFolder(Server.MapPath(sourceFolder), path);
+                    this.CopyFolder(Server.MapPath(sourceFolder), path);
                 }
             }
 
@@ -90,7 +94,7 @@
             foreach (var folder in Directory.EnumerateDirectories(source))
             {
                 var dest = Path.Combine(destination, Path.GetFileName(folder));
-                CopyFolder(folder, dest);
+                this.CopyFolder(folder, dest);
             }
         }
     }

@@ -1,4 +1,9 @@
-﻿namespace BookCatalog.UI.Areas.MVC.Controllers
+﻿//-----------------------------------------------------------------------
+// <copyright file="BookController.cs" company="Apriorit">
+//     Copyright (c). All rights reserved.
+// </copyright>
+//-----------------------------------------------------------------------
+namespace BookCatalog.UI.Areas.MVC.Controllers
 {
     #region Using
     using System.Controllers;
@@ -31,7 +36,7 @@
         {
             get
             {
-                return domainModel != null ? domainModel : domainModel = (IBookServiceWrapper)DependencyResolver.Current.GetService(typeof(IBookServiceWrapper));
+                return this.domainModel != null ? this.domainModel : this.domainModel = (IBookServiceWrapper)DependencyResolver.Current.GetService(typeof(IBookServiceWrapper));
             }
         }
 
@@ -68,7 +73,7 @@
         /// <summary>
         /// Gets a partial view for creating or editing new book.
         /// </summary>
-        /// <param name="id">Identifier.</param>
+        /// <param name="id">Book identifier.</param>
         /// <returns>Partial view.</returns>
         public ActionResult AddBookForm(int? id)
         {
@@ -93,7 +98,7 @@
         /// Creates or edits a book.
         /// </summary>
         /// <param name="bookVM">Book view model.</param>
-        /// <returns>Json.</returns>
+        /// <returns>Json with information about the book.</returns>
         [HttpPost]
         public JsonResult Manage(BookViewModel bookVM)
         {
@@ -147,7 +152,7 @@
         public FileResult GetXMLFile()
         {
             byte[] bytes = Encoding.Default.GetBytes(this.DomainModel.GetXML());
-            return File(bytes, global::System.Net.Mime.MediaTypeNames.Text.Xml, "bookcatalog.xml");
+            return this.File(bytes, global::System.Net.Mime.MediaTypeNames.Text.Xml, "bookcatalog.xml");
         }
     }
 }

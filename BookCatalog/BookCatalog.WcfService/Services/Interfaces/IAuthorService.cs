@@ -65,6 +65,7 @@ namespace BookCatalogService
         /// Adds or edits an author.
         /// </summary>
         /// <param name="authorVM">Author view model.</param>
+        /// <returns>Author identifier.</returns>
         [OperationContract]
         int Manage(AuthorViewModel authorVM);
 

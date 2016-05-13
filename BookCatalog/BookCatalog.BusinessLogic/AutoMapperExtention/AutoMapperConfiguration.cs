@@ -9,8 +9,8 @@ namespace BookCatalog.BusinessLogic.AutoMapperExtention
     using System.Collections.Generic;
     using System.Linq;
     using AutoMapper;
-    using DAL.Models;
     using Components.ViewModels;
+    using DAL.Models;
     #endregion
 
     /// <summary>
@@ -30,9 +30,9 @@ namespace BookCatalog.BusinessLogic.AutoMapperExtention
         /// <summary>
         /// Ignores all unmapped members.
         /// </summary>
-        /// <typeparam name="TSource">Source.</typeparam>
-        /// <typeparam name="TDest">Destination.</typeparam>
-        /// <param name="expression">Expression.</param>
+        /// <typeparam name="TSource">Source type.</typeparam>
+        /// <typeparam name="TDest">Destination type.</typeparam>
+        /// <param name="expression">Mapping xpression.</param>
         /// <returns>Mapping expression.</returns>
         public static IMappingExpression<TSource, TDest> IgnoreAllUnmapped<TSource, TDest>(this IMappingExpression<TSource, TDest> expression)
         {
