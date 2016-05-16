@@ -18,7 +18,7 @@ namespace BookCatalogService
     /// <summary>
     /// Books' service interface.
     /// </summary>
-    [ServiceContract]
+    [ServiceContract, ProtoBuf.ProtoContract]
     public interface IBookService
     {
         /// <summary>

@@ -16,7 +16,7 @@ namespace BookCatalogService
     /// <summary>
     /// Authors' service interface.
     /// </summary>
-    [ServiceContract]
+    [ServiceContract, ProtoBuf.ProtoContract]
     public interface IAuthorService
     {
         /// <summary>
