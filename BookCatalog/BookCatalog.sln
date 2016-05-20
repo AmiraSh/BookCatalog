@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.UI", "BookCatalog.UI\BookCatalog.UI.csproj", "{D1BAB331-124D-42D1-B1EF-8F6E1F8E8FDA}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.Infrastructure"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.DAL", "BookCatalog.DAL\BookCatalog.DAL.csproj", "{1E2A569E-0D14-42FF-92C3-5CB2ACEF6543}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalogService", "BookCatalog.WcfService\BookCatalogService.csproj", "{ACA84EBE-B272-47E4-BDCD-8364035E3A03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.WcfService", "BookCatalog.WcfService\BookCatalog.WcfService.csproj", "{ACA84EBE-B272-47E4-BDCD-8364035E3A03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.Components", "BookCatalog.Components\BookCatalog.Components.csproj", "{0F17F994-5D9A-4373-84E1-F5EB9B36EC5D}"
 EndProject
@@ -25,6 +25,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BookCatalog.DataBase", "Boo
 	ProjectSection(SolutionItems) = preProject
 		BookCatalog.DataBase111\BookCatalogDb.mdf = BookCatalog.DataBase111\BookCatalogDb.mdf
 		BookCatalog.DataBase111\BookCatalogDb_log.ldf = BookCatalog.DataBase111\BookCatalogDb_log.ldf
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookCatalog.LoadTest", "BookCatalog.LoadTest\BookCatalog.LoadTest.csproj", "{63DC1178-627B-411D-A55D-882E979F9EBC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D609E20A-4186-453F-8D52-F86751FC7045}"
+	ProjectSection(SolutionItems) = preProject
+		Local.testsettings = Local.testsettings
 	EndProjectSection
 EndProject
 Global
@@ -61,6 +68,10 @@ Global
 		{27F4558B-AB69-4CB8-BC5B-2D1E98AFB90E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27F4558B-AB69-4CB8-BC5B-2D1E98AFB90E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27F4558B-AB69-4CB8-BC5B-2D1E98AFB90E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63DC1178-627B-411D-A55D-882E979F9EBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63DC1178-627B-411D-A55D-882E979F9EBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63DC1178-627B-411D-A55D-882E979F9EBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63DC1178-627B-411D-A55D-882E979F9EBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,7 @@
 //     Copyright (c). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace BookCatalogService
+namespace BookCatalog.WcfService
 {
     #region Using
     using System.Collections.Generic;
