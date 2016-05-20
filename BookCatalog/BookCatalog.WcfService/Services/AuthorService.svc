@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="BookCatalogService.AuthorService" CodeBehind="BookCatalogService.AuthorService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="BookCatalog.WcfService.AuthorService" CodeBehind="BookCatalog.WcfService.AuthorService.svc.cs" %>
