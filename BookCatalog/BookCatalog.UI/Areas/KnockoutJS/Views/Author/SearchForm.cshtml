@@ -1,0 +1,44 @@
+﻿@model BookCatalog.Components.ViewModels.SearchTopAuthorsViewModel
+
+@using (Html.BeginForm("TopAuthors", "Author", new { Model, area = "MVC" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Count, htmlAttributes: new { @class = "control-label col-md-1" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Count, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Count, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BeginDate, htmlAttributes: new { @class = "control-label col-md-1", @type = "datetime" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.BeginDate, @"{0:MM/dd/yyyy}", htmlAttributes: new { @class = "form-control col-md-10 datepicker" })
+                @Html.ValidationMessageFor(model => model.BeginDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.EndDate, htmlAttributes: new { @class = "control-label col-md-1", @type = "datetime" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.EndDate, @"{0:MM/dd/yyyy}", htmlAttributes: new { @class = "form-control col-md-10 datepicker" })
+                @Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-6">
+                <input id="Search" type="submit" value="Search" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(document).ready(function () {
+        $('.datepicker').datepicker();
+    })
+</script>
