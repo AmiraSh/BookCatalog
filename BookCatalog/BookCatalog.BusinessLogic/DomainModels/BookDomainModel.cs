@@ -3,7 +3,7 @@
 //     Copyright (c). All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace BookCatalog.BusinessLogic.DomainModel
+namespace BookCatalog.BusinessLogic.DomainModels
 {
     #region Using
     using System.Collections.Generic;
@@ -28,35 +28,20 @@ namespace BookCatalog.BusinessLogic.DomainModel
     public class BookDomainModel
     {
         /// <summary>
-        /// Book repository.
-        /// </summary>
-        private IBookRepository bookRepository;
-
-        /// <summary>
-        /// Author repository.
-        /// </summary>
-        private IAuthorRepository authorRepository;
-
-        /// <summary>
         /// Gets book repository.
         /// </summary>
-        private IBookRepository BookRepository
-        {
-            get
-            {
-                return this.bookRepository != null ? this.bookRepository : this.bookRepository = new BookRepository();
-            }
-        }
+        private IBookRepository BookRepository { get; set; }
 
         /// <summary>
         /// Gets author repository.
         /// </summary>
-        private IAuthorRepository AuthorRepository
+        private IAuthorRepository AuthorRepository { get; set; }
+
+
+        public BookDomainModel(IAuthorRepository authorRepository, IBookRepository bookRepository)
         {
-            get
-            {
-                return this.authorRepository != null ? this.authorRepository : this.authorRepository = new AuthorRepository();
-            }
+            BookRepository = bookRepository;
+            AuthorRepository = authorRepository;
         }
 
         /// <summary>

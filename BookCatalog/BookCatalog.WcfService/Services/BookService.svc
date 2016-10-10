@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="BookCatalog.WcfService.BookService" CodeBehind="BookCatalog.WcfService.BookService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="BookCatalog.WcfService.BookService" Factory="BookCatalog.ServicesBootstrap.UnityServiceHostFactory" CodeBehind="BookCatalog.WcfService.BookService.svc.cs" %>

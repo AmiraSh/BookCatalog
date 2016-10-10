@@ -143,6 +143,10 @@
       <Project>{0f17f994-5d9a-4373-84e1-f5eb9b36ec5d}</Project>
       <Name>BookCatalog.Components</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ServicesBootstrap\BookCatalog.ServicesBootstrap.csproj">
+      <Project>{0077feea-e6b8-4388-ae90-443e0371649d}</Project>
+      <Name>BookCatalog.ServicesBootstrap</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

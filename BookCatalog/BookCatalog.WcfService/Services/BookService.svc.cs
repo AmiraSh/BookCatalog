@@ -11,7 +11,7 @@ namespace BookCatalog.WcfService
     using System.Web.Mvc;
     using System.Xml;
     using BookCatalog.BusinessLogic.AutoMapperExtention.Configurations;
-    using BookCatalog.BusinessLogic.DomainModel;
+    using BookCatalog.BusinessLogic.DomainModels;
     using BookCatalog.Components.ViewModels;
     using BookCatalog.Infrastructure.Filtration;
     #endregion Using
@@ -34,7 +34,7 @@ namespace BookCatalog.WcfService
         {
             get
             {
-                return this.domainModel != null ? this.domainModel : this.domainModel = new BookDomainModel();
+                return this.domainModel != null ? this.domainModel : this.domainModel = (BookDomainModel)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(BookDomainModel));
             }
         }
 

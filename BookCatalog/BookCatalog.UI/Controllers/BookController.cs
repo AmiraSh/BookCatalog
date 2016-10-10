@@ -14,7 +14,8 @@ namespace BookCatalog.API.Controllers
     using Components.Validation;
     using Components.ViewModels;
     using Infrastructure.Errors;
-    using UI.ServiceWrappers.Interfaces;
+    using Services.ServiceWrappers.Interfaces;
+    using Microsoft.Practices.Unity;
     #endregion
 
     /// <summary>
@@ -23,20 +24,10 @@ namespace BookCatalog.API.Controllers
     public class BookController : ApiController
     {
         /// <summary>
-        /// Domain model.
-        /// </summary>
-        private IBookServiceWrapper domainModel;
-
-        /// <summary>
         /// Gets the domain model or creates new if it was null.
         /// </summary>
-        private IBookServiceWrapper DomainModel
-        {
-            get
-            {
-                return this.domainModel != null ? this.domainModel : this.domainModel = (IBookServiceWrapper)DependencyResolver.Current.GetService(typeof(IBookServiceWrapper));
-            }
-        }
+        [Dependency]
+        protected IBookServiceWrapper DomainModel { get; set; }
 
         /// <summary>
         /// Gets all books.

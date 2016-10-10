@@ -17,7 +17,8 @@ namespace BookCatalog.UI.Areas.Kendo.Controllers
     using Infrastructure.Errors;
     using Infrastructure.Filtration;
     using KendoAnalysing;
-    using ServiceWrappers.Interfaces;
+    using Services.ServiceWrappers.Interfaces;
+    using Microsoft.Practices.Unity;
     #endregion
 
     /// <summary>
@@ -28,18 +29,8 @@ namespace BookCatalog.UI.Areas.Kendo.Controllers
         /// <summary>
         /// Domain model.
         /// </summary>
-        private IAuthorServiceWrapper domainModel;
-
-        /// <summary>
-        /// Gets the domain model or creates new if it was null.
-        /// </summary>
-        private IAuthorServiceWrapper DomainModel
-        {
-            get
-            {
-                return this.domainModel != null ? this.domainModel : this.domainModel = (IAuthorServiceWrapper)DependencyResolver.Current.GetService(typeof(IAuthorServiceWrapper));
-            }
-        }
+        [Dependency]
+        protected IAuthorServiceWrapper DomainModel { get; set; }
         
         /// <summary>
         /// Gets grid view.

@@ -67,7 +67,10 @@ namespace BookCatalog.UI
 
             bundles.Add(new ScriptBundle("~/bundles/appjs").Include(
                       "~/Scripts/angularController/authorController.js",
-                      "~/Scripts/angularController/bookController.js"));            
+                      "~/Scripts/angularController/bookController.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
+                      "~/Scripts/knockout-3.4.0.js"));
 
             bundles.IgnoreList.Clear();
         }

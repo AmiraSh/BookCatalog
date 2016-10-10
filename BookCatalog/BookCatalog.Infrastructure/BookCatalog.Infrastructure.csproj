@@ -45,9 +45,14 @@
     <Compile Include="Filtration\CustomFilter.cs" />
     <Compile Include="Filtration\CustomOperator.cs" />
     <Compile Include="Filtration\Sort.cs" />
+    <Compile Include="Logging\Concrete\InfoLogger.cs" />
     <Compile Include="Logging\Concrete\Logger.cs" />
+    <Compile Include="Logging\IInfoLogger.cs" />
     <Compile Include="Logging\ILogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

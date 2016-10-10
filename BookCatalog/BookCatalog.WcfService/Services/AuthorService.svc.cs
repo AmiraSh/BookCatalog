@@ -32,7 +32,7 @@ namespace BookCatalog.WcfService
         {
             get
             {
-                return this.domainModel != null ? this.domainModel : this.domainModel = new AuthorDomainModel();
+                return this.domainModel != null ? this.domainModel : this.domainModel = (AuthorDomainModel)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(AuthorDomainModel));
             }
         }
 

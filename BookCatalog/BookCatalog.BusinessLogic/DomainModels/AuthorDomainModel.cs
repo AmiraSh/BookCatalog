@@ -23,21 +23,15 @@ namespace BookCatalog.BusinessLogic.DomainModels
     /// Author domain model.
     /// </summary>
     public class AuthorDomainModel
-    {
-        /// <summary>
-        /// Author repository.
-        /// </summary>
-        private IAuthorRepository authorRepository;
-        
+    {        
         /// <summary>
         /// Gets author repository.
         /// </summary>
-        private IAuthorRepository AuthorRepository
+        private IAuthorRepository AuthorRepository { get; set; }
+        
+        public AuthorDomainModel(IAuthorRepository authorRepository)
         {
-            get
-            {
-                return this.authorRepository != null ? this.authorRepository : this.authorRepository = new AuthorRepository();
-            }
+            AuthorRepository = authorRepository;
         }
 
         /// <summary>

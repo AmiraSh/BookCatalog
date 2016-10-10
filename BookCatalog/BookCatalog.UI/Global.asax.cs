@@ -38,6 +38,7 @@ namespace BookCatalog.UI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AutoMapperWebServiceConfiguration.Configure();
+            Infrastructure.Logging.Concrete.InfoLogger.Log("Application_Start", "");
         }
 
         /// <summary>

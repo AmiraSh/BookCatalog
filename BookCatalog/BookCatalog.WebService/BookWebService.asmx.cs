@@ -11,7 +11,7 @@ namespace BookCatalog.WebService
     using System.Xml;
     using System.Web.Mvc;
     using BusinessLogic.AutoMapperExtention;
-    using BusinessLogic.DomainModel;
+    using BusinessLogic.DomainModels;
     using Components.ViewModels;
     using Infrastructure.Filtration;
     #endregion Using
@@ -35,7 +35,7 @@ namespace BookCatalog.WebService
         {
             get
             {
-                return this.domainModel != null ? this.domainModel : this.domainModel = new BookDomainModel();
+                return this.domainModel != null ? this.domainModel : this.domainModel = (BookDomainModel)System.Web.Mvc.DependencyResolver.Current.GetService(typeof(BookDomainModel));
             }
         }
 

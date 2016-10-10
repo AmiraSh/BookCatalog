@@ -32,29 +32,29 @@ namespace BookCatalog.UI.AutoMapperExtention
         /// </summary>
         private static void ConfigureBookMapping()
         {
-            Mapper.CreateMap<BookWebService.BookViewModel, BookViewModel>();
-            Mapper.CreateMap<BookViewModel, BookWebService.BookViewModel>();
+            Mapper.CreateMap<Services.BookWebService.BookViewModel, BookViewModel>();
+            Mapper.CreateMap<BookViewModel, Services.BookWebService.BookViewModel>();
 
-            Mapper.CreateMap<BookWebService.AuthorViewModel, AuthorViewModel>();
-            Mapper.CreateMap<AuthorViewModel, BookWebService.AuthorViewModel>();
+            Mapper.CreateMap<Services.BookWebService.AuthorViewModel, AuthorViewModel>();
+            Mapper.CreateMap<AuthorViewModel, Services.BookWebService.AuthorViewModel>();
 
-            Mapper.CreateMap<BookWebService.ShortBookViewModel, ShortBookViewModel>();
-            Mapper.CreateMap<ShortBookViewModel, BookWebService.ShortBookViewModel>();
+            Mapper.CreateMap<Services.BookWebService.ShortBookViewModel, ShortBookViewModel>();
+            Mapper.CreateMap<ShortBookViewModel, Services.BookWebService.ShortBookViewModel>();
 
-            Mapper.CreateMap<CustomFilter, BookWebService.CustomFilter>();
-            Mapper.CreateMap<BookWebService.CustomFilter, CustomFilter>();
+            Mapper.CreateMap<CustomFilter, Services.BookWebService.CustomFilter>();
+            Mapper.CreateMap<Services.BookWebService.CustomFilter, CustomFilter>();
 
-            Mapper.CreateMap<SelectListItem, BookWebService.SelectListItem>();
-            Mapper.CreateMap<BookWebService.SelectListItem, SelectListItem>();
+            Mapper.CreateMap<SelectListItem, Services.BookWebService.SelectListItem>();
+            Mapper.CreateMap<Services.BookWebService.SelectListItem, SelectListItem>();
 
-            Mapper.CreateMap<Sort, BookWebService.Sort>();
-            Mapper.CreateMap<BookWebService.Sort, Sort>();
+            Mapper.CreateMap<Sort, Services.BookWebService.Sort>();
+            Mapper.CreateMap<Services.BookWebService.Sort, Sort>();
 
-            Mapper.CreateMap<ListSortDirection, BookWebService.ListSortDirection>();
-            Mapper.CreateMap<BookWebService.ListSortDirection, ListSortDirection>();
+            Mapper.CreateMap<ListSortDirection, Services.BookWebService.ListSortDirection>();
+            Mapper.CreateMap<Services.BookWebService.ListSortDirection, ListSortDirection>();
 
-            Mapper.CreateMap<SelectListGroup, BookWebService.SelectListGroup>();
-            Mapper.CreateMap<BookWebService.SelectListGroup, SelectListGroup>();
+            Mapper.CreateMap<SelectListGroup, Services.BookWebService.SelectListGroup>();
+            Mapper.CreateMap<Services.BookWebService.SelectListGroup, SelectListGroup>();
         }
 
         /// <summary>
@@ -62,26 +62,26 @@ namespace BookCatalog.UI.AutoMapperExtention
         /// </summary>
         private static void ConfigureAuthorMapping()
         {
-            Mapper.CreateMap<AuthorWebService.AuthorViewModel, AuthorViewModel>();
-            Mapper.CreateMap<AuthorViewModel, AuthorWebService.AuthorViewModel>();
+            Mapper.CreateMap<Services.AuthorWebService.AuthorViewModel, AuthorViewModel>();
+            Mapper.CreateMap<AuthorViewModel, Services.AuthorWebService.AuthorViewModel>();
 
-            Mapper.CreateMap<SearchTopAuthorsViewModel, AuthorWebService.SearchTopAuthorsViewModel>();
-            Mapper.CreateMap<AuthorWebService.SearchTopAuthorsViewModel, SearchTopAuthorsViewModel>();
+            Mapper.CreateMap<SearchTopAuthorsViewModel, Services.AuthorWebService.SearchTopAuthorsViewModel>();
+            Mapper.CreateMap<Services.AuthorWebService.SearchTopAuthorsViewModel, SearchTopAuthorsViewModel>();
 
-            Mapper.CreateMap<AuthorWebService.ShortBookViewModel, ShortBookViewModel>();
-            Mapper.CreateMap<ShortBookViewModel, AuthorWebService.ShortBookViewModel>();
+            Mapper.CreateMap<Services.AuthorWebService.ShortBookViewModel, ShortBookViewModel>();
+            Mapper.CreateMap<ShortBookViewModel, Services.AuthorWebService.ShortBookViewModel>();
 
-            Mapper.CreateMap<CustomFilter, AuthorWebService.CustomFilter>();
-            Mapper.CreateMap<AuthorWebService.CustomFilter, CustomFilter>();
+            Mapper.CreateMap<CustomFilter, Services.AuthorWebService.CustomFilter>();
+            Mapper.CreateMap<Services.AuthorWebService.CustomFilter, CustomFilter>();
 
-            Mapper.CreateMap<TopAuthorViewModel, AuthorWebService.TopAuthorViewModel>();
-            Mapper.CreateMap<AuthorWebService.TopAuthorViewModel, TopAuthorViewModel>();
+            Mapper.CreateMap<TopAuthorViewModel, Services.AuthorWebService.TopAuthorViewModel>();
+            Mapper.CreateMap<Services.AuthorWebService.TopAuthorViewModel, TopAuthorViewModel>();
 
-            Mapper.CreateMap<Sort, AuthorWebService.Sort>();
-            Mapper.CreateMap<AuthorWebService.Sort, Sort>();
+            Mapper.CreateMap<Sort, Services.AuthorWebService.Sort>();
+            Mapper.CreateMap<Services.AuthorWebService.Sort, Sort>();
 
-            Mapper.CreateMap<ListSortDirection, AuthorWebService.ListSortDirection>();
-            Mapper.CreateMap<AuthorWebService.ListSortDirection, ListSortDirection>();
+            Mapper.CreateMap<ListSortDirection, Services.AuthorWebService.ListSortDirection>();
+            Mapper.CreateMap<Services.AuthorWebService.ListSortDirection, ListSortDirection>();
         }
     }
 }

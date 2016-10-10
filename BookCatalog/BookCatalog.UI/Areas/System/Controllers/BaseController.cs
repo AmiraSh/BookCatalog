@@ -8,6 +8,7 @@ namespace BookCatalog.UI.Areas.System.Controllers
     #region Using
     using BookCatalog.Infrastructure.Logging;
     using global::System.Web.Mvc;
+    using Microsoft.Practices.Unity;
     #endregion
 
     /// <summary>
@@ -18,15 +19,8 @@ namespace BookCatalog.UI.Areas.System.Controllers
         /// <summary>
         /// The logger.
         /// </summary>
-        private ILogger logger;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BaseController"/> class.
-        /// </summary>
-        public BaseController()
-        {
-            this.logger = (ILogger)DependencyResolver.Current.GetService(typeof(ILogger));
-        }
+        [Dependency]
+        protected ILogger logger { get; set; }
 
         /// <summary>
         /// Overridden OnException method to catch server exceptions. If the request is AJAX return JSON else redirect user to Error view.

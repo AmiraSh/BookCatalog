@@ -14,7 +14,8 @@ namespace BookCatalog.API.Controllers
     using BookCatalog.Components.ViewModels;
     using BookCatalog.Infrastructure.Errors;
     using System.Linq;
-    using UI.ServiceWrappers.Interfaces;
+    using Services.ServiceWrappers.Interfaces;
+    using Microsoft.Practices.Unity;
     #endregion
 
     /// <summary>
@@ -25,18 +26,8 @@ namespace BookCatalog.API.Controllers
         /// <summary>
         /// Domain model.
         /// </summary>
-        private IAuthorServiceWrapper domainModel;
-
-        /// <summary>
-        /// Gets the domain model or creates new if it was null.
-        /// </summary>
-        private IAuthorServiceWrapper DomainModel
-        {
-            get
-            {
-                return this.domainModel != null ? this.domainModel : this.domainModel = (IAuthorServiceWrapper)DependencyResolver.Current.GetService(typeof(IAuthorServiceWrapper));
-            }
-        }
+        [Dependency]
+        protected IAuthorServiceWrapper DomainModel { get; set; }
 
         /// <summary>
         /// Gets all authors.

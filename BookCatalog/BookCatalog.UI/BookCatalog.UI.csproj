@@ -94,24 +94,32 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.Mvc.4.0.1\lib\net45\Microsoft.Practices.Unity.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention, Version=4.0.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.4.0.1\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.2.0.0\lib\net45-full\Ninject.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Ninject.Web.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.MVC3.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="protobuf-net">
@@ -199,9 +207,11 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\KnockoutJS\Controllers\AuthorController.cs" />
+    <Compile Include="Areas\KnockoutJS\Controllers\BookController.cs" />
+    <Compile Include="Areas\KnockoutJS\KnockoutJSAreaRegistration.cs" />
     <Compile Include="AutoMapperExtention\AutoMapperWebServiceConfiguration.cs" />
     <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BookController.cs" />
@@ -225,33 +235,6 @@
     </Compile>
     <Compile Include="KendoAnalysing\KendoAnalyser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\AuthorService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\AuthorWebService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\BookService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\BookWebService\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-    <Compile Include="ServiceWrappers\Concrete\WcfService\WcfAuthorServiceWrapper.cs" />
-    <Compile Include="ServiceWrappers\Concrete\WcfService\WcfBookServiceWrapper.cs" />
-    <Compile Include="ServiceWrappers\Concrete\WebService\WebAuthorServiceWrapper.cs" />
-    <Compile Include="ServiceWrappers\Concrete\WebService\WebBookServiceWrapper.cs" />
-    <Compile Include="ServiceWrappers\Interfaces\IAuthorServiceWrapper.cs" />
-    <Compile Include="ServiceWrappers\Interfaces\IBookServiceWrapper.cs" />
-    <Compile Include="ServiceWrappers\ServiceOptions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\System\Views\Shared\ApplicationError.htm" />
@@ -375,6 +358,17 @@
     <Content Include="Properties\DataSources\BookCatalog.Components.ViewModels.TopAuthorViewModel.datasource" />
     <Content Include="Properties\DataSources\BookCatalog.Components.ViewModels.BookViewModel.datasource" />
     <Content Include="Properties\DataSources\System.Xml.XmlNode.datasource" />
+    <Content Include="Areas\KnockoutJS\Views\web.config" />
+    <Content Include="Areas\KnockoutJS\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\KnockoutJS\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\KnockoutJS\Views\Author\AuthorForm.cshtml" />
+    <Content Include="Areas\KnockoutJS\Views\Author\Details.cshtml" />
+    <Content Include="Areas\KnockoutJS\Views\Author\Index.cshtml" />
+    <Content Include="Areas\KnockoutJS\Views\Author\SearchForm.cshtml" />
+    <Content Include="Areas\KnockoutJS\Views\Author\TopAuthors.cshtml" />
+    <Content Include="Areas\KnockoutJS\Views\Book\BookForm.cshtml" />
+    <Content Include="Areas\KnockoutJS\Views\Book\Details.cshtml" />
+    <Content Include="Areas\KnockoutJS\Views\Book\Index.cshtml" />
     <None Include="Properties\PublishProfiles\BookCatalogIIS.pubxml" />
     <Content Include="Scripts\angular.min.js.map" />
     <None Include="Scripts\jquery-2.2.0.intellisense.js" />
@@ -399,6 +393,8 @@
     <Content Include="Scripts\kendo\kendo.all.min.js" />
     <Content Include="Scripts\kendo\kendo.angular.min.js" />
     <Content Include="Scripts\kendo\kendo.aspnetmvc.min.js" />
+    <Content Include="Scripts\knockout-3.4.0.debug.js" />
+    <Content Include="Scripts\knockout-3.4.0.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.ar.min.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.az.min.js" />
     <Content Include="Scripts\locales\bootstrap-datepicker.bg.min.js" />
@@ -468,63 +464,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="Service References\AuthorService\AuthorService.disco" />
-    <Content Include="Service References\AuthorService\BookCatalog.UI.AuthorService.GetAuthorsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\AuthorService\configuration91.svcinfo" />
-    <None Include="Service References\AuthorService\configuration.svcinfo" />
-    <None Include="Service References\AuthorService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\AuthorWebService\AuthorWebService.disco" />
-    <Content Include="Service References\AuthorWebService\BookCatalog.UI.AuthorWebService.AuthorViewModel.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\AuthorWebService\BookCatalog.UI.AuthorWebService.TopAuthorViewModel.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\AuthorWebService\BookCatalog.UI.AuthorWebService.GetAuthorsResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\AuthorWebService\AuthorWebService.wsdl" />
-    <None Include="Service References\AuthorWebService\configuration91.svcinfo" />
-    <None Include="Service References\AuthorWebService\configuration.svcinfo" />
-    <None Include="Service References\AuthorWebService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <Content Include="Service References\BookService\BookCatalog.UI.BookService.GetBooksResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BookService\BookCatalog.UI.BookService.GetXMLResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\BookService\BookService.disco" />
-    <None Include="Service References\BookService\configuration91.svcinfo" />
-    <None Include="Service References\BookService\configuration.svcinfo" />
-    <None Include="Service References\BookService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <Content Include="Service References\BookWebService\BookCatalog.UI.BookWebService.BookViewModel.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BookWebService\BookCatalog.UI.BookWebService.GetBooksResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\BookWebService\BookCatalog.UI.BookWebService.SelectListItem.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <None Include="Service References\BookWebService\BookWebService.wsdl" />
-    <None Include="Service References\BookWebService\configuration91.svcinfo" />
-    <None Include="Service References\BookWebService\configuration.svcinfo" />
-    <None Include="Service References\BookWebService\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
-    <None Include="Service References\BookWebService\BookWebService.disco" />
     <Content Include="Views\Shared\ApplicationError.htm" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -572,64 +511,12 @@
     <Content Include="Areas\Angular\Views\Catalog\Books.cshtml" />
     <Content Include="Areas\Angular\Views\Catalog\Authors.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <None Include="Service References\AuthorService\AuthorService.wsdl" />
-    <None Include="Service References\AuthorService\AuthorService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\AuthorService\AuthorService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\AuthorService\AuthorService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\AuthorService\AuthorService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\AuthorService\AuthorService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\AuthorService\AuthorService5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\AuthorService\AuthorService6.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\AuthorService\AuthorService7.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BookService\BookService.wsdl" />
-    <None Include="Service References\BookService\BookService.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BookService\BookService1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BookService\BookService2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BookService\BookService3.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BookService\BookService4.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BookService\BookService5.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BookService\BookService6.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BookService\BookService7.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\BookService\BookService8.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Angular\Models\" />
     <Folder Include="Areas\Kendo\Models\" />
+    <Folder Include="Areas\KnockoutJS\Models\" />
     <Folder Include="Areas\MVC\Models\" />
     <Folder Include="Content\UserFiles\Files\" />
     <Folder Include="Content\UserFiles\Images\" />
@@ -641,6 +528,18 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BookCatalog.Bootstrap\BookCatalog.Bootstrap.csproj">
+      <Project>{27fb2f94-2421-4d4e-a923-bf569e89e444}</Project>
+      <Name>BookCatalog.Bootstrap</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BookCatalog.BusinessLogic\BookCatalog.BusinessLogic.csproj">
+      <Project>{89544eaf-cca2-4a44-82aa-3e6b086fd3ca}</Project>
+      <Name>BookCatalog.BusinessLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BookCatalog.DAL\BookCatalog.DAL.csproj">
+      <Project>{1e2a569e-0d14-42ff-92c3-5cb2acef6543}</Project>
+      <Name>BookCatalog.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BookCatalog.Infrastructure\BookCatalog.Infrastructure.csproj">
       <Project>{4ea7a47a-ff7d-47a1-8d34-4b29f262d7e1}</Project>
       <Name>BookCatalog.Infrastructure</Name>
@@ -649,15 +548,10 @@
       <Project>{0f17f994-5d9a-4373-84e1-f5eb9b36ec5d}</Project>
       <Name>BookCatalog.Components</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\AuthorService\" />
-    <WCFMetadataStorage Include="Service References\AuthorWebService\" />
-    <WCFMetadataStorage Include="Service References\BookService\" />
-    <WCFMetadataStorage Include="Service References\BookWebService\" />
+    <ProjectReference Include="..\BookCatalog.Services\BookCatalog.Services.csproj">
+      <Project>{b8233267-8a6e-406e-adaa-8f7b493b0fff}</Project>
+      <Name>BookCatalog.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
