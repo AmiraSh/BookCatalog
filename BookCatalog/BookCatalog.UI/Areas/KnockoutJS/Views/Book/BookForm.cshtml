@@ -1,6 +1,6 @@
 ﻿@model BookCatalog.Components.ViewModels.BookViewModel
 
-@using (Ajax.BeginForm("Manage", "Book", new { Model, area = "MVC" }, new AjaxOptions() { OnSuccess = "onSuccess" }))
+@using (Ajax.BeginForm("Manage", "Book", new { Model, area = "KnockoutJS" }, new AjaxOptions() { OnSuccess = "onSuccess" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Id)

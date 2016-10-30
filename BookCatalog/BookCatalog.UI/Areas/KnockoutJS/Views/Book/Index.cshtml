@@ -2,10 +2,12 @@
 @{
     ViewBag.Title = "Books";
 }
+@using System.Web.Script.Serialization
+@{
+    var serializer = new JavaScriptSerializer() { MaxJsonLength = int.MaxValue };
+    string data = serializer.Serialize(Model);
+}
 <br />
-<div style="margin-bottom:5px;">
-    @Html.ActionLink("Download XML file", "GetXMLFile", new { }, new { @class="btn btn-default" })
-</div>
 <div style="margin-bottom:5px;">
     <input type="button" value="Add" id="CreateBook" class="btn btn-default" />
     <div id="BookForm" style="display:none">        
@@ -14,115 +16,36 @@
 <table id="booksTable" class="table table-striped table-bordered" cellspacing="0">
     <thead>
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PublishedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PagesCount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Authors)
-            </th>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Published Date</th>
+            <th>Pages Count</th>
+            <th>Rating</th>
+            <th>Authors</th>
             <th></th>
         </tr>
     </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Id)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PublishedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PagesCount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Rating)
-                </td>
-                <td>
-                    @foreach (var author in item.Authors)
-                    {
-                        @Html.DisplayFor(modelItem => author.FirstName) @(" ") @Html.DisplayFor(modelItem => author.SecondName) <br />
-                    }
-                </td>
-                <td>
-                    <input type="button" value="Edit" id="Edit" onclick="editBook(@item.Id)" class="makealink" /> |
-                    @Html.ActionLink("Details", "Details", "Book", new { id = item.Id , area = "MVC" }, null) |
-                    <input type="button" value="Delete" id="Delete" onclick="deleteBook(@item.Id)" class="makealink" />
-                </td>
-            </tr>
-        }
+    <tbody data-bind="foreach: Books">
+        <tr>
+            <td data-bind="text: Id"></td>
+            <td data-bind="text: Name"></td>
+            <td data-bind="date: PublishedDate"></td>
+            <td data-bind="text: PagesCount"></td>
+            <td data-bind="text: Rating"></td>
+            <td data-bind="foreach: Authors">
+                <span data-bind="text: FirstName"></span>&nbsp;<span data-bind="text: SecondName"></span><br />
+            </td>
+            <td>
+                @*<input type="button" value="Edit" id="Edit" onclick="editBook(@item.Id)" class="makealink" /> |
+                @Html.ActionLink("Details", "Details", "Book", new { id = item.Id , area = "KnockoutJS" }, null) |
+                <input type="button" value="Delete" id="Delete" onclick="deleteBook(@item.Id)" class="makealink" />*@
+            </td>
+        </tr>
     </tbody>
 </table>
 
 <script>
-    var isedited = false;
-    var booksTable;
     $(document).ready(function () {
-        booksTable = $('#booksTable').dataTable({
-            "aoColumns": [
-                { "sClass": "Id", "mDataProp": "Id" },
-                { "sClass": "Name", "mDataProp": "Name" },
-                { "sClass": "PublishedDate", "mDataProp": "PublishedDate" },
-                { "sClass": "PagesCount", "mDataProp": "PagesCount" },
-                { "sClass": "Rating", "mDataProp": "Rating" },
-                { "sClass": "Authors", "mDataProp": "Authors" },
-                { "sClass": "Controls", "mDataProp": "Controls" }
-            ]
-        });
+        BookModel.Initialize(@Html.Raw(data));
     });
-    $("#CreateBook").click(function () {
-        if (isedited !=true)
-        {
-            $.ajax({
-                async: true,
-                url: '/MVC/Book/AddBookForm'
-            }).success(function (content) {
-                isedited = true;
-                $('#BookForm').attr("style", "");
-                $('#BookForm').append(content);
-            });
-        }
-    });
-    function editBook(bookId) {
-        if (isedited != true)
-        {
-            $.ajax({
-                async: true,
-                url: '/MVC/Book/AddBookForm/' + bookId
-            }).success(function (content) {
-                isedited = true;
-                $('#BookForm').attr("style", "");
-                $('#BookForm').append(content);
-            });
-        }
-    }
-    function deleteBook(bookId) {
-        if (confirm("Are you sure, you want to delete this book from catalog?") == true) {
-            $.ajax({
-                async: true,
-                type: 'POST',
-                url: '/MVC/Book/Delete/' + bookId
-            }).success(function () {
-                $( "tr:contains('" + bookId + "')").each(function() {
-                    booksTable.fnDeleteRow(this);
-                });
-            });
-        }
-    }
 </script>

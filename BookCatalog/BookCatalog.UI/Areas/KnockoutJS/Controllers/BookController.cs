@@ -135,15 +135,5 @@ namespace BookCatalog.UI.Areas.KnockoutJS.Controllers
         {
             return this.Json(this.DomainModel.GetBooksCount(), JsonRequestBehavior.AllowGet);
         }
-
-        /// <summary>
-        /// Returns XML file.
-        /// </summary>
-        /// <returns>XML file.</returns>
-        public FileResult GetXMLFile()
-        {
-            byte[] bytes = Encoding.Default.GetBytes(this.DomainModel.GetXML());
-            return this.File(bytes, global::System.Net.Mime.MediaTypeNames.Text.Xml, "bookcatalog.xml");
-        }
     }
 }
